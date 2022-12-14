@@ -1,0 +1,10 @@
+.image {
+    float: left;
+    width: 50%;
+  }
+  
+  .list:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
