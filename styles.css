@@ -20,8 +20,9 @@ body {
 }
  
 .sidebar a.active {
-  background-color: #04AA6D;
-  color: white;
+  background-color: #9fa3a2;
+  color: blue;
+  font-size: large;
 }
 
 .sidebar a:hover:not(.active) {
@@ -56,24 +57,28 @@ div.content {
 
 .navbar {
   width: 100%;
-  background-color: #555;
+  /* background-color: rgb(214, 208, 208); */
+  border: #555;
   overflow: auto;
 }
 
 .navbar a {
   float: left;
   padding: 12px;
-  color: white;
+  padding-bottom: 0px;
+  color: rgb(59, 56, 56);
   text-decoration: none;
-  font-size: 17px;
+  font-size: 27px;
 }
 
 .navbar a:hover {
-  background-color: #000;
+  /* background-color: #000; */
+  color: blue;
 }
 
 .active {
-  background-color: #04AA6D;
+  /* background-color: #9fa3a2; */
+  color: blue;
 }
 
 @media screen and (max-width: 500px) {
