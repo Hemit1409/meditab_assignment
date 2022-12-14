@@ -1,51 +1,902 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
+
 <body>
-<!-- Load an icon library -->
+  <!-- Load an icon library -->
 
-
-<div class="navbar">
-  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> </a>
-  <!-- <a href="#"><i class="fa fa-fw fa-search"></i> </a>
+  <div class="main2">
+    <div class="navbar">
+      <a class="active" href="#"><i class="fa fa-fw fa-home"></i> </a>
+      <!-- <a href="#"><i class="fa fa-fw fa-search"></i> </a>
   <a href="#"><i class="fa fa-fw fa-envelope"></i> </a>
   <a href="#"><i class="fa fa-fw fa-user"></i></a> -->
-  <a href="#"><i class="fa-sharp fa-solid fa-gear"></i> </a>
-  <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i> </a>
-  <a href="#"><i class="fa-solid fa-user"></i> </a>
-  <a href="#"><i class="fa-solid fa-calendar-days"></i></a>
-  <a href="#"><i class="fa-solid fa-user-shield"></i> </a>
-  <a href="#"><i class="fa-solid fa-shield"></i></a>
-  <a href="#"><i class="fa-solid fa-check-double"></i></a>
+      <a href="#"><i class="fa-sharp fa-solid fa-gear"></i> </a>
+      <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i> </a>
+      <a href="#"><i class="fa-solid fa-user"></i> </a>
+      <a href="#"><i class="fa-solid fa-calendar-days"></i></a>
+      <a href="#"><i class="fa-solid fa-user-shield"></i> </a>
+      <a href="#"><i class="fa-solid fa-shield"></i></a>
+      <a href="#"><i class="fa-solid fa-check-double"></i></a>
 
-  <a href="#"><i class="fa-solid fa-notes-medical"></i></a>
-  <a href="#"><i class="fa-solid fa-flask"></i></a>
-  <a href="#"><i class="fa-solid fa-prescription"></i></a>
-  <a href="#"><i class="fa-solid fa-prescription"></i></a>
-  <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
-  <a href="#"><i class="fa-solid fa-shield"></i></a>
-  <a href="#"><i class="fa-solid fa-check-double"></i></a>
-</div>
-<hr>
-<div class="sidebar">
-  <a class="active" href="#home">Home</a>
+      <a href="#"><i class="fa-solid fa-notes-medical"></i></a>
+      <a href="#"><i class="fa-solid fa-flask"></i></a>
+      <a href="#"><i class="fa-solid fa-prescription"></i></a>
+      <a href="#"><i class="fa-solid fa-prescription"></i></a>
+      <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
+      <a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
+      <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+
+      <a href="#"><i class="fa-solid fa-shield"></i></a>
+      <a href="#"><i class="fa-solid fa-check-double"></i></a>
+      <a href="#"><i class="fa-solid fa-notes-medical"></i></a>
+      <a href="#"><i class="fa-solid fa-flask"></i></a>
+      <a href="#"><i class="fa-solid fa-prescription"></i></a>
+      <a href="#"><i class="fa-solid fa-prescription"></i></a>
+      <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
+      <a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
+      <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+    </div>
+    <!-- <hr> -->
+
+    <div class="sidebar">
+      <!-- <a class="active" href="#home">Home</a>
   <a href="#news">News</a>
   <a href="#contact">Contact</a>
-  <a href="#about">About</a>
-</div>
+  <a href="#about">About</a> -->
 
-<div class="content">
-  <!-- <h2>Responsive Sidebar Example</h2>
-  <p>This example use media queries to transform the sidebar to a top navigation bar when the screen size is 700px or less.</p>
-  <p>We have also added a media query for screens that are 400px or less, which will vertically stack and center the navigation links.</p>
-  <h3>Resize the browser window to see the effect.</h3> -->
-</div>
+      <a class="" href="#/app/patient/edit/1000336/dashboard" tabindex="0">
+        <span class="ui-menuitem-text">Dashboard</span></a>
+      <a class="active" href="#/app/patient/edit/1000336/demographics" tabindex="0">
+        <span class="ui-menuitem-text">Demographics</span></a>
+      <a class="" href="#/app/patient/edit/1000336/insurance" tabindex="0">
+        <span class="ui-menuitem-text">Insurance</span></a>
+      <a class="" href="#/app/patient/edit/1000336/case" tabindex="0">
+        <span class="ui-menuitem-text">Case</span></a>
 
 
+      <a class="" href="#/app/patient/edit/1000336/contacts" tabindex="0">
+        <span class="ui-menuitem-text">Contacts</span></a>
+      <a class="" href="#/app/patient/edit/1000336/employer" tabindex="0">
+        <span class="ui-menuitem-text">Employer</span></a>
+      <a class="" href="#/app/patient/edit/1000336/appointment" tabindex="0">
+        <span class="ui-menuitem-text">Appointments</span></a>
+      <a class="" href="#/app/patient/edit/1000336/encounters" tabindex="0">
+        <span class="ui-menuitem-text">Encounters</span></a>
+      <a class="" href="#/app/patient/edit/1000336/documents" tabindex="0">
+        <span class="ui-menuitem-text">Documents</span></a>
+      <a class="" href="#/app/patient/edit/1000336/notesAndAlerts" tabindex="0">
+        <span class="ui-menuitem-text">Notes &amp; Alerts</span></a>
+      <a class="ui-menuitem-link ui-corner-all ng-star-inserted" href="#/app/patient/edit/1000336/forms" tabindex="0">
+        <span class="ui-menuitem-text">Forms</span></a>
+      <a class="ui-menuitem-link ui-corner-all ng-star-inserted" href="#/app/patient/edit/1000336/consents"
+        tabindex="0">
+        <span class="ui-menuitem-text">Consents</span></a>
+      <a class="ui-menuitem-link ui-corner-all ng-star-inserted" href="#/app/patient/edit/1000336/appointment-reminder"
+        tabindex="0">
+        <span class="ui-menuitem-text">Reminder Preference</span></a>
+
+      <hr>
+      <a class="" href="#/app/patient/edit/1000336/allergy" tabindex="0">
+        <span class="ui-menuitem-text">Allergy</span></a>
+      <a class="" href="#/app/patient/edit/1000336/diagnosis" tabindex="0">
+        <span class="ui-menuitem-text">Diagnosis</span></a>
+      <a class="" href="#/app/patient/edit/1000336/familyHistory" tabindex="0">
+        <span class="ui-menuitem-text">Family History</span></a>
+      <a class="" href="#/app/patient/edit/1000336/prescription" tabindex="0">
+        <span class="ui-menuitem-text">Prescription</span></a>
+      <a class="" href="#/app/patient/edit/1000336/lab" tabindex="0">
+        <span class="ui-menuitem-text">Lab</span></a>
+      <a class="" href="#/app/patient/edit/1000336/immunization" tabindex="0">
+        <span class="ui-menuitem-text">Immunization</span></a>
+      <a class="" href="#/app/patient/edit/1000336/vital-signs" tabindex="0">
+        <span class="ui-menuitem-text">Vitals</span></a>
+
+      <hr>
+      <a class="" href="#/app/patient/edit/1000336/authorization" tabindex="0">
+        <span class="ui-menuitem-text">Authorization</span></a>
+      <a class="" href="#/app/patient/edit/1000336/claims" tabindex="0">
+        <span class="ui-menuitem-text">Claims</span></a>
+      <a class="" href="#/app/patient/edit/1000336/receipts" tabindex="0">
+        <span class="ui-menuitem-text">Receipts</span></a>
+      <a class="" href="#/app/patient/edit/1000336/open-credit" tabindex="0">
+        <span class="ui-menuitem-text">Open Credit</span></a>
+      <a class="" href="#/app/patient/edit/1000336/statements" tabindex="0">
+        <span class="ui-menuitem-text">Statements</span></a>
+      <a class="" href="#/app/patient/edit/1000336/ledger" tabindex="0">
+        <span class="ui-menuitem-text">Ledger</span></a>
+
+
+    </div>
+
+    <div class="content">
+      <div class="navbar2">
+        <!-- <a class="active" href="#"><i class="fa fa-fw fa-home"></i> </a> -->
+        <a href="#"><i class="fa-sharp fa-solid fa-gear"></i>Submit </a>
+        <!-- <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i> </a> -->
+        
+      </div>
+      <div class="formdiv">
+        
+        <form>
+          <div class="column">
+            <div class="patient-photo-container">
+              <div class="patient-image-container" style="height: 12rem; width: 12rem;">
+                <img class="patient-image" src="download.png">
+              </div>
+            </div>
+            <div class="lab2">
+              <div class=""></div>
+              <div class=""><span class="" style="">PT0000000036</span>
+              </div>
+            </div>
+            <div class="lab">
+              <label>Prefix</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">First Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Middle Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name2</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">suffix</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">AKA</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>sex</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">DOB</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">pref lang</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">interpreter</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">risk</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">merital status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">SSN</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">race</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">ethnicity</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>self pay</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default facility</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">TimeZone</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default pharmacy</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">use current phrmacy for all Rx</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP same as provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Fee schedule</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="formdiv">
+        <h1>Contact Details*</h1>
+        <form>
+          <div class="column">
+            <div class="patient-photo-container">
+              <div class="patient-image-container" style="height: 12rem; width: 12rem;">
+                <img class="patient-image" src="download.png">
+              </div>
+            </div>
+            <div class="lab2">
+              <div class=""></div>
+              <div class=""><span class="" style="">PT0000000036</span>
+              </div>
+            </div>
+            <div class="lab">
+              <label>Prefix</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">First Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Middle Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name2</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">suffix</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">AKA</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>sex</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">DOB</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">pref lang</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">interpreter</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">risk</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">merital status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">SSN</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">race</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">ethnicity</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>self pay</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default facility</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">TimeZone</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default pharmacy</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">use current phrmacy for all Rx</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP same as provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Fee schedule</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="formdiv">
+        <h1>Other Details*</h1>
+        <form>
+          <div class="column">
+            <div class="patient-photo-container">
+              <div class="patient-image-container" style="height: 12rem; width: 12rem;">
+                <img class="patient-image" src="download.png">
+              </div>
+            </div>
+            <div class="lab2">
+              <div class=""></div>
+              <div class=""><span class="" style="">PT0000000036</span>
+              </div>
+            </div>
+            <div class="lab">
+              <label>Prefix</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">First Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Middle Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Last Name2</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">suffix</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">AKA</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>sex</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">DOB</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">pref lang</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">interpreter</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">risk</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">merital status</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">SSN</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">race</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">ethnicity</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+          <div class="column">
+            <div class="lab">
+              <label>self pay</label>
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="d420bl">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default facility</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">TimeZone</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">default pharmacy</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">use current phrmacy for all Rx</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP same as provider</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">PCP</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+            <div class="lab">
+              <label class="">Fee schedule</label>
+
+              <span class="">
+                <input pinputtext="" mtabtitlecase="" style="font-family: FontAwesome, WebIMSLato;" tabindex="0"
+                  placeholder="" autocomplete="new-password" type="TEXT" step="1" class="" fdprocessedid="xcblfk">
+              </span>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- <script>
+  window.onscroll = function() {myFunction()};
+  
+  var navbar = document.getElementById("navbar");
+  var sticky = navbar.offsetTop;
+  
+  function myFunction() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add("sticky")
+    } else {
+      navbar.classList.remove("sticky");
+    }
+  }
+  </script> -->
 </body>
+
 </html>
