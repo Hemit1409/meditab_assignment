@@ -1,0 +1,283 @@
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(202, 195, 195);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(185, 181, 181);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(145, 141, 141);
+}
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+hr {
+  padding-bottom: 0px;
+}
+
+.main2{
+  background-color: #d9e2ec;
+  position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    overflow:hidden;
+}
+
+.sidebar {
+  border-radius: 25px;
+  border: 1px solid #99aabe;
+  width: 200px;
+  background-color: #d9e2ec;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  margin-left: 10px;
+
+ 
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  /* background-color: #9fa3a2; */
+  color: blue;
+  font-size: large;
+}
+
+.sidebar a:hover:not(.active) {
+  /* background-color: #555; */
+  color: blue;
+  font-size: large;
+}
+
+.rightside{
+  border-radius: 25px;
+  border: 1px solid #99aabe;
+  width: 200px;
+  background-color: #d9e2ec;
+  
+  height: 100px;
+  overflow: auto;
+  margin-left: 10px;
+  /* float:right; */
+
+  display: flex;
+  /* width: 3%; */
+  /* height: 900px; */
+  flex-direction: column;
+  border-style: ridge;
+  /* border-radius: 5px; */
+  align-items: center;
+
+}
+/* .rightside a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+} */
+ 
+/* .rightside a.active {
+  background-color: #9fa3a2;
+  color: blue;
+  font-size: large;
+}
+
+.rightside a:hover:not(.active) {
+  background-color: #555;
+  color: blue;
+} */
+
+.content {
+  margin-left: 220px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  padding-top: 0px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 25px;
+  overflow:scroll; 
+  height:100%;
+  margin-right:80px; 
+  box-shadow: 0 2px 4px rgb(0 0 0 / 24%), 0 4px 8px rgb(0 0 0 / 12%);
+}
+
+.navbar2{
+  width: 100%;
+  height: 50px;
+  position:sticky;
+  background-color: #a6bad1;
+  border: #555;
+  overflow: auto;
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  left: 0;
+  right: 0;
+  border-top-left-radius: 25px;
+  padding-left: 0px;
+  margin-right:80px; 
+}
+
+.inter {
+  position: fixed;
+  height: 50px;
+  width:84.3%;
+  background-color: #a6bad1;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border: #555;
+  margin-right: 80px;
+  padding-top: 20px;
+}
+
+.innernav {
+  position:fixed;
+  /* background-color: #7d8996; */
+  border: #555;
+  width:80%;
+  margin-left: 1240px;
+  
+  float: right;
+  margin-right: 80px;
+}
+
+.formdiv {
+  padding: 20px;
+  height: 55%;
+  border-radius: 25px;
+  align-items: center;
+}
+
+.patient-photo-container .patient-image {
+  height: 80%;
+  width: 80%;
+  border-radius: 2rem;
+  border: unset;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 24%), 0 4px 8px rgb(0 0 0 / 12%);
+  align-items: center;
+  margin: 20px;
+  margin-left: 30px;
+}
+
+.formcontent {
+  align-items: center;
+}
+
+.lab{
+  align-content: center;
+  padding: 10px;
+}
+
+.lab2{
+  align-content: center;
+  margin-left: 50px;
+}
+
+.column
+{
+    float: left;
+    width: 33%;
+}
+
+@media screen and (max-width: 1000px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+
+  .column{
+    /* float: left; */
+    width: 100%
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+
+
+.navbar {
+  width: 100%;
+  margin-bottom: 16px;
+  position:sticky;
+  background-color: #d9e2ec;
+  border: #555;
+  overflow: auto;
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,.5);
+}
+
+
+.navbar a {
+  float: left;
+  padding: 10px;
+  padding-bottom: 10px;
+  color: rgb(59, 56, 56);
+  text-decoration: none;
+  font-size: 23px;
+}
+
+.navbar a:hover {
+  /* background-color: #000; */
+  color: blue;
+}
+
+.active {
+  /* background-color: #9fa3a2; */
+  color: blue;
+}
+
+.searchbar {
+  float: right;
+  margin: 20px;
+  border-radius: 20px;
+  color: #0a0a0a;
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 16px;
+  width:300px;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+
+.ig.ig-inline.ig-label-left {
+  padding: .3rem;
+}
+
+button {
+  border-radius: 5px;
+}
