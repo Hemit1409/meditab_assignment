@@ -29,7 +29,7 @@ body {
 hr {
   padding-bottom: 0px;
 }
-h3{
+h3 {
   margin-left: 20px;
 }
 
@@ -89,14 +89,14 @@ ul {
 }
  */
 
-.main2{
+.main2 {
   background-color: #ebe1e1;
-  position:absolute;
-    top:0;
-    bottom:0;
-    right:0;
-    left:0;
-    overflow:hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -109,7 +109,6 @@ ul {
   overflow: auto;
   margin-left: 10px;
   margin-bottom: 20px;
- 
 }
 
 .sidebar a {
@@ -118,7 +117,7 @@ ul {
   padding: 16px;
   text-decoration: none;
 }
- 
+
 .sidebar a.active {
   /* background-color: #9fa3a2; */
   color: blue;
@@ -131,16 +130,16 @@ ul {
   font-size: large;
 }
 
-.rightside{
+.rightside {
   border-radius: 25px;
   border: 1px solid #99aabe;
   width: 200px;
   background-color: #d9e2ec;
-  
+
   height: 100px;
   overflow: auto;
   margin-left: 10px;
-  float:right;
+  float: right;
 
   display: flex;
   /* width: 3%; */
@@ -149,7 +148,6 @@ ul {
   border-style: ridge;
   /* border-radius: 5px; */
   align-items: center;
-
 }
 /* .rightside a {
   display: block;
@@ -157,7 +155,7 @@ ul {
   padding: 16px;
   text-decoration: none;
 } */
- 
+
 /* .rightside a.active {
   background-color: #9fa3a2;
   color: blue;
@@ -178,31 +176,31 @@ ul {
   overflow: hidden;
   background-color: #e2dede;
   border-radius: 25px;
-  overflow-y:scroll; 
-  height:83%;
-  margin-right:80px; 
+  overflow-y: scroll;
+  height: 83%;
+  margin-right: 80px;
   /* box-shadow: 0 2px 4px rgb(0 0 0 / 24%), 0 4px 8px rgb(0 0 0 / 12%); */
 }
 
-.navbar2{
+.navbar2 {
   /* width: 100%; */
   height: 50px;
-  position:sticky;
+  position: sticky;
   background-color: #f8f8f9;
   border: #555;
   overflow: auto;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
   left: 0;
   right: 0;
   border-top-left-radius: 25px;
   padding-left: 0px;
-  margin-right:80px; 
+  margin-right: 80px;
 }
 
 .inter {
   position: fixed;
   height: 50px;
-  width:84.3%;
+  width: 84.3%;
   background-color: #d9e2ec;
   /* background-color: #e2dede; */
   border-top-left-radius: 25px;
@@ -210,27 +208,27 @@ ul {
   border: #555;
   margin-right: 80px;
   padding-top: 20px;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 }
 
 .innernav {
-  position:fixed;
+  position: fixed;
   /* background-color: #7d8996; */
   border: #555;
-  width:80%;
+  width: 80%;
   margin-left: 1240px;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
   float: right;
   margin-right: 80px;
 }
 
 .formdiv {
   padding: 25px;
-  margin:20px;
+  margin: 20px;
   height: 59%;
   /* border-radius: 25px; */
   align-items: center;
-  box-shadow: 0px 2px 2px -2px rgba(0,0,0,.7);
+  box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.7);
   background-color: #f8f8f9;
 }
 
@@ -249,20 +247,19 @@ ul {
   align-items: center;
 }
 
-.lab{
+.lab {
   align-content: center;
   padding: 10px;
 }
 
-.lab2{
+.lab2 {
   align-content: center;
   margin-left: 50px;
 }
 
-.column
-{
-    float: left;
-    width: 33%;
+.column {
+  float: left;
+  width: 33%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -271,12 +268,16 @@ ul {
     height: auto;
     position: relative;
   }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
 
-  .column{
+  .column {
     /* float: left; */
-    width: 100%
+    width: 100%;
   }
 }
 
@@ -287,18 +288,15 @@ ul {
   }
 }
 
-
-
 .navbar {
   width: 100%;
   margin-bottom: 16px;
-  position:sticky;
+  position: sticky;
   background-color: #f8f8f9;
   border: #555;
   overflow: auto;
-  box-shadow: 0 2px 2px -2px rgba(0,0,0,.5);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.5);
 }
-
 
 .navbar a {
   float: left;
@@ -319,8 +317,7 @@ ul {
   color: blue;
 }
 
-
-.rightbar{
+.rightbar {
   float: right;
 }
 
@@ -333,10 +330,8 @@ ul {
   text-decoration: none;
   /* display: inline-block; */
   font-size: 16px;
-  width:300px;
+  width: 300px;
 }
-
-
 
 @media screen and (max-width: 500px) {
   .navbar a {
@@ -345,9 +340,8 @@ ul {
   }
 }
 
-
 .ig.ig-inline.ig-label-left {
-  padding: .3rem;
+  padding: 0.3rem;
 }
 
 button {
