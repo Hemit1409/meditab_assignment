@@ -293,7 +293,7 @@ ul {
 .formdiv {
   padding: 25px;
   margin: 20px;
-  height: 59%;
+  height: 67%;
   justify-content: space-between;
   /* border-radius: 25px; */
   align-items: center;
@@ -376,6 +376,7 @@ button {
 
 .multiaddress{
   display: flex;
+  border-radius: 5%;
 }
 
 .contactpref {
