@@ -1,7 +1,8 @@
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 7px;
   height: 20px;
+  /* margin-left: 10px; */
 }
 
 /* Track */
@@ -25,6 +26,7 @@ body {
   margin: 0;
   font-family: "Lato", sans-serif;
   overflow-y: scroll;
+  color: #6f6f79;
 }
 hr {
   padding-bottom: 0px;
@@ -32,6 +34,63 @@ hr {
 h3 {
   margin-left: 20px;
 }
+
+
+/*NAVBAR*/
+
+.navbar {
+  width: 100%;
+  margin-bottom: 16px;
+  position: sticky;
+  /* background-color: #f8f8f9; */
+  background-color: #fff;
+  border: #555;
+  overflow: auto;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.5);
+}
+
+.navbar a {
+  float: left;
+  padding: 10px;
+  padding-bottom: 10px;
+  color: rgb(59, 56, 56);
+  text-decoration: none;
+  font-size: 23px;
+}
+
+.navbar a:hover {
+  /* background-color: #000; */
+  color: blue;
+}
+
+.active {
+  /* background-color: #9fa3a2; */
+  color: blue;
+}
+
+.rightbar {
+  float: right;
+}
+
+.searchbar {
+  float: left;
+  margin: 10px;
+  border-radius: 20px;
+  color: #0a0a0a;
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 16px;
+  width: 300px;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
 
 /* body .mtab-tab-menu-component-container .mtab-ptabmenu-container .ui-tabmenu .ui-tabmenu-nav {
   scroll-behavior: smooth;
@@ -90,7 +149,7 @@ ul {
  */
 
 .main2 {
-  background-color: #ebe1e1;
+  background-color: #f1f1f1;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -100,10 +159,12 @@ ul {
 }
 
 .sidebar {
-  border-radius: 25px;
+  border-radius: 15px;
   border: 1px solid #99aabe;
   width: 200px;
-  background-color: #e2dede;
+  /* background-color: #e2dede; */
+  /* background-color: #ebe1e1; */
+  background-color: #f1f1f1;
   position: fixed;
   height: 85%;
   overflow: auto;
@@ -113,8 +174,8 @@ ul {
 
 .sidebar a {
   display: block;
-  color: black;
-  padding: 16px;
+  color: #6f6f79;
+  padding: 10px;
   text-decoration: none;
 }
 
@@ -133,14 +194,15 @@ ul {
 .rightside {
   border-radius: 25px;
   border: 1px solid #99aabe;
-  width: 200px;
-  background-color: #d9e2ec;
+  width: 80px;
+  /* background-color: #ebe1e1; */
+  background-color: #f1f1f1;
 
   height: 100px;
   overflow: auto;
   margin-left: 10px;
   float: right;
-
+  /* position:fixed; */
   display: flex;
   /* width: 3%; */
   /* height: 900px; */
@@ -168,17 +230,19 @@ ul {
 } */
 
 .content {
-  margin-left: 220px;
+  margin-left: 230px;
   margin-bottom: 20px;
   padding-bottom: 16px;
   padding-top: 0px;
   position: relative;
   overflow: hidden;
-  background-color: #e2dede;
+  /* background-color: #e2dede; */
+  /* background-color: #ebe1e1; */
+  background-color: #f1f1f1;
   border-radius: 25px;
   overflow-y: scroll;
   height: 83%;
-  margin-right: 80px;
+  margin-right: 90px;
   /* box-shadow: 0 2px 4px rgb(0 0 0 / 24%), 0 4px 8px rgb(0 0 0 / 12%); */
 }
 
@@ -186,7 +250,8 @@ ul {
   /* width: 100%; */
   height: 50px;
   position: sticky;
-  background-color: #f8f8f9;
+  /* background-color: #f8f8f9; */
+  background-color: #ebe1e1;
   border: #555;
   overflow: auto;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
@@ -194,42 +259,49 @@ ul {
   right: 0;
   border-top-left-radius: 25px;
   padding-left: 0px;
-  margin-right: 80px;
+  margin-right: 90px;
 }
 
 .inter {
   position: fixed;
   height: 50px;
-  width: 84.3%;
-  background-color: #d9e2ec;
+  width: 82.5%;
+  /* background-color: #d9e2ec; */
+  /* background-color: #ebe1e1; */
+  background-color: #f1f1f1;
   /* background-color: #e2dede; */
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
+  /* border-top-left-radius: 25px;
+  border-top-right-radius: 25px; */
   border: #555;
-  margin-right: 80px;
+  margin-right: 90px;
   padding-top: 20px;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.9);
 }
 
 .innernav {
   position: fixed;
   /* background-color: #7d8996; */
   border: #555;
-  width: 80%;
-  margin-left: 1240px;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+  width: 70%;
+  margin-left: 1190px;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.8);
   float: right;
   margin-right: 80px;
+  /* border-radius: 70px;S */
 }
 
 .formdiv {
   padding: 25px;
   margin: 20px;
   height: 59%;
+  justify-content: space-between;
   /* border-radius: 25px; */
   align-items: center;
   box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.7);
-  background-color: #f8f8f9;
+  /* background-color: #f8f8f9; */
+  background-color: #fff;
+  /* margin-left: 12%; */
+  font-size: small;
 }
 
 .patient-photo-container .patient-image {
@@ -259,6 +331,8 @@ ul {
 
 .column {
   float: left;
+  /* justify-content: space-between; */
+  /* justify-content: ; */
   width: 33%;
 }
 
@@ -288,57 +362,6 @@ ul {
   }
 }
 
-.navbar {
-  width: 100%;
-  margin-bottom: 16px;
-  position: sticky;
-  background-color: #f8f8f9;
-  border: #555;
-  overflow: auto;
-  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.5);
-}
-
-.navbar a {
-  float: left;
-  padding: 10px;
-  padding-bottom: 10px;
-  color: rgb(59, 56, 56);
-  text-decoration: none;
-  font-size: 23px;
-}
-
-.navbar a:hover {
-  /* background-color: #000; */
-  color: blue;
-}
-
-.active {
-  /* background-color: #9fa3a2; */
-  color: blue;
-}
-
-.rightbar {
-  float: right;
-}
-
-.searchbar {
-  float: left;
-  margin: 10px;
-  border-radius: 20px;
-  color: #0a0a0a;
-  text-align: center;
-  text-decoration: none;
-  /* display: inline-block; */
-  font-size: 16px;
-  width: 300px;
-}
-
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-  }
-}
 
 .ig.ig-inline.ig-label-left {
   padding: 0.3rem;
@@ -346,4 +369,36 @@ ul {
 
 button {
   border-radius: 5px;
+}
+
+
+/* contact details */
+
+.multiaddress{
+  display: flex;
+}
+
+.contactpref {
+  width: 100%;
+  display: flex;
+  border-style: ridge;
+  border-radius: 5px;
+  margin-bottom: 2%;
+  margin-right: 100px;
+}
+
+.otherdetails {
+  width: 100%;
+  display: flex;
+  border-style: ridge;
+  border-radius: 5px;
+}
+
+.profile div {
+  margin: 1%;
+}
+
+.flex{
+  display: flex;
+  padding: 4px;
 }
