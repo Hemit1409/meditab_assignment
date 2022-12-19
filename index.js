@@ -14,8 +14,6 @@ function getFormValue() {
   }
 }
 
-
-
 // function getFormValue(){
 //       var originalvalue = document.getElementById("getValues").value;
 //       console.log("The value in the text box is =" + originalvalue);
@@ -53,14 +51,12 @@ function ageCount() {
 //   return false;
 // }
 
-
 const form = document.getElementById("form_id");
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const fd = new FormData(form);
-        const entries = fd.entries();
-        const data = Object.fromEntries(entries);
-        console.log(data)
-        
-    })
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(form);
+  const entries = fd.entries();
+  const data = Object.fromEntries(entries);
+  console.log(data);
+});

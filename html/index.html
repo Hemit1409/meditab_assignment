@@ -477,10 +477,18 @@
 
                 <span class="">
                   <select name="status" id="status">
-                    <option value="First Appointment Pending">First Appointment Pending</option>
-                    <option value="Registration Entry Pending">Registration Entry Pending</option>
-                    <option value="Immunizations Pending">Immunizations Pending</option>
-                    <option value="Insurance inclusion Pending">Insurance inclusion Pending</option>
+                    <option value="First Appointment Pending">
+                      First Appointment Pending
+                    </option>
+                    <option value="Registration Entry Pending">
+                      Registration Entry Pending
+                    </option>
+                    <option value="Immunizations Pending">
+                      Immunizations Pending
+                    </option>
+                    <option value="Insurance inclusion Pending">
+                      Insurance inclusion Pending
+                    </option>
                     <option value="Insurace12">Insurace12</option>
                   </select>
                 </span>
@@ -540,9 +548,13 @@
                 <span class="">
                   <select name="ethnicity" id="ethnicity">
                     <option value="Other Ethnicity">Other Ethnicity</option>
-                    <option value="Unreported/Refuced to report">Unreported/Refuced to report</option>
+                    <option value="Unreported/Refuced to report">
+                      Unreported/Refuced to report
+                    </option>
                     <option value="Hispanic/Latino">Hispanic/Latino</option>
-                    <option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+                    <option value="Non-Hispanic/Latino">
+                      Non-Hispanic/Latino
+                    </option>
                   </select>
                 </span>
               </div>
@@ -594,14 +606,22 @@
                 <label class="">use current phrmacy for all Rx</label>
 
                 <span class="use current phrmacy for all Rx">
-                  <input type="checkbox" name="use current phrmacy for all Rx" id="Rx" />
+                  <input
+                    type="checkbox"
+                    name="use current phrmacy for all Rx"
+                    id="Rx"
+                  />
                 </span>
               </div>
               <div class="lab">
                 <label class="">PCP same as provider</label>
 
                 <span class="">
-                  <input type="checkbox" name="PCP same as provider" id="PCPprovider" />
+                  <input
+                    type="checkbox"
+                    name="PCP same as provider"
+                    id="PCPprovider"
+                  />
                 </span>
               </div>
               <div class="lab">
@@ -617,7 +637,11 @@
                 <label class="">Fee schedule</label>
 
                 <span class="">
-                  <select name="Fee schedule" id="schedule" disabled="disabled"></select>
+                  <select
+                    name="Fee schedule"
+                    id="schedule"
+                    disabled="disabled"
+                  ></select>
                 </span>
               </div>
             </div>
@@ -704,7 +728,11 @@
                             </select>
                           </div>
                           <div style="width: 20%">
-                            <input type="text" placeholder="Number" id="contact"/>
+                            <input
+                              type="text"
+                              placeholder="Number"
+                              id="contact"
+                            />
                           </div>
                           <div style="width: 20%"></div>
                         </div>
@@ -721,7 +749,7 @@
                             <input type="text" placeholder="Code" />
                           </div>
                           <div style="width: 20%">
-                            <input type="text" placeholder="Number"/>
+                            <input type="text" placeholder="Number" />
                           </div>
                           <div style="width: 2%">
                             <i class="fa-solid fa-trash-can"></i>
@@ -1346,91 +1374,6 @@
       </div>
     </div>
 
-    <!-- <script>
-  window.onscroll = function() {myFunction()};
-  
-  var navbar = document.getElementById("navbar");
-  var sticky = navbar.offsetTop;
-  
-  function myFunction() {
-    if (window.pageYOffset >= sticky) {
-      navbar.classList.add("sticky")
-    } else {
-      navbar.classList.remove("sticky");
-    }
-  }
-  </script> -->
-    <!-- <script>
-      function newFunction() {
-        var element = document.getElementById("form_id");
-        element.reset();
-      }
-
-      function getFormValue() {
-        const form = document.getElementById("form_id");
-
-        // const formElements = Array.from(form.elements);
-
-        // formElements.forEach((element) => {
-        //   console.log(element);
-        // });
-
-        // console.log("-----------------");
-
-        // const onlyInputs = document.querySelectorAll("#form_id input");
-
-        // onlyInputs.forEach((input) => {
-        //   console.log(input);
-        // });
-
-        // x = document.getElementById("form_id");
-        console.log(form);
-        for (var i = 0; i < form.length; i++) {
-          // if (form.elements[i].value != 'Submit') {
-            console.log(form.elements[i].value);
-          // }
-        }
-      }
-      // function getFormValue(){
-      //       var originalvalue = document.getElementById("getValues").value;
-      //       console.log("The value in the text box is =" + originalvalue);
-      //     }
-
-      function ageCount() {
-        var date1 = new Date();
-        var dob = document.getElementById("dob").value;
-        var contact = document.getElementById("contact").value;
-        var sex = document.getElementById("sex").value; 
-        var date2 = new Date(dob);
-        //var pattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/; //Regex to validate date format (dd/mm/yyyy)
-        //if (pattern.test(dob)) {
-        var y1 = date1.getFullYear(); //getting current year
-        var y2 = date2.getFullYear(); //getting dob year
-        var age = y1 - y2; //calculating age
-        console.log("Age : " + age);
-        console.log(contact);
-        console.log("sex: " + sex);
-        if (age < 18 && contact == "") {
-          if(sex=="Male"){
-          alert("Please add a contact for the Patient as he, is a minor");
-          }
-          else if(sex == "Female"){
-          alert("Please add a contact for the Patient as she, is a minor");  
-          }
-          else{
-            alert("Please add a contact for the Patient as he/she, is a minor"); 
-          }
-        } else {
-          console.log("thankyou");
-        }
-      }
-        //return true;
-        // } else {
-        //   alert("Invalid date format. Please Input in (dd/mm/yyyy) format!");
-        //   return false;
-        // }
-      
-    </script> -->
     <script src="/index.js"></script>
   </body>
 </html>
