@@ -564,3 +564,36 @@ body .ui-widget-content {
 div {
     display: block;
 }
+
+
+.conpref {
+  width: 100%;
+  border-style: ridge;
+  border-radius: 5px;
+  margin-bottom: 2%;
+  margin-right: 100px;
+}
+
+.conpref table{
+  border-collapse: collapse;
+  width: 90%;
+  margin:2%;
+  border: 1px solid;
+}
+
+
+.conpref td,tr,th{
+  border-collapse: collapse;
+  
+  border: 1px solid;
+}
+
+.conpref input[type=text]{
+  width: 98%;
+  border: none;
+  border-style: none;
+}
+
+.conpref th{
+  width: 16.66%;
+}
