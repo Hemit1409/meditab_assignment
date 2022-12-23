@@ -1,0 +1,233 @@
+html{
+    width: 100%;
+    height: 100%;
+}
+
+.def-color{
+    color: #627d98
+}
+
+.flex{
+    display: flex;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.h-100{
+    height: 100%;
+}
+
+.w-50{
+    width: 50%;
+}
+
+.h-50{
+    height: 50%;
+}
+
+.w-33{
+    width: 33.33%;
+}
+
+.h-33{
+    height: 33.33;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+}    
+
+.navbar a {
+    font-size: 150%;
+    padding: 0.5%;
+    color: rgb(70, 67, 67)
+}    
+
+.navicon {
+    display: flex;
+    width: 80%;
+}    
+
+.navsearch {
+    display: flex;
+    width: 20%;
+}    
+
+.searchbar {
+    border-radius: 20px;
+    height: 70%;
+    width: 75% !important;
+    margin-right: 2%;
+}    
+
+.main {
+    display: flex;
+    /* height: auto; */
+}    
+
+.left {
+    display: flex;
+    width: 97%;
+}    
+
+.sidebar {
+    font-size: 110%;
+    left: 0;
+    top: 6rem;
+    position: fixed;
+    border-style: ridge;
+    border-radius: 5px;
+    width: 10%;
+    height: 90%;
+    overflow: auto;
+}    
+
+.sidebar hr {
+    width: 90%;
+}    
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #0A2644;
+    padding-top: 0.5%;
+    padding-left: 10%;
+}    
+
+.right {
+    display: flex;
+    width: 3%;
+    height: 100%;
+    flex-direction: column;
+    border-style: ridge;
+    border-radius: 5px;
+    align-items: center;
+}    
+
+.right i {
+    padding: 20%;
+    font-size: 150%;
+    color: rgb(70, 67, 67)
+}    
+
+.detailpart {
+    width: 83%;
+    margin-left: 12%;
+    margin-right: 1%;
+    height: 94%;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+}    
+
+.innernav {
+    display: flex;
+    float: right;
+    padding: 1rem;
+    width: 100%;
+    justify-content: right;
+}    
+
+.details {
+    width: 100%;
+    height: 100%;
+}    
+
+.profile {
+    width: 100%;
+    display: flex;
+    text-align: right;
+    border-style: ridge;
+    border-radius: 5px;
+    margin-bottom: 2%;
+}
+
+.avatar {
+    justify-content: center;
+}
+
+.avatar img {
+    border-radius: 50%;
+    width: 30%;
+    margin-left: 40%;
+}
+
+.eqdiv {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.alignr {
+    display: flex;
+    justify-content: right;
+    width: 50%;
+}
+
+.alignl {
+    display: flex;
+    width: 50%;
+    justify-content: left;
+}
+
+select,
+input[type=text],
+input[type=date],
+input[type=email] {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.contactdetail {
+    width: 100%;
+    /* display: flex; */
+    border-style: ridge;
+    border-radius: 5px;
+    margin-bottom: 2%;
+}
+
+#multiadress{
+    overflow-x: auto;
+}
+
+.address{
+    min-width: 40%;
+    /* max-width: 100%; */
+}
+
+.contactpref {
+    width: 100%;
+    border-style: ridge;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    margin-right: 100px;
+}
+
+.contactpref table,td,tr,th{
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+.contactpref input[type=text]{
+    width: 98%;
+    border: none;
+    border-style: none;
+}
+
+.contactpref th{
+    width: 16.66%;
+}
+
+.otherdetails {
+    width: 100%;
+    display: flex;
+    border-style: ridge;
+    border-radius: 5px;
+}
+
+.profile div {
+    margin: 1%;
+}

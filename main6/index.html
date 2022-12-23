@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Assignment 14_12</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<!-- Nav -->
+	<div>
+		<nav class="navbar">
+			<div class="navicon">
+				<a href="#"><i class="fa-solid fa-house"></i></a>
+				<a href="#"><i class="fa-solid fa-gear"></i></a>
+				<a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+				<a href="#"><i class="fa-solid fa-user"></i></a>
+				<a href="#"><i class="fa-solid fa-calendar-days"></i></a>
+				<a href="#"><i class="fa-solid fa-user-shield"></i></a>
+				<a href="#"><i class="fa-solid fa-shield-heart"></i></a>
+				<a href="#"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+				<a href="#"><i class="fa-solid fa-notes-medical"></i></a>
+				<a href="#"><i class="fa-solid fa-flask"></i></a>
+				<a href="#"><i class="fa-solid fa-arrow-down"></i></a>
+				<a href="#"><i class="fa-solid fa-arrow-up"></i></a>
+				<a href="#"><i class="fa-solid fa-file-invoice"></i></a>
+				<a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
+				<a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+				<a href="#"><i class="fa-solid fa-magnifying-glass-dollar"></i></a>
+				<a href="#"><i class="fa-solid fa-hand-holding-dollar"></i></a>
+				<a href="#"><i class="fa-solid fa-envelope-circle-check"></i></a>
+				<a href="#"><i class="fa-solid fa-circle-dollar-to-slot"></i></a>
+				<a href="#"><i class="fa-solid fa-sack-dollar"></i></a>
+				<a href="#"><i class="fa-solid fa-receipt"></i></a>
+				<a href="#"><i class="fa-solid fa-book"></i></a>
+				<a href="#"><i class="fa-solid fa-envelope-open-text"></i></a>
+				<a href="#"><i class="fa-solid fa-chart-line"></i></a>
+			</div>
+			<div class="navsearch">
+				<input width="20" class="searchbar" type="text" placeholder="Search Patient - lname fname dob" />
+				<a href="#"><i class="fa-solid fa-calendar-week"></i></a>
+				<a href="#"><i class="fa-solid fa-circle-question"></i></a>
+				<a href="#"><i class="fa-solid fa-lock"></i></a>
+			</div>
+		</nav>
+	</div>
+
+	<!-- Main -->
+	<div class="main h-100">
+		<!-- Left -->
+		<div class="left">
+			Patient Bar
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<a href="#">Dashboard</a><br>
+				<a href="#">Demographics</a><br>
+				<a href="#">Insurance</a><br>
+				<a href="#">Case</a><br>
+				<a href="#">Contacts</a><br>
+				<a href="#">Employer</a><br>
+				<a href="#">Appointments</a><br>
+				<a href="#">Encounters</a><br>
+				<a href="#">Documents</a><br>
+				<a href="#">Notes & Alerts</a><br>
+				<a href="#">Forms</a><br>
+				<a href="#">Consents</a><br>
+				<a href="#">Reminder Preference</a>
+				<hr>
+				<a href="#">Allergy</a><br>
+				<a href="#">Diagnosis</a><br>
+				<a href="#">Family History</a><br>
+				<a href="#">Prescription</a><br>
+				<a href="#">Lab</a><br>
+				<a href="#">Immunization</a><br>
+				<a href="#">Vitals</a><br>
+				<hr>
+				<a href="#">Authorization</a><br>
+				<a href="#">Claims</a><br>
+				<a href="#">Receipts</a><br>
+				<a href="#">Receipts</a><br>
+				<a href="#">Open Credit</a><br>
+				<a href="#">Statements</a><br>
+				<a href="#">Ledger</a><br>
+			</div>
+
+			<!-- Detail Part -->
+			<div class="detailpart">
+				<form action="" method="" id="detailsForm">
+					<!-- Inner Nav -->
+					<nav class="innernav">
+						<div>
+							<input type="checkbox" name="active">Active <i class="fa-solid fa-ellipsis-vertical"></i>
+							<button>Re-verify</button> <i class="fa-solid fa-circle-check"></i>
+							<button type="reset" onclick="alert('Form reset !')">Cancel Changes</button>
+							<button type="submit"><i class="fa-solid fa-triangle-exclamation"></i>Save</button>
+						</div>
+					</nav>
+					<!-- Details -->
+					<div class="details">
+						<!-- Profile -->
+						<div class="profile">
+							<div class="w-33">
+								<div class="avatar eqdiv">
+									<img src="./avatar.jpg" alt="Avatar">
+								</div>
+								<div
+									style="text-align: center; margin-left: 40%; color: rgb(70, 67, 67); font-weight: bolder">
+									PT0000000001
+								</div>
+								<div>
+									<div class="eqdiv">
+										<div class="alignr">
+											Prefix:
+										</div>
+										<div class="alignl">
+											<input type="text" name="prefix" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											First Name*:
+										</div>
+										<div class="alignl">
+											<input type="text" name="fname" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											Middle Name:
+										</div>
+										<div class="alignl">
+											<input type="text" name="mname" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											Last Name*:
+										</div>
+										<div class="alignl">
+											<input type="text" name="lname" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											Last Nmae 2:
+										</div>
+										<div class="alignl">
+											<input type="text" name="lname2" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											Suffix:
+										</div>
+										<div class="alignl">
+											<input type="text" name="suffix" id=""><br>
+										</div>
+									</div>
+									<div class="eqdiv">
+										<div class="alignr">
+											AKA:
+										</div>
+										<div class="alignl">
+											<input type="text" name="aka" id="">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="w-33">
+								<div class="eqdiv">
+									<div class="alignr">
+										Sex*:
+									</div>
+									<div class="alignl">
+										<select name="sex" id="">
+											<option value="Male">Male</option>
+											<option value="Female">Female</option>
+											<option value="Unknown">Unknown</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										DOB:
+									</div>
+									<div class="alignl">
+										<input type="date" name="dob" id="">
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+									</div>
+									<div class="alignl">
+										<input type="text" name="age" disabled style="border: none;" value=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Pref Language:
+									</div>
+									<div class="alignl">
+										<select name="prefLang" id="">
+											<option value="English">English</option>
+											<option value="Hindi">Hindi</option>
+											<option value="Gujarati">Gujarati</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Interpreter:
+									</div>
+									<div class="alignl">
+										<input type="checkbox" name="interpreter" id=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Status:
+									</div>
+									<div class="alignl">
+										<select name="appointmentStatus" id="">
+											<option value="First Appointment Pending">First Appointment Pending</option>
+											<option value="Registration Entry Pending">Registration Entry Pending
+											</option>
+											<option value="Immunizations Pending">Immunizations Pending</option>
+											<option value="Insurance inclusion Pending">Insurance inclusion Pending
+											</option>
+											<option value="Insurace12">Insurace12</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Risk:
+									</div>
+									<div class="alignl">
+										<input type="text" name="risk" id="" disabled><i
+											class="fa-solid fa-pencil"></i><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Marital Status:
+									</div>
+									<div class="alignl">
+										<select name="maritalStatus" id="">
+											<option value="Married">Married</option>
+											<option value="Never Married">Never Married</option>
+											<option value="Divorced">Divorced</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										SSN:
+									</div>
+									<div class="alignl">
+										<input type="text" name="ssn" id=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Race:
+									</div>
+									<div class="alignl">
+										<select name="race" id="">
+											<option value="White">White</option>
+											<option value="Asian">Asian</option>
+											<option value="Black">Black</option>
+											<option value="Other">Other</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Ethnicity:
+									</div>
+									<div class="alignl">
+										<select name="ethnicity" id="">
+											<option value="Other Ethnicity">Other Ethnicity</option>
+											<option value="Unreported/Refuced to report">Unreported/Refuced to report
+											</option>
+											<option value="Hispanic/Latino">Hispanic/Latino</option>
+											<option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="w-33">
+								<div class="eqdiv">
+									<div class="alignr">
+										Self Pay:
+									</div>
+									<div class="alignl">
+										<input type="checkbox" name="selfPay" id=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Default Facility:
+									</div>
+									<div class="alignl">
+										<select name="defaultFacility" id="">
+											<option value="1">1</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Default Provider:
+									</div>
+									<div class="alignl">
+										<select name="defaultProvider" id="">
+											<option value="1">1</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Timezone:
+									</div>
+									<div class="alignl">
+										<select name="timezone" id="">
+											<option value="1">1</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Default Pharmacy:
+									</div>
+									<div class="alignl">
+										<select name="defaultPharmacy" id="">
+											<option value="1">1</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Use current pharmacy for all Rx:
+									</div>
+									<div class="alignl">
+										<input type="checkbox" name="useCurrentPharmacy" id=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										PCP same as Provider:
+									</div>
+									<div class="alignl">
+										<input type="checkbox" name="samePCP" id=""><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										PCP:
+									</div>
+									<div class="alignl">
+										<select name="pcp" id="">
+											<option value="1">1</option>
+										</select><br>
+									</div>
+								</div>
+								<div class="eqdiv">
+									<div class="alignr">
+										Fee Schedule:
+									</div>
+									<div class="alignl">
+										<select name="feeSchedule" id="" disabled="disabled">
+											<option value="1">1</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Contact Detail -->
+						<div class="contactdetail">
+							<div class="def-color" style="font-size: 150%;">
+								Contact Details <i class="fa-solid fa-circle-plus" onclick="addAddressField()"></i>
+							</div>
+							<div>
+								Please set the preferences after adding the contact information, the section to set
+								preference can be found below the contact section of the page.
+								<div class="flex" id="multiadress">
+									<div class="address w-100">
+										<fieldset>
+											<legend>
+												<div>
+													<select name="addressType" id="">
+														<option value="Home">Home</option>
+														<option value="Work">Work</option>
+														<option value="Other">Other</option>
+													</select>
+												</div>
+											</legend>
+											<div>
+												<div class="flex">
+													<div style="width: 98%;">
+														Address
+													</div>
+													<div style="width: 2%;">
+														<i class="fa-solid fa-trash-can def-color"
+															onclick="removeAddressField(this)"></i>
+													</div>
+												</div>
+												<div>
+													Street
+													<div class="flex" style="margin-right: 50%;">
+														<input type="text" name="street">
+													</div>
+												</div>
+												<div class="flex" style="column-gap: 2%;">
+													<div style="width: 24%;">
+														Zip
+														<input type="text" name="zip" id="">
+													</div>
+													<div style="width: 24%;">
+														City
+														<input type="text" name="city" id="">
+													</div>
+													<div style="width: 24%;">
+														State
+														<input type="text" name="state" id="">
+													</div>
+													<div style="width: 24%;">
+														Country
+														<select name="country" id="">
+															<option value="IN">IN</option>
+															<option value="US">US</option>
+														</select>
+													</div>
+													<div style="width: 4%;">
+														<i class="fa-solid fa-trash-can def-color"></i>
+													</div>
+												</div>
+											</div>
+											<div>
+												<div>
+													<div>
+														Phone <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															Type
+														</div>
+														<div style="width: 20%;">
+															Code
+														</div>
+														<div style="width: 20%;">
+															Number
+														</div>
+														<div style="width: 20%;">
+															Ext.
+														</div>
+													</div>
+													<hr>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															<select name="phonetype" id="">
+																<option value="Cell">Cell</option>
+																<option value="Landline">Landline</option>
+															</select>
+														</div>
+														<div style="width: 20%;">
+															<select name="countrtycode" id="">
+																<option value="+91">+91 India</option>
+																<option value="+1">+1 United States</option>
+															</select>
+														</div>
+														<div style="width: 20%;">
+															<input type="text" name="phoneNumber" placeholder="Number"
+																value="1">
+														</div>
+														<div style="width: 20%;">
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Fax <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															Code
+														</div>
+														<div style="width: 20%;">
+															Number
+														</div>
+													</div>
+													<hr>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															<input type="text" placeholder="Code" name="faxcode">
+														</div>
+														<div style="width: 20%;">
+															<input type="text" placeholder="Number" name="faxnumber">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Email <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 50%;">
+															<input type="email" name="email">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Website <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 50%;">
+															<input type="text" name="website">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Contact Preference -->
+						<div class="contactpref">
+							<div>
+								Contact Preference
+							</div>
+							<div class="w-100">
+								<table class="w-100">
+									<tr>
+										<th>
+											Type
+										</th>
+										<th>
+											Address
+										</th>
+										<th>
+											Phone <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
+										</th>
+										<th>
+											Fax
+										</th>
+										<th>
+											Email <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
+										</th>
+										<th>
+											Website
+										</th>
+									</tr>
+									<tr>
+										<td>
+											Appointment Reminder
+										</td>
+										<td>
+											<input type="text" name="r" id="">
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Mailing
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Primary
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Statement
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+										<td>
+
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Preffered Comm.
+										</td>
+										<td colspan="5">
+											<div class="flex">
+												<div class="w-50 flex">
+													<div class="w-50 flex h-33" style="margin-top: 1%;">
+														Type:
+														<select name="" id="">
+															<option value="">Email</option>
+															<option value="">Fax</option>
+															<option value="">Mail</option>
+															<option value="">Phone</option>
+															<option value="">Text</option>
+														</select>
+													</div>
+												</div>
+												<div class="w-50">
+													<div class="w-50 flex h-33" style="margin-top: 1%;">
+														value*:
+														<select name="" id="">
+															<option value=""></option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!-- Other Details -->
+						<div class="otherdetails">
+							Other Details
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Right -->
+		<div class="right">
+			<i class="fa-solid fa-fax"></i>
+			<i class="fa-solid fa-comment-dots"></i>
+			<i class="fa-solid fa-envelope"></i>
+			<i class="fa-solid fa-bell"></i>
+			<i class="fa-solid fa-list-check"></i>
+			<i class="fa-solid fa-calendar-plus"></i>
+			<i class="fa-solid fa-note-sticky"></i>
+		</div>
+	</div>
+</body>
+
+<script>
+	function addAddressField() {
+		// alert('hi');
+		addressHTML = `<div class="address w-100">
+										<fieldset>
+											<legend>
+												<div>
+													<select name="addressType" id="">
+														<option value="Home">Home</option>
+														<option value="Work">Work</option>
+														<option value="Other">Other</option>
+													</select>
+												</div>
+											</legend>
+											<div>
+												<div class="flex">
+													<div style="width: 98%;">
+														Address
+													</div>
+													<div style="width: 2%;">
+														<i class="fa-solid fa-trash-can def-color"
+															onclick="removeAddressField(this)"></i>
+													</div>
+												</div>
+												<div>
+													Street
+													<div class="flex" style="margin-right: 50%;">
+														<input type="text" name="street">
+													</div>
+												</div>
+												<div class="flex" style="column-gap: 2%;">
+													<div style="width: 24%;">
+														Zip
+														<input type="text" name="zip" id="">
+													</div>
+													<div style="width: 24%;">
+														City
+														<input type="text" name="city" id="">
+													</div>
+													<div style="width: 24%;">
+														State
+														<input type="text" name="state" id="">
+													</div>
+													<div style="width: 24%;">
+														Country
+														<select name="country" id="">
+															<option value="IN">IN</option>
+															<option value="US">US</option>
+														</select>
+													</div>
+													<div style="width: 4%;">
+														<i class="fa-solid fa-trash-can def-color"></i>
+													</div>
+												</div>
+											</div>
+											<div>
+												<div>
+													<div>
+														Phone <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															Type
+														</div>
+														<div style="width: 20%;">
+															Code
+														</div>
+														<div style="width: 20%;">
+															Number
+														</div>
+														<div style="width: 20%;">
+															Ext.
+														</div>
+													</div>
+													<hr>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															<select name="phonetype" id="">
+																<option value="Cell">Cell</option>
+																<option value="Landline">Landline</option>
+															</select>
+														</div>
+														<div style="width: 20%;">
+															<select name="countrtycode" id="">
+																<option value="+91">+91 India</option>
+																<option value="+1">+1 United States</option>
+															</select>
+														</div>
+														<div style="width: 20%;">
+															<input type="text" name="phoneNumber" placeholder="Number">
+														</div>
+														<div style="width: 20%;">
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Fax <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															Code
+														</div>
+														<div style="width: 20%;">
+															Number
+														</div>
+													</div>
+													<hr>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 20%;">
+															<input type="text" placeholder="Code" name="faxcode">
+														</div>
+														<div style="width: 20%;">
+															<input type="text" placeholder="Number" name="faxnumber">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Email <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 50%;">
+															<input type="email" name="email">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div>
+														Website <i class="fa-solid fa-circle-plus def-color"></i>
+													</div>
+													<div class="flex" style="column-gap: 2%;">
+														<div style="width: 50%;">
+															<input type="text" name="website">
+														</div>
+														<div style="width: 2%;">
+															<i class="fa-solid fa-trash-can def-color"></i>
+														</div>
+													</div>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+
+`
+		document.getElementById("multiadress").innerHTML += addressHTML
+	}
+
+	function removeAddressField(btn) {
+		btn.closest('.address').remove();
+	}
+</script>
+<script src="submit.js"></script>
+
+</html>
