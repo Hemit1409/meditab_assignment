@@ -299,7 +299,7 @@
         </div>
         <div class="formdiv">
           <form id="form_id">
-            <div class="column">
+            <!-- <div class="column">
               <div class="patient-photo-container">
                 <div
                   class="patient-image-container"
@@ -318,120 +318,49 @@
               <div class="lab">
                 <label>Prefix</label>
                 <span class="">
-                  <input
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="d420bl"
-                    name="Prefix"
-                  />
+                  <input type="TEXT" name="Prefix" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">First Name</label>
 
                 <span class="">
-                  <input
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="firstname"
-                    name="firstname"
-                  />
+                  <input type="TEXT" id="firstname" name="firstname" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">Middle Name</label>
 
                 <span class="">
-                  <input
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="midname"
-                    name="middlename"
-                  />
+                  <input type="TEXT" id="midname" name="middlename" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">Last Name</label>
 
                 <span class="">
-                  <input
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="lastname"
-                    name="lastname"
-                  />
+                  <input type="TEXT" id="lastname" name="lastname" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">Last Name2</label>
 
                 <span class="">
-                  <input
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="lastname2"
-                    name="lastname2"
-                  />
+                  <input type="TEXT" id="lastname2" name="lastname2" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">suffix</label>
 
                 <span class="">
-                  <input
-                    p
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="suffix"
-                    name="suffix"
-                  />
+                  <input type="TEXT" id="suffix" name="suffix" />
                 </span>
               </div>
               <div class="lab">
                 <label class="">AKA</label>
 
                 <span class="">
-                  <input
-                    p
-                    tabindex="0"
-                    placeholder=""
-                    autocomplete="new-password"
-                    type="TEXT"
-                    step="1"
-                    class=""
-                    fdprocessedid="xcblfk"
-                    id="AKA"
-                    name="AKA"
-                  />
+                  <input type="TEXT" id="AKA" name="AKA" />
                 </span>
               </div>
             </div>
@@ -644,7 +573,156 @@
                   ></select>
                 </span>
               </div>
-            </div>
+            </div> -->
+            <div class="column">
+              <div class="patient-photo-container">
+                <div
+                  class="patient-image-container"
+                  style="height: 12rem; width: 12rem"
+                >
+                  <img
+                    class="patient-image"
+                    src="54821fcb-139d-4de1-b322-f408a2a36c22.jpg"
+                  />
+                </div>
+              </div>
+              <div class="lab2">
+                <div class=""></div>
+                <div class=""><span class="">PT0000000036</span></div>
+              </div>
+              <div class="profileform">
+                  <label for="prefix">Prefix:</label>
+                  <input type="text" id="prefix" name="prefix" />
+                  <br />
+
+                  <label for="fname">First Name:</label>
+                  <input type="text" id="fname" name="firstname" />
+                  <br />
+
+                  <label for="mname">Middle Name:</label>
+                  <input type="text" id="mname" name="middlename" />
+                  <br />
+
+                  <label for="lname">Last Name:</label>
+                  <input type="text" id="lname" name="lastname" />
+                  <br />
+
+                  <label for="lname2">Last Name 2:</label>
+                  <input type="text" id="lname2" name="lastname2" />
+                  <br />
+
+                  <label for="Suffix">Suffix:</label>
+                  <input type="text" id="Suffix" name="Suffix" />
+                  <br />
+
+                  <label for="aka">AKA:</label>
+                  <input type="text" id="aka" name="aka" />
+                  <br />
+              </div>
+          </div>
+          <div class="column">
+              <div class="profileform" id="form2">
+                  <label for="sex">Sex*:</label>
+                  <select>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Unknown">Unknown</option>
+                  </select>
+                  <br />
+                  <label for="dob">DOB:</label>
+                  <input type="date" id="DOB" name="DOB" onchange="ageCalculator()"><br />
+                  <span id="result"></span>
+                  <br />
+                  <label for="pref">Pref Language:</label>
+                  <select>
+                      <option value="English">English</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Gujarati">Gujarati</option>
+                  </select>
+                  <br />
+                  <label for="Interpreter">Interpreter:</label>
+                  <input type="checkbox" id="interpreter" name="interpreter">
+                  <br />
+                  <label for="status">Status:</label>
+                  <select name="pref" id="pref">
+                      <option value=""></option>
+                      <option value="First">First Appointment Pending</option>
+                      <option value="Registration">Registration entry Pending</option>
+                  </select>
+                  <br />
+                  <label for="risk">Risk:
+                      <i class="fa-solid fa-circle-plus" style="color: #627d98;"></i>Add
+                      Risk</label>
+                  <br />
+                  <label for="maritalstatus">Marital Status:</label>
+                  <select>
+                      <option value="Married">Married</option>
+                      <option value="UnMarried">UnMarried</option>
+                      <option value="Divorced">Divorced</option>
+                      <option value="Unknown">Unknown</option>
+                  </select><br/>
+                  <label for="ssn">SSN:</label>
+                  <input type="text" id="ssn" name="ssn" />
+                  <br />
+                  <label for="race">Race:</label>
+                  <select>
+                      <option value="White">White</option>
+                      <option value="Asian">Asian</option>
+                      <option value="African">African</option>
+                  </select><br/>
+                  <label for="ethnicity">Ethnicity:</label>
+                  <select>
+                      <option value="Other Ethinicity">Other Ethnicity</option>
+                      <option value="Unreported/Refused to Report">Unreported/Refused to Report
+                      </option>
+                      <option value="Hispanic/Latino">Hispanic/Latino</option>
+                      <option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+                  </select>
+              </div>
+          </div>
+          <div class="column">
+              <div class="profileform" id="formTwo">
+                  <label for="Self Pay">Self Pay:</label>
+                  <input type="checkbox" id="Self Pay">
+                  <br />
+                  <label for="facility">Default Facility:</label>
+                  <select>
+                      <option value="(FACFRE)CMC Fresno">(FACFRE) CMC Fresno</option>
+                      <option value="(FAC8) Aviral">(FAC8) Aviral</option>
+                      <option value="(fac13) Facility">(fac13) Facility</option>
+                  </select><br/>
+                  <label for="provider">Default Provider:</label>
+                  <select>
+                      <option value="Jones, Charlie | 1558444216">Jones, Charlie | 1558444216
+                      </option>
+                  </select><br/>
+                  <label for="timezone">Timezone:</label>
+                  <select>
+                      <option value="(UTC-09:00) AKST - America...">(UTC-09:00) AKST - America...
+                      </option>
+                  </select><br/>
+                  <label for="pharmacy">Default Pharmacy:</label>
+                  <select>
+                      <option value=""></option>
+                  </select>
+                  <a href=""><i class="fa-solid fa-list"></i></a><br/>
+                  <label>Use current pharmacy for all Rx:</label>
+                  <input type="checkbox" id="current pharmacy">
+                  <br />
+                  <label>PCP Same As Provider:</label>
+                  <input type="checkbox" id="PCP">
+                  <br />
+                  <label>PCP :</label>
+                  <select>
+                      <option value=""></option>
+                  </select><br/>
+                  <label>Fee Schedule :</label>
+                  <select>
+                      <option value=""></option>
+                  </select>
+                  <br />
+              </div>
+          </div>
           </form>
         </div>
         <!-- <hr> -->
@@ -891,119 +969,63 @@
         <div class="formdiv">
           <h1>Other Details</h1>
           <div class="conpref">
-            <div>
-              Contact Preference
-            </div>
+            <div>Contact Preference</div>
             <div class="w-100">
               <table class="w-100">
                 <tr>
+                  <th>Type</th>
+                  <th>Address</th>
                   <th>
-                    Type
+                    Phone
+                    <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
                   </th>
+                  <th>Fax</th>
                   <th>
-                    Address
+                    Email
+                    <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
                   </th>
-                  <th>
-                    Phone <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
-                  </th>
-                  <th>
-                    Fax
-                  </th>
-                  <th>
-                    Email <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
-                  </th>
-                  <th>
-                    Website
-                  </th>
+                  <th>Website</th>
                 </tr>
                 <tr>
+                  <td>Appointment Reminder</td>
                   <td>
-                    Appointment Reminder
+                    <input type="text" name="r" id="" />
                   </td>
-                  <td>
-                    <input type="text" name="r" id="">
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>
-                    Mailing
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
+                  <td>Mailing</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>
-                    Primary
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
+                  <td>Primary</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>
-                    Statement
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
-                  <td>
-
-                  </td>
+                  <td>Statement</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>
-                    Preffered Comm.
-                  </td>
+                  <td>Preffered Comm.</td>
                   <td colspan="5">
                     <div class="flex">
                       <div class="w-50 flex">
-                        <div class="w-50 flex h-33" style="margin-top: 1%;">
+                        <div class="w-50 flex h-33" style="margin-top: 1%">
                           Type:
                           <select name="" id="">
                             <option value="">Email</option>
@@ -1015,7 +1037,7 @@
                         </div>
                       </div>
                       <div class="w-50">
-                        <div class="w-50 flex h-33" style="margin-top: 1%;">
+                        <div class="w-50 flex h-33" style="margin-top: 1%">
                           value*:
                           <select name="" id="">
                             <option value=""></option>
