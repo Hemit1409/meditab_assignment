@@ -4,3 +4,7 @@ https://iemodemoindia.meditab.com/#/app/setup/scheduler/provider-availability?pa
 
 reference:
 https://docs.google.com/document/d/1bgsotd2UOZXW996ebkGLsMtIKP5ysBk15qP-aVNx0f4/edit?usp=sharing
+
+
+sidebar collapsible
+https://www.cssscript.com/smooth-collapsible-sidebar-navigation/
