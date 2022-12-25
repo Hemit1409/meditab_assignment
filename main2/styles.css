@@ -435,7 +435,10 @@ table input:focus{
     border: none;
     outline: none;
 }
-
+.address{
+    min-width: 40%;
+    /* max-width: 100%; */
+}
 
 
 /* Media Queries */
@@ -481,4 +484,80 @@ table input:focus{
     .nav-vertical .nav-links i{
         font-size: 12px;
     }
+}
+
+
+
+
+.eqdiv {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.alignr {
+    display: flex;
+    justify-content: right;
+    width: 50%;
+}
+
+.alignl {
+    display: flex;
+    width: 50%;
+    justify-content: left;
+}
+
+select,
+input[type=text],
+input[type=date],
+input[type=email] {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.contactdetail {
+    width: 100%;
+    /* display: flex; */
+    border-style: ridge;
+    border-radius: 5px;
+    margin-bottom: 2%;
+}
+
+#multiadress{
+    overflow-x: auto;
+}
+
+.address{
+    min-width: 40%;
+    /* max-width: 100%; */
+}
+
+.contactpref {
+    width: 100%;
+    border-style: ridge;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    margin-right: 100px;
+}
+
+.contactpref table,td,tr,th{
+    border-collapse: collapse;
+    border: 1px solid;
+}
+
+.contactpref input[type=text]{
+    width: 98%;
+    border: none;
+    border-style: none;
+}
+
+.contactpref th{
+    width: 16.66%;
+}
+
+.otherdetails {
+    width: 100%;
+    display: flex;
+    border-style: ridge;
+    border-radius: 5px;
 }

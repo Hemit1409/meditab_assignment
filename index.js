@@ -117,3 +117,205 @@ form.addEventListener("submit", (e) => {
   const data = Object.fromEntries(entries);
   console.log(data);
 });
+
+
+const sidebar = document.querySelector('.sidebar');
+const mainContent = document.querySelector('.content');
+document.getElementById("sidebar-collapse").onclick = function () {
+  sidebar.classList.toggle('sidebar_small');
+  mainContent.classList.toggle('content_large');
+}
+
+const other = document.querySelector('.formdiv2');
+// const otherContent = document.querySelector('.content');
+document.getElementById("fax-collapse").onclick = function () {
+  other.classList.toggle('formdiv2-small');
+  // otherContent.classList.toggle('content_large');
+}
+
+function addAddressField() {
+  // alert('hi');
+  addressHTML = `<div class="address w-100">
+                  <fieldset>
+                    <legend>
+                      <div>
+                        <select name="addressType" id="">
+                          <option value="Home">Home</option>
+                          <option value="Work">Work</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                    </legend>
+                    <div>
+                      <div class="flex">
+                        <div style="width: 98%;">
+                          Address
+                        </div>
+                        <div style="width: 2%;">
+                          <i class="fa-solid fa-trash-can def-color"
+                            onclick="removeAddressField(this)"></i>
+                        </div>
+                      </div>
+                      <div>
+                        Street
+                        <div class="flex" style="margin-right: 50%;">
+                          <input type="text" name="street">
+                        </div>
+                      </div>
+                      <div class="flex" style="column-gap: 2%;">
+                        <div style="width: 24%;">
+                          Zip
+                          <input type="text" name="zip" id="">
+                        </div>
+                        <div style="width: 24%;">
+                          City
+                          <input type="text" name="city" id="">
+                        </div>
+                        <div style="width: 24%;">
+                          State
+                          <input type="text" name="state" id="">
+                        </div>
+                        <div style="width: 24%;">
+                          Country
+                          <select name="country" id="">
+                            <option value="IN">IN</option>
+                            <option value="US">US</option>
+                          </select>
+                        </div>
+                        <div style="width: 4%;">
+                          <i class="fa-solid fa-trash-can def-color"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <div>
+                          Phone <i class="fa-solid fa-circle-plus def-color"></i>
+                        </div>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 20%;">
+                            Type
+                          </div>
+                          <div style="width: 20%;">
+                            Code
+                          </div>
+                          <div style="width: 20%;">
+                            Number
+                          </div>
+                          <div style="width: 20%;">
+                            Ext.
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 20%;">
+                            <select name="phonetype" id="">
+                              <option value="Cell">Cell</option>
+                              <option value="Landline">Landline</option>
+                            </select>
+                          </div>
+                          <div style="width: 20%;">
+                            <select name="countrtycode" id="">
+                              <option value="+91">+91 India</option>
+                              <option value="+1">+1 United States</option>
+                            </select>
+                          </div>
+                          <div style="width: 20%;">
+                            <input type="text" name="phoneNumber" placeholder="Number">
+                          </div>
+                          <div style="width: 20%;">
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          Fax <i class="fa-solid fa-circle-plus def-color"></i>
+                        </div>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 20%;">
+                            Code
+                          </div>
+                          <div style="width: 20%;">
+                            Number
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 20%;">
+                            <input type="text" placeholder="Code" name="faxcode">
+                          </div>
+                          <div style="width: 20%;">
+                            <input type="text" placeholder="Number" name="faxnumber">
+                          </div>
+                          <div style="width: 2%;">
+                            <i class="fa-solid fa-trash-can def-color"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          Email <i class="fa-solid fa-circle-plus def-color"></i>
+                        </div>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 50%;">
+                            <input type="email" name="email">
+                          </div>
+                          <div style="width: 2%;">
+                            <i class="fa-solid fa-trash-can def-color"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          Website <i class="fa-solid fa-circle-plus def-color"></i>
+                        </div>
+                        <div class="flex" style="column-gap: 2%;">
+                          <div style="width: 50%;">
+                            <input type="text" name="website">
+                          </div>
+                          <div style="width: 2%;">
+                            <i class="fa-solid fa-trash-can def-color"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+`
+  document.getElementById("multiadress").innerHTML += addressHTML
+}
+
+function removeAddressField(btn) {
+  btn.closest('.address').remove();
+}
+
+function addFaxField(){
+  addressHTML = `<div class="flex" style="column-gap: 2%;">
+  <div style="width: 20%;">
+    Code
+  </div>
+  <div style="width: 20%;">
+    Number
+  </div>
+</div>
+<hr>
+<div class="flex" style="column-gap: 2%;">
+  <div style="width: 20%;">
+    <input type="text" placeholder="Code" name="faxcode">
+  </div>
+  <div style="width: 20%;">
+    <input type="text" placeholder="Number" name="faxnumber">
+  </div>
+  <div style="width: 2%;cursor: pointer;">
+    <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
+  </div>
+</div>
+
+`
+  document.getElementById("multifax").innerHTML += addressHTML
+}
+
+function removeFaxField(btn) {
+  btn.closest('.fax').remove();
+}

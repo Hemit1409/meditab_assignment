@@ -183,6 +183,31 @@ input[type=date] {
   margin-bottom: 20px;
 }
 
+.sidebar button {
+  /* position: absolute; */
+  float: none;
+  border: none;
+  color: #627d98;
+  transform: translateX(-50%);
+  cursor: pointer;
+  size: 10px;
+}
+.sidebar_small {
+  width: 1%;
+}
+
+.sidebar_small .sidebar-button{
+  float: none;
+}
+
+.sidebar_small a{
+  display: none;
+}
+
+.sidebar_small hr{
+  display: none;
+}
+
 .sidebar a {
   display: block;
   color: #6f6f79;
@@ -261,6 +286,17 @@ input[type=date] {
   height: 80%;
   margin-right: 90px;
   /* box-shadow: 0 2px 4px rgb(0 0 0 / 24%), 0 4px 8px rgb(0 0 0 / 12%); */
+
+  /* width: 87%; */
+    /* margin-left: 10%; */
+    /* padding: 20px; */
+    transition: .5s ease;
+}
+
+.content_large {
+  width: 90%;
+  margin-left: 1%;
+  margin-right: 3%;
 }
 
 .navbar2 {
@@ -310,7 +346,7 @@ input[type=date] {
 .formdiv {
   padding: 25px;
   margin: 20px;
-  height: 69%;
+  height: 71%;
   justify-content: space-between;
   /* border-radius: 25px; */
   align-items: center;
@@ -319,6 +355,34 @@ input[type=date] {
   background-color: #fff;
   /* margin-left: 12%; */
   font-size: small;
+}
+
+.formdiv2 {
+  padding: 25px;
+  margin: 20px;
+  height: 71%;
+  justify-content: space-between;
+  /* border-radius: 25px; */
+  align-items: center;
+  box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.7);
+  /* background-color: #f8f8f9; */
+  background-color: #fff;
+  /* margin-left: 12%; */
+  font-size: small;
+}
+
+.formdiv2-small{
+  
+  height: 20%;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.formdiv2-small .column{
+  display: none;
+}
+
+.fax-button{
+  float: none;
 }
 
 .patient-photo-container .patient-image {
@@ -579,8 +643,8 @@ div {
 
 .conpref {
   width: 100%;
-  border-style: ridge;
-  border-radius: 5px;
+  /* border-style: ridge;
+  border-radius: 5px; */
   margin-bottom: 2%;
   margin-right: 100px;
 }
@@ -637,7 +701,7 @@ div {
 fieldset{
   padding-left: 5px;
   margin-bottom:20px;
-  height: 334px;
+  height: 400px;
   font-size: 13px;
   border: 0.5px solid rgb(216, 214, 233);
 }
@@ -676,7 +740,6 @@ fieldset{
 }
 #contact-bottom-details label{
   display: inline-block;
-
 }
 .phone-inputs{
   display:flex;
@@ -708,4 +771,62 @@ fieldset{
   margin: 5px;
   width: 25%;
   height: 20px;
+}
+
+
+/* 
+
+select,
+input[type=text],
+input[type=date],
+input[type=email] {
+  width: 100%;
+  border-radius: 5px;
+} */
+
+.contactdetail {
+  width: 100%;
+  /* display: flex; */
+  /* border-style: ridge;
+  border-radius: 5px; */
+  margin-bottom: 2%;
+}
+
+#multiadress{
+  overflow-x: auto;
+}
+
+.address{
+  min-width: 40%;
+  /* max-width: 100%; */
+}
+
+.contactpref {
+  width: 100%;
+  /* border-style: ridge;
+  border-radius: 5px; */
+  margin-bottom: 2%;
+  margin-right: 100px;
+}
+
+.contactpref table,td,tr,th{
+  border-collapse: collapse;
+  border: 1px solid;
+}
+
+.contactpref input[type=text]{
+  width: 98%;
+  border: none;
+  border-style: none;
+}
+
+.contactpref th{
+  width: 16.66%;
+}
+
+.otherdetails {
+  width: 100%;
+  display: flex;
+  /* border-style: ridge;
+  border-radius: 5px; */
 }
