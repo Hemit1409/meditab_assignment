@@ -85,7 +85,7 @@ function ageCount() {
        ageString = age.months + " M";
     //when current date is same as dob(date of birth)
     else ageString = "Welcome to Earth! <br> It's first day on Earth!"; 
-    
+    console.log("Age: "+ageString);
     if(age.years < 18 ){
       document.getElementById("result").innerHTML = ageString; 
       console.log("Minor!!")
