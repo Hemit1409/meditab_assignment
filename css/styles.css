@@ -357,7 +357,7 @@ input[type=date] {
   font-size: small;
 }
 
-.formdiv2 {
+.formdiv2{
   padding: 25px;
   margin: 20px;
   height: 71%;
@@ -369,6 +369,7 @@ input[type=date] {
   background-color: #fff;
   /* margin-left: 12%; */
   font-size: small;
+  transition: .5s ease;
 }
 
 .formdiv2-small{
