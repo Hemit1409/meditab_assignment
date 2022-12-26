@@ -293,6 +293,7 @@ function addAddressField() {
 
 `
   document.getElementById("multiadress").innerHTML += addressHTML
+  
 }
 
 function removeAddressField(btn) {
@@ -392,7 +393,7 @@ function removeEmailField(btn) {
   btn.closest('.email').remove();
 }
 
-function addWebsiteField(){
+function addWebsiteField(btn){
   addressHTML = `<div class="flex" style="column-gap: 2%;">
   <div style="width: 50%;">
     <input type="text" name="website">
@@ -403,6 +404,7 @@ function addWebsiteField(){
 </div>
 `
   document.getElementById("multiweb").innerHTML += addressHTML
+  // btn.closest('.website-section').querySelector('.multiweb').innerHTML += websiteHTML;
 }
 
 function removeWebsiteField(btn) {

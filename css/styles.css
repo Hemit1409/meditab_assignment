@@ -130,6 +130,23 @@ input[type=date] {
   color: blue;
 }
 
+.hrbutton {
+  background-color:#aaadf3;
+  /* border:#5a5fe2; */
+  /* border-color: black; */
+  border: 1px solid #6f72cf;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+
+.hrbutton5 {border-radius: 50%;}
+
 .active {
   /* background-color: #9fa3a2; */
   color: blue;

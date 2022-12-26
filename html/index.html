@@ -59,6 +59,7 @@
           <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
           <a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
           <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+          <button class="hrbutton hrbutton5">HR</button>
         </div>
       </div>
       <!-- <hr> -->
@@ -597,16 +598,16 @@
                   <input type="text" id="prefix" name="prefix" />
                   <br />
 
-                  <label for="fname">First Name:</label>
-                  <input type="text" id="fname" name="firstname" />
+                  <label for="fname">First Name*:</label>
+                  <input type="text" id="fname" name="firstname" required/>
                   <br />
 
                   <label for="mname">Middle Name:</label>
                   <input type="text" id="mname" name="middlename" />
                   <br />
 
-                  <label for="lname">Last Name:</label>
-                  <input type="text" id="lname" name="lastname" />
+                  <label for="lname">Last Name*:</label>
+                  <input type="text" id="lname" name="lastname" required/>
                   <br />
 
                   <label for="lname2">Last Name 2:</label>
@@ -625,7 +626,7 @@
           <div class="column">
               <div class="profileform" id="form2">
                   <label for="sex">Sex*:</label>
-                  <select name="sex" id="sex">
+                  <select name="sex" id="sex" required>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Unknown">Unknown</option>
@@ -1085,10 +1086,10 @@
                             <hr>
                             <div class="flex" style="column-gap: 2%;">
                               <div style="width: 20%;">
-                                <input type="text" placeholder="Code" name="faxcode">
+                                <input type="text"  name="faxcode">
                               </div>
                               <div style="width: 20%;">
-                                <input type="text" placeholder="Number" name="faxnumber">
+                                <input type="text"  name="faxnumber">
                               </div>
                               <div style="width: 2%;cursor: pointer;margin-left: 30px;">
                                 <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
@@ -1110,9 +1111,9 @@
                               </div>
                             </div></div>
                           </div>
-                          <div>
+                          <div class="website-section">
                             <div id="multiweb" style="cursor: pointer;">
-                              Website <i class="fa-solid fa-circle-plus def-color" onclick="addWebsiteField()"></i>
+                              Website <i class="fa-solid fa-circle-plus def-color" onclick="addWebsiteField(this)"></i>
                             </div>
                             <div class="web">
                             <div class="flex" style="column-gap: 2%;">
