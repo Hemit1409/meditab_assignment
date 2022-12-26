@@ -285,11 +285,11 @@
             <div class="innernav" >
               <input type="checkbox" name="Active" style="cursor: pointer;"/>Active
               <i class="fa-solid fa-ellipsis-vertical" ></i>
-              <input type="submit" form="form_id" value="Re-verify" style="cursor: pointer;"/>
+              <input type="submit" form="form_id" value="Re-verify" style="cursor: pointer;background-color:white;border-color: gray;border-width: 2px;border-radius: 6px;"/>
               <i class="fa-solid fa-circle-check" ></i>
-              <input type="button" onclick="newFunction()" value="Reset" style="cursor: pointer;"/>
+              <input type="button" onclick="newFunction()" value="Reset" style="cursor: pointer;background-color: white;border-color: gray;border-width: 2px;border-radius: 6px;;"/>
               <!-- <input type="submit" onclick="getFormvalue()" value="Save" /> -->
-              <input type="button" onclick="ageCount()" value="Save" style="cursor: pointer;"/>
+              <input type="button" onclick="ageCount()" value="Save" style="cursor: pointer; background-color: #5a5fe2;color: aliceblue;border-color: gray;border-width: 2px;border-radius: 6px;"/>
               <!-- <button><i
                 class="fa-solid fa-triangle-exclamation"></i>
               Save</button> -->
@@ -1026,9 +1026,10 @@
                         </div>
                         <div>
                           <div>
-                            <div style="cursor: pointer;">
+                            <div id="multiphone" style="cursor: pointer;">
                               Phone <i class="fa-solid fa-circle-plus def-color" onclick="addPhoneField()"></i>
                             </div>
+                            <div class="phone">
                             <div class="flex" style="column-gap: 2%;">
                               <div style="width: 20%;">
                                 Type
@@ -1062,8 +1063,11 @@
                                   value="1">
                               </div>
                               <div style="width: 20%;">
+                                <div style="width: 2%;cursor: pointer;margin-left: 30px;">
+                                  <i class="fa-solid fa-trash-can def-color" onclick="removePhoneField(this)"></i>
+                                </div>
                               </div>
-                            </div>
+                            </div></div>
                           </div>
                           <div>
                             <div id="multifax" style="cursor: pointer;">
@@ -1086,37 +1090,39 @@
                               <div style="width: 20%;">
                                 <input type="text" placeholder="Number" name="faxnumber">
                               </div>
-                              <div style="width: 2%;cursor: pointer;">
+                              <div style="width: 2%;cursor: pointer;margin-left: 30px;">
                                 <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
                               </div>
                             </div>
                           </div>
                           </div>
                           <div>
-                            <div style="cursor: pointer;">
+                            <div id="multiemail" style="cursor: pointer;">
                               Email <i class="fa-solid fa-circle-plus def-color" onclick="addEmailField()"></i>
                             </div>
+                            <div class="email">
                             <div class="flex" style="column-gap: 2%;">
                               <div style="width: 50%;">
                                 <input type="email" name="email">
                               </div>
-                              <div style="width: 2%;">
-                                <i class="fa-solid fa-trash-can def-color"></i>
+                              <div style="width: 2%;cursor: pointer;">
+                                <i class="fa-solid fa-trash-can def-color" onclick="removeEmailField(this)"></i>
                               </div>
-                            </div>
+                            </div></div>
                           </div>
                           <div>
-                            <div style="cursor: pointer;">
+                            <div id="multiweb" style="cursor: pointer;">
                               Website <i class="fa-solid fa-circle-plus def-color" onclick="addWebsiteField()"></i>
                             </div>
+                            <div class="web">
                             <div class="flex" style="column-gap: 2%;">
                               <div style="width: 50%;">
                                 <input type="text" name="website">
                               </div>
-                              <div style="width: 2%;">
-                                <i class="fa-solid fa-trash-can def-color"></i>
+                              <div style="width: 2%;cursor: pointer;">
+                                <i class="fa-solid fa-trash-can def-color"onclick="removeWebsiteField(this)"></i>
                               </div>
-                            </div>
+                            </div></div>
                           </div>
                         </div>
                       </fieldset>
@@ -1132,90 +1138,72 @@
           <h1>Contact Preference</h1>
           <div class="conpref">
             <div>Contact Preference</div>
-            <div class="w-100">
-              <table class="w-100">
-                <tr>
-                  <th>Type</th>
-                  <th>Address</th>
-                  <th>
-                    Phone
-                    <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
-                  </th>
-                  <th>Fax</th>
-                  <th>
-                    Email
-                    <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
-                  </th>
-                  <th>Website</th>
-                </tr>
-                <tr>
-                  <td>Appointment Reminder</td>
-                  <td>
-                    <input type="text" name="r" id="" />
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Mailing</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Primary</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Statement</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Preffered Comm.</td>
-                  <td colspan="5">
-                    <div class="flex">
-                      <div class="w-50 flex">
-                        <div class="w-50 flex h-33" style="margin-top: 1%">
-                          Type:
-                          <select name="" id="">
-                            <option value="">Email</option>
-                            <option value="">Fax</option>
-                            <option value="">Mail</option>
-                            <option value="">Phone</option>
-                            <option value="">Text</option>
+            <div class="Table">
+              <table>
+                  <tr>
+                      <th>Type</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Fax</th>
+                      <th>Email</th>
+                      <th>Website</th>
+                  </tr>
+                  <tr>
+                      <td contenteditable='false'>Appointment Reminder</td>
+                      <td></td>
+                      <td contenteditable='true'></td>
+                      <td></td>
+                      <td contenteditable='true'></td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>Mailing</td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                  </tr>
+                  <tr>
+                      <td>Primary</td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                  </tr>
+                  <tr>
+                      <td>Statement</td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                      <td contenteditable='true'></td>
+                  </tr>
+                  <tr>
+                      <th>Preferred Comm.</th>
+                      <td colspan="5">
+                          <label for="Type">Type: </label>
+                          <select id="Type">
+                              <option value="Email">Email</option>
+                              <option value="Fax">Fax</option>
+                              <option value="Mail">Mail</option>
+                              <option value="Phone">Phone</option>
+                              <option value="Text">Text</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="w-50">
-                        <div class="w-50 flex h-33" style="margin-top: 1%">
-                          value*:
-                          <select name="" id="">
-                            <option value=""></option>
+                          <label for="Value">Value: </label>
+                          <select id="Value" readonly>
+                              <option value=""></option>
                           </select>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                      </td>
+                  </tr>
               </table>
-            </div>
+          </div>
           </div>
         </div>
         <div class="formdiv2">
           <div class="fax-button" id="fax-collapse" style=" cursor: pointer;">
-            <button ><i class="fa-solid fa-angle-right"></i></button>
+            <button style=" cursor: pointer;"><i class="fa-solid fa-angle-right"></i></button>
           </div>
           <h1>Other Details</h1>
           <form id="form_id">

@@ -151,7 +151,7 @@ function addAddressField() {
                         <div style="width: 98%;">
                           Address
                         </div>
-                        <div style="width: 2%;">
+                        <div style="width: 2%;cursor: pointer;">
                           <i class="fa-solid fa-trash-can def-color"
                             onclick="removeAddressField(this)"></i>
                         </div>
@@ -307,7 +307,7 @@ function addFaxField(){
   <div style="width: 20%;">
     <input type="text" placeholder="Number" name="faxnumber">
   </div>
-  <div style="width: 2%;cursor: pointer;">
+  <div style="width: 2%;cursor: pointer;margin-left: 30px;">
     <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
   </div>
 </div>
@@ -318,4 +318,105 @@ function addFaxField(){
 
 function removeFaxField(btn) {
   btn.closest('.fax').remove();
+}
+
+function addPhoneField(){
+  addressHTML = `<div class="flex" style="column-gap: 2%;">
+  <div style="width: 20%;">
+    Type
+  </div>
+  <div style="width: 20%;">
+    Code
+  </div>
+  <div style="width: 20%;">
+    Number
+  </div>
+  <div style="width: 20%;">
+    Ext.
+  </div>
+</div>
+<hr>
+<div class="flex" style="column-gap: 2%;">
+  <div style="width: 20%;">
+    <select name="phonetype" id="">
+      <option value="Cell">Cell</option>
+      <option value="Landline">Landline</option>
+    </select>
+  </div>
+  <div style="width: 20%;">
+    <select name="countrtycode" id="">
+      <option value="+91">+91 India</option>
+      <option value="+1">+1 United States</option>
+    </select>
+  </div>
+  <div style="width: 20%;">
+    <input type="text" name="phoneNumber" placeholder="Number"
+      value="1">
+  </div>
+  <div style="width: 20%;">
+    <div style="width: 2%;cursor: pointer;margin-left: 30px;">
+      <i class="fa-solid fa-trash-can def-color" onclick="removePhoneField(this)"></i>
+    </div>
+  </div>
+`
+  document.getElementById("multiphone").innerHTML += addressHTML
+}
+
+function removePhoneField(btn) {
+  btn.closest('.phone').remove();
+}
+
+function addEmailField(){
+  addressHTML = `<div class="flex" style="column-gap: 2%;">
+  <div style="width: 50%;">
+    <input type="email" name="email">
+  </div>
+  <div style="width: 2%;">
+    <i class="fa-solid fa-trash-can def-color"></i>
+  </div>
+</div>
+`
+  document.getElementById("multiemail").innerHTML += addressHTML
+}
+
+function removeEmailField(btn) {
+  btn.closest('.email').remove();
+}
+
+function addWebsiteField(){
+  addressHTML = `<div class="flex" style="column-gap: 2%;">
+  <div style="width: 50%;">
+    <input type="text" name="website">
+  </div>
+  <div style="width: 2%;cursor: pointer;">
+    <i class="fa-solid fa-trash-can def-color"onclick="removeWebsiteField(this)"></i>
+  </div>
+</div>
+`
+  document.getElementById("multiweb").innerHTML += addressHTML
+}
+
+function removeWebsiteField(btn) {
+  btn.closest('.web').remove();
+}
+
+
+
+var coll = document.getElementsByClassName("formdiv2");
+var i;
+var faxbutton = document.getElementById("fax-button")
+
+for (i = 0; i < coll.length; i++) {
+
+  coll[i].addEventListener("click", function() {
+    
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      faxbutton.style.transform = "rotate(360deg)"
+    } else {
+      content.style.display = "block";
+      faxbutton.style.transform = "rotate(90deg)";
+    }
+  });
 }
