@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles\styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
+</head>
+<body>
+   <nav class="main-nav">
+        <div class="nav-menu-left">
+            <a href="#"><i class="fa-sharp fa-solid fa-gear"></i> </a>
+            <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i> </a>
+            <a href="#"><i class="fa-solid fa-user"></i> </a>
+            <a href="#"><i class="fa-solid fa-calendar-days"></i></a>
+            <a href="#"><i class="fa-solid fa-user-shield"></i> </a>
+            <a href="#"><i class="fa-solid fa-shield"></i></a>
+            <a href="#"><i class="fa-solid fa-check-double"></i></a>
+    
+            <a href="#"><i class="fa-solid fa-notes-medical"></i></a>
+            <a href="#"><i class="fa-solid fa-flask"></i></a>
+            <a href="#"><i class="fa-solid fa-prescription"></i></a>
+            <a href="#"><i class="fa-solid fa-prescription"></i></a>
+            <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
+            <a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
+            <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+    
+            <a href="#"><i class="fa-solid fa-shield"></i></a>
+            <a href="#"><i class="fa-solid fa-check-double"></i></a>
+            <a href="#"><i class="fa-solid fa-notes-medical"></i></a>
+            <a href="#"><i class="fa-solid fa-flask"></i></a>
+            <a href="#"><i class="fa-solid fa-prescription"></i></a>
+            <a href="#"><i class="fa-solid fa-prescription"></i></a>
+            <a href="#"><i class="fa-sharp fa-solid fa-file-invoice"></i> </a>
+            <a href="#"><i class="fa-solid fa-dollar-sign"></i></a>
+            <a href="#"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+        </div>
+        
+        <div class="nav-menu-right">
+            <form action="" id="patient-search">
+                <input  type="text" placeholder="Search Patient">
+            </form>
+            <a href="#"><i class="fa-sharp fa-solid fa-gear"></i> </a>
+            <a href="#"><i class="fa-sharp fa-solid fa-magnifying-glass"></i> </a>
+            <a href="#"><i class="fa-solid fa-user"></i> </a>
+            <a href="#"><i class="fa-solid fa-calendar-days"></i></a>
+            <a href="#"><i class="fa-solid fa-user-shield"></i> </a>
+        </div>
+
+   </nav>
+
+   <!-- <div class="tabs">
+    All open tabs will show here
+   </div> -->
+
+   <div class="main">
+        
+        <div class="top-content">
+            <div id="patient-bar">Patient Bar</div>
+            <div class="buttons">
+                <input type="checkbox"> <span>Active</span><i class="fa-solid fa-ellipsis-vertical"></i>        
+                <button onclick="resetFunction()">Reset</button>
+                <button>Cancel Changes</button>
+                <button id="save-btn" type="submit" form="mainform" >Save</button>
+            </div>
+        </div>
+
+        <div class="sideform">
+                <aside class="sidebar" >
+                    <span class="fa-solid fa-chevron-left toggle"></span>
+                    <a href="#">Dashboard</a>
+                    <a href="#">Demographics</a>
+                    <a href="#">Insurance</a>
+                    <a href="#">Case</a>
+                    <a href="#">Contacts</a>
+                    <a href="#">Employer</a>
+                    <a href="#">Appointments</a>
+                    <a href="#">Encounters</a>
+                    <a href="#">Documents</a>
+                    <a href="#">Notes & Alerts</a>
+                    <a href="#">Forms</a>
+                    <a href="#">Consent</a>
+                    <a href="#">Reminder Preference</a>
+                    <hr>
+                    <a href="#">Allergy</a>
+                    <a href="#">Diagnosis</a>
+                    <a href="#">Family History</a>
+                    <a href="#">Prescription</a>
+                    <a href="#">Lab</a>
+                    <a href="#">Immunization</a>
+                    <a href="#">Vitals</a>
+                    <hr>
+                    <a href="#">Authorization</a>
+                    <a href="#">Claims</a>
+                    <a href="#">Receipt</a>
+                    <a href="#">Open Credit</a>
+                    <a href="#">Statements</a>  
+                    <a href="#">Ledger</a>   
+                </aside>
+        
+                <form action="" class="mainform" id="mainform">
+                    
+                        <div class="form1">
+                            <div class="column">
+                                    <img src="styles\istockphoto-1331257339-1024x1024.jpg" alt="Avatar" id="avatar">
+                                    <p id="img-txt">PT000001</p>
+
+                                    <label for="prefix">Prefix:</label>
+                                        <input type="text" name="prefix" id="prefix">
+                                    <br>
+                                    <label for="fname">First Name<span class="asterick">*</span>:</label>
+                                        <input type="text" name="fname" id="fname" required>
+                                    <br>
+                                    <label for="mname">Middle Name:</label>
+                                        <input type="text" name="mname" id="mname">
+                                    <br>
+                                    <label for="lname1">Last Name1<span class="asterick">*</span>:</label>
+                                        <input type="text" name="lname1" id="lname1" required>
+                                    <br>
+                                    <label for="lname2">Last Name2:</label>
+                                        <input type="text" name="lname2" id="lname2">
+                                    <br>
+                                    <label for="suffix">Suffix:</label>
+                                        <input type="text" name="suffix" id="suffix">
+                                    <br>
+                                    <label for="aka">AKA:</label>
+                                        <input type="text" name="aka" id="aka">
+                                    <br>
+                            </div>
+                            <div class="column">
+                                    <label for="sex"> Sex<span class="asterick">*</span>:</label>
+                                    <select name="sex" id="sex">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Unknown">Unknown</option>
+                                    </select><br>
+                                        
+                                    <label for="dob">DOB:</label>
+                                        <input type="date" name="dob" id="dob" onchange="checkAge()">
+                                    <br>
+                                    <label for="lang-pref">Pref Language:</label>
+                                    <select name="lang-pref" id="lang-pref">
+                                            <option value="English">English</option>
+                                            <option value="Hindi">Hindi</option>
+                                            <option value="Gujarati">Gujarati</option>
+                                        </select><br>
+                                    <label for="interpreter">Interpreter:</label>
+                                        <input type="checkbox" name="interpreter" id="interpreter"><br>
+                                    <label for="status">Status:</label>
+                                        <select name="status" id="status">
+                                            <option value="First Appointment Pending">First Appointment Pending</option>
+                                            <option value="Registration Entry Pending">Registration Entry Pending</option>
+                                            <option value="Immunizations Pending">Immunizations Pending</option>
+                                            <option value="Insurance inclusion Pending">Insurance inclusion Pending</option>
+                                        </select><br>
+                                    <label>Risk:</label><span> High </span><i class="fa-solid fa-pencil"></i><br>
+                                    <label for="Marital Status">Marital Status:</label>
+                                        <select name="Marital Status" id="Marital Status">
+                                            <option value="Married">Married</option>
+                                            <option value="Never Married">Never Married</option>
+                                            <option value="Divorced">Divorced</option>
+                                        </select><br>
+                                    <label for="ssn">SSN:</label>
+                                        <input type="text" name="ssn" id="ssn"><br>
+                                    <label for="race">Race:</label>
+                                        <select name="race" id="race">
+                                            <option value="White">White</option>
+                                            <option value="Asian">Asian</option>
+                                            <option value="Black">Black</option>
+                                            <option value="Other">Other</option>
+                                        </select><br>
+                                    <label for="ethnicity">Ethnicity:</label>
+                                        <select name="ethnicity" id="">
+                                            <option value="Other Ethnicity">Other Ethnicity</option>
+                                            <option value="Unreported/Refuced to report">Unreported/Refuced to report</option>
+                                            <option value="Hispanic/Latino">Hispanic/Latino</option>
+                                            <option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+                                        </select>
+                            </div>
+                            <div class="column">
+                                <label for="selfpay">Self Pay:</label>
+                                    <input type="checkbox" name="selfpay" id="selfpay"><br>
+                                <label for="facility">Default Facility:</label>
+                                    <select name="facility" id="facility">
+                                        <option value="FAC1">FAC1</option>
+                                        <option value="FAC2">FAC2</option>
+                                        <option value="FAC3">FAC3</option>
+                                    </select><br>
+                                <label for="def-provider">Default Provider:</label>
+                                    <select name="def-provider" id="def-provider">
+                                        <option value="Jordan Smith">Jordan Smith</option>
+                                        <option value="Jordan Smith">Jordan Smith</option>
+                                        <option value="Jordan Smith">Jordan Smith</option>
+                                    </select><br>
+                                <label for="timezone">Timezone:</label>
+                                    <select name="tomezone" id="timezone">
+                                        <option value="GMT">GMT</option>
+                                        <option value="IST">IST</option>
+                                        <option value="PST">PST</option>
+                                    </select><br>
+                                <label for="pharma">Default Pharmacy:</label>
+                                    <select name="pharma" id="pharma">
+                                        <option value="pharma1">Pharma1</option>
+                                        <option value="pharma2">Pharma2</option>
+                                        <option value="pharma3">Pharma3</option>
+                                    </select><br>
+                                <label for="prescription">Use current pharmacy for all Rx:</label>
+                                    <input type="checkbox" name="prescription" id="prescription">
+                                <br>
+                                <label for="provider">PCP same as Provider:</label>
+                                    <input type="checkbox" name="provider" id="provider">
+                                <br>
+                                <label for="PCP">PCP:</label>
+                                    <select name="PCP" id="PCP">
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                    </select><br>
+                                <label for="fee">Fee Schedule:</label>
+                                    <select name="fee" id="fee" disabled="disabled"></select>
+                            </div>
+                        </div>
+
+                        <div class="form2">
+                            <div class="contact-header"><h2>Contact Details</h2><i class="fa-solid fa-circle-plus" style="margin-top: 5px;" onclick="addContactField()"></i></div>
+                            <div class="address-container" id="address-container">
+                                <div class="address1">
+                                    <fieldset>
+                                        <legend>
+                                            <select name="" id="address-option">
+                                                <option value="">Home</option>
+                                                <option value="">Work</option>
+                                            </select>
+                                        </legend>
+                                        <div class="address-field">
+                                            <div class="address-field-header">
+                                                <h3>Address<i class="fa-solid fa-circle-plus" style="display:none;" onclick="addAddressField(this)"></i></h3><i class="fa-solid fa-trash-can" onclick="removeContactField(this)"></i>
+                                            </div>
+                                            <div class="address-field-container">
+                                               <div class="address-street">
+                                                    <label for="street">Street</label>
+                                                    <input type="text" name="street" id="street">
+                                               </div>
+                                               <div class="address-rest">
+                                                    <div>
+                                                        <label for="zip">Zip</label>
+                                                        <input type="text" name="zip" id="zip">
+                                                    </div>
+                                                    <div>
+                                                        <label for="city">City</label>
+                                                        <input type="text" name="city" id="city">
+                                                    </div>
+                                                    <div id="state">
+                                                        <label for="state">State</label>
+                                                        <select name="state" id="state">
+                                                            <option value="Washington">Washington</option>
+                                                            <option value="Illoniss">Illoniss</option>
+                                                        </select>
+                                                    </div>
+                                                    <div >
+                                                        <label for="Country">Country</label>
+                                                        <select name="country" id="country">
+                                                            <option value="US">US</option>
+                                                            <option value="India">India</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label for=""><i class="fa-solid fa-trash-can" onclick="removeAddressField(this)"></i></label>
+                                                    </div>
+                                               </div>
+                                            </div>  
+                                        </div>
+                                        <div class="phone">
+                                            <h3>Phone</h3>
+                                            <i class="fa-solid fa-circle-plus" onclick="addPhone(this)"></i>
+                                            <div class="phone-wrapper">
+                                                <div class="phone-header-wrapper">
+                                                    <div class="phone-header">
+                                                        <p class="type">Type</p>
+                                                        <p class="code">Code</p>
+                                                        <p class="number">Number</p>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            
+                                            
+                                                <div class="phone-inputs-wrapper" id="phone-inputs-wrapper">
+                                                    <div id="phone-inputs" class="phone-inputs"> 
+                                                        <select name="type" id="type" class="type-input">
+                                                            <option value="Cell">Cell</option>
+                                                            <option value="Landline">Landline</option>
+                                                        </select>
+                                                        <select name="code" id="code" class="code-input">
+                                                            <option value="+1">+1</option>
+                                                            <option value="+91">+91</option>
+                                                        </select>
+                                                        <input type="text" name="number" id="number" class="number-input">
+                                                        <i class="fa-solid fa-trash-can" style="margin-left: 20px; margin-top: 7px;" onclick="removePhoneField(this)"></i>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fax">
+                                            <h3>Fax</h3><i class="fa-solid fa-circle-plus" onclick="addFax(this)"></i>
+                                            <div class="fax-wrapper">
+            
+                                            </div>
+                                        </div>
+                                        <div class="email">
+                                            <h3>Email</h3><i class="fa-solid fa-circle-plus" onclick="addEmail(this)"></i>
+                                            <div class="email-input-wrapper" >
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="website">
+                                            <h3>Website</h3><i class="fa-solid fa-circle-plus" onclick="addWebsite(this)"></i>
+                                            <div class="website-input-wrapper" >
+                                               
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="address1">
+                                    <fieldset>
+                                        <legend>
+                                            <select name="" id="address-option">
+                                                <option value="">Home</option>
+                                                <option value="">Work</option>
+                                            </select>
+                                        </legend>
+                                        <div class="address-field">
+                                            <div class="address-field-header">
+                                                <h3>Address<i class="fa-solid fa-circle-plus"></i></h3><i class="fa-solid fa-trash-can" onclick="removeContactField(this)"></i>
+                                            </div>
+                                            <div class="address-field-container">
+                                               <div class="address-street">
+                                                    <label for="street">Street</label>
+                                                    <input type="text" name="street" id="street">
+                                               </div>
+                                               <div class="address-rest">
+                                                    <div>
+                                                        <label for="zip">Zip</label>
+                                                        <input type="text" name="zip" id="zip">
+                                                    </div>
+                                                    <div>
+                                                        <label for="city">City</label>
+                                                        <input type="text" name="city" id="city">
+                                                    </div>
+                                                    <div id="state">
+                                                        <label for="state">State</label>
+                                                        <select name="state" id="state">
+                                                            <option value="Washington">Washington</option>
+                                                            <option value="Illoniss">Illoniss</option>
+                                                        </select>
+                                                    </div>
+                                                    <div >
+                                                        <label for="Country">Country</label>
+                                                        <select name="country" id="country">
+                                                            <option value="US">US</option>
+                                                            <option value="India">India</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label for=""><i class="fa-solid fa-trash-can"></i></label>
+                                                    </div>
+                                               </div>
+                                            </div>  
+                                        </div>
+                                        <div class="phone">
+                                            <h3>Phone</h3>
+                                            <i class="fa-solid fa-circle-plus" onclick="addPhone(this)"></i>
+                                            <div class="phone-wrapper">
+                                                <div class="phone-header-wrapper">
+                                                    <div class="phone-header">
+                                                        <p class="type">Type</p>
+                                                        <p class="code">Code</p>
+                                                        <p class="number">Number</p>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            
+                                            
+                                                <div class="phone-inputs-wrapper" id="phone-inputs-wrapper">
+                                                    <div id="phone-inputs" class="phone-inputs"> 
+                                                        <select name="type" id="type" class="type-input">
+                                                            <option value="Cell">Cell</option>
+                                                            <option value="Landline">Landline</option>
+                                                        </select>
+                                                        <select name="code" id="code" class="code-input">
+                                                            <option value="+1">+1</option>
+                                                            <option value="+91">+91</option>
+                                                        </select>
+                                                        <input type="text" name="number" id="number" class="number-input">
+                                                        <i class="fa-solid fa-trash-can" style="margin-left: 20px; margin-top: 7px;" onclick="removePhoneField(this)"></i>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fax">
+                                            <h3>Fax</h3><i class="fa-solid fa-circle-plus" onclick="addFax(this)"></i>
+                                            <div class="fax-wrapper">
+            
+                                            </div>
+                                        </div>
+                                        <div class="email">
+                                            <h3>Email</h3><i class="fa-solid fa-circle-plus" onclick="addEmail(this)"></i>
+                                            <div class="email-input-wrapper" >
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="website">
+                                            <h3>Website</h3><i class="fa-solid fa-circle-plus" onclick="addWebsite(this)"></i>
+                                            <div class="website-input-wrapper" >
+                                               
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form3">
+                            <h2>Contact Prefernce</h2>
+                            <table>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Fax</th>
+                                    <th>Email</th>
+                                    <th>Website</th>
+                                </tr>
+                                <tr>
+                                    <td contenteditable='false'>Appointment Reminder</td>
+                                    <td></td>
+                                    <td contenteditable='true'></td>
+                                    <td></td>
+                                    <td contenteditable='true'></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Mailing</td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                </tr>
+                                <tr>
+                                    <td>Primary</td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                </tr>
+                                <tr>
+                                    <td>Statement</td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                    <td contenteditable='true'></td>
+                                </tr>
+                                <tr>
+                                    <th>Preferred Comm.</th>
+                                    <td colspan="5">  
+                                        <label for="Type">Type: </label>
+                                        <select id="Type">
+                                            <option value="Email">Email</option>
+                                            <option value="Fax">Fax</option>
+                                            <option value="Mail">Mail</option>
+                                            <option value="Phone">Phone</option>
+                                            <option value="Text">Text</option>
+                                        </select>
+                                        <label for="Value">Value: </label>
+                                        <select id="Value" readonly>
+                                            <option value=""></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> 
+
+                        
+
+                        <div class="form4">
+                            <div class="other-details-header">
+                                <i class="fa-solid fa-circle-chevron-right other-toggle" id="chevron"></i>
+                                <h2>Other Details</h2>  
+                            </div>
+                            
+                            <div class="column-expandable">
+                                <div class="column-wrapper">
+                                    <div class="column">
+                                        
+
+                                        <label for="prefix">Prefix:</label>
+                                            <input type="text" name="prefix" id="prefix">
+                                        <br>
+                                        <label for="fname">First Name:</label>
+                                            <input type="text" name="fname" id="fname" required>
+                                        <br>
+                                        <label for="mname">Middle Name:</label>
+                                            <input type="text" name="mname" id="mname">
+                                        <br>
+                                        <label for="lname1">Last Name1:</label>
+                                            <input type="text" name="lname1" id="lname1" required>
+                                        <br>
+                                        <label for="lname2">Last Name2:</label>
+                                            <input type="text" name="lname2" id="lname2">
+                                        <br>
+                                        <label for="suffix">Suffix:</label>
+                                            <input type="text" name="suffix" id="suffix">
+                                        <br>
+                                        <label for="aka">AKA:</label>
+                                            <input type="text" name="aka" id="aka">
+                                        <br>
+                                </div>
+                                <div class="column">
+                                        <label for="sex"> Sex*:</label>
+                                        <select name="sex" id="sex">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Unknown">Unknown</option>
+                                        </select><br>
+                                            
+                                        <label for="dob">DOB:</label>
+                                            <input type="date" name="dob" id="dob" onchange="checkAge()">
+                                        <br>
+                                        <label for="lang-pref">Pref Language:</label>
+                                        <select name="lang-pref" id="lang-pref">
+                                                <option value="English">English</option>
+                                                <option value="Hindi">Hindi</option>
+                                                <option value="Gujarati">Gujarati</option>
+                                            </select><br>
+                                        <label for="interpreter">Interpreter:</label>
+                                            <input type="checkbox" name="interpreter" id="interpreter"><br>
+                                        <label for="status">Status:</label>
+                                            <select name="status" id="status">
+                                                <option value="First Appointment Pending">First Appointment Pending</option>
+                                                <option value="Registration Entry Pending">Registration Entry Pending</option>
+                                                <option value="Immunizations Pending">Immunizations Pending</option>
+                                                <option value="Insurance inclusion Pending">Insurance inclusion Pending</option>
+                                            </select><br>
+                                        <label>Risk:</label><span> High </span><i class="fa-solid fa-pencil"></i><br>
+                                        <label for="Marital Status">Marital Status:</label>
+                                            <select name="Marital Status" id="Marital Status">
+                                                <option value="Married">Married</option>
+                                                <option value="Never Married">Never Married</option>
+                                                <option value="Divorced">Divorced</option>
+                                            </select><br>
+                                        <label for="ssn">SSN:</label>
+                                            <input type="text" name="ssn" id="ssn"><br>
+                                        <label for="race">Race:</label>
+                                            <select name="race" id="race">
+                                                <option value="White">White</option>
+                                                <option value="Asian">Asian</option>
+                                                <option value="Black">Black</option>
+                                                <option value="Other">Other</option>
+                                            </select><br>
+                                        <label for="ethnicity">Ethnicity:</label>
+                                            <select name="ethnicity" id="">
+                                                <option value="Other Ethnicity">Other Ethnicity</option>
+                                                <option value="Unreported/Refuced to report">Unreported/Refuced to report</option>
+                                                <option value="Hispanic/Latino">Hispanic/Latino</option>
+                                                <option value="Non-Hispanic/Latino">Non-Hispanic/Latino</option>
+                                            </select>
+                                </div>
+                                <div class="column">
+                                    <label for="selfpay">Self Pay:</label>
+                                        <input type="checkbox" name="selfpay" id="selfpay"><br>
+                                    <label for="facility">Default Facility:</label>
+                                        <select name="facility" id="facility">
+                                            <option value="FAC1">FAC1</option>
+                                            <option value="FAC2">FAC2</option>
+                                            <option value="FAC3">FAC3</option>
+                                        </select><br>
+                                    <label for="def-provider">Default Provider:</label>
+                                        <select name="def-provider" id="def-provider">
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                            <option value="Jordan Smith">Jordan Smith</option>
+                                        </select><br>
+                                    <label for="timezone">Timezone:</label>
+                                        <select name="tomezone" id="timezone">
+                                            <option value="GMT">GMT</option>
+                                            <option value="IST">IST</option>
+                                            <option value="PST">PST</option>
+                                        </select><br>
+                                    <label for="pharma">Default Pharmacy:</label>
+                                        <select name="pharma" id="pharma">
+                                            <option value="pharma1">Pharma1</option>
+                                            <option value="pharma2">Pharma2</option>
+                                            <option value="pharma3">Pharma3</option>
+                                        </select><br>
+                                    <label for="prescription">Use current pharmacy for all Rx:</label>
+                                        <input type="checkbox" name="prescription" id="prescription">
+                                    <br>
+                                    <label for="provider">PCP same as Provider:</label>
+                                        <input type="checkbox" name="provider" id="provider">
+                                    <br>
+                                    <label for="PCP">PCP:</label>
+                                        <select name="PCP" id="PCP">
+                                                <option value="Jordan Smith">Jordan Smith</option>
+                                                <option value="Jordan Smith">Jordan Smith</option>
+                                                <option value="Jordan Smith">Jordan Smith</option>
+                                        </select><br>
+                                    <label for="fee">Fee Schedule:</label>
+                                        <select name="fee" id="fee" disabled="disabled"></select>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </form>
+
+        </div>
+            
+       
+        
+
+   </div>
+   
+</body>
+<script src="main.js"></script>
+</html>
