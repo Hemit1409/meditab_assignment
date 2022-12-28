@@ -45,3 +45,7 @@ Upload it on this link https://drive.google.com/drive/folders/1VyEYvo8nYMF2H15i3
 
 autoincrement the id
 https://chartio.com/resources/tutorials/how-to-define-an-auto-increment-primary-key-in-postgresql/
+
+
+foreignkey in postgre sql
+https://www.javatpoint.com/postgresql-foreign-key
