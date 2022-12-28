@@ -34,7 +34,7 @@ create table patient_zip(
 );
 
 create table phone(
-    ph_id serial primary key 
+    ph_id serial primary key, 
     phoneID INT,
     phone varchar(10),
     CONSTRAINT fk_emp_phone  
