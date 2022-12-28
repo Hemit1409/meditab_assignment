@@ -170,7 +170,7 @@ input[type=date] {
   text-decoration: none;
   /* display: inline-block; */
   font-size: 16px;
-  width: 300px;
+  width: 30px;
 }
 
 @media screen and (max-width: 500px) {
@@ -367,11 +367,11 @@ input[type=date] {
 
 .formdiv {
   padding: 25px;
-  margin: 20px;
-  height: 71%;
-  justify-content: space-between;
+  margin: 20px 50px;
+  height: 82%;
+  /* justify-content: space-between; */
   /* border-radius: 25px; */
-  align-items: center;
+  /* align-items: center; */
   box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.7);
   /* background-color: #f8f8f9; */
   background-color: #fff;
@@ -381,8 +381,8 @@ input[type=date] {
 
 .formdiv2{
   padding: 25px;
-  margin: 20px;
-  height: 71%;
+  margin: 20px 50px;
+  height: 40%;
   justify-content: space-between;
   /* border-radius: 25px; */
   align-items: center;
@@ -485,14 +485,14 @@ button {
   border-radius: 5%;
 }
 
-.contactpref {
+/* .contactpref {
   width: 100%;
   display: flex;
   border-style: ridge;
   border-radius: 5px;
   margin-bottom: 2%;
   margin-right: 100px;
-}
+} */
 
 .otherdetails {
   width: 100%;
@@ -666,218 +666,179 @@ div {
 }
 
 
-.conpref {
-  width: 100%;
-  /* border-style: ridge;
-  border-radius: 5px; */
+
+
+
+
+
+
+/* ****************************************************************** */
+
+.contactdetail {
+  width: 99%;
+  /* box-shadow: 0 1px 2px rgb(0 0 0 / 15%); */
+  /* border: 1px solid #e9eafb;
+  border-radius: 0.5rem; */
   margin-bottom: 2%;
-  margin-right: 100px;
+  background-color: #fff;
+  padding: 0.5%;
+  font-size:medium;
 }
 
-/* .conpref table{
-  border-collapse: collapse;
-  width: 90%;
-  margin:2%;
-  border: 1px solid;
+.contact-type-div {
+  width: 300%;
 }
 
+fieldset {
+  margin: 0;
+  border: 1px solid #e9eafb
+}
 
-.conpref td,tr,th{
+.multi-contact {
+  overflow-x: auto;
+  width: 100%;
+  border: 0px solid #e9eafb
+}
+
+.single-contact {
+  width: 100%;
+  margin-bottom: 0.2%;
+}
+
+.single-email,
+.single-website,
+.phone-input-section,
+.fax-input-section {
+  margin-bottom: 0.2%;
+}
+
+.contactpref {
+  width: 99%;
+  /* box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+  border: 1px solid #e9eafb;
+  border-radius: 0.5rem; */
+  margin-bottom: 2%;
+  padding: 0.5%;
+  background-color: #fff;
+}
+
+.contactpref table{
   border-collapse: collapse;
-  
-  border: 1px solid;
-} */
+  border: 1px solid #e9eafb;
+  text-align: start;
+  width: 100%;
+  font-size: large;
+}
 
-.conpref input[type=text]{
+.contactpref td,
+.contactpref tr,
+.contactpref th {
+  border-collapse: collapse;
+  border: 1px solid #e9eafb;
+  text-align: start;
+}
+
+.contactpref input[type=text] {
+  text-overflow: ellipsis;
   width: 98%;
   border: none;
   border-style: none;
 }
 
-/* .conpref th{
+.contactpref th {
   width: 16.66%;
-} */
-
-.Table{
-  width: 97%;
-  border-radius: 5px;
-  background-color:white;
-  margin: auto;
-  /* padding-bottom: 20px; */
 }
-table {
-  font-family: arial, sans-serif;
-  font-size: 13px;
-  border-collapse: collapse;
+
+.fa-circle-exclamation {
+  color: #ff8c00;
+}
+
+.otherdetails {
   width: 100%;
-  height: 200px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+  border: 1px solid #e9eafb;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  flex-direction: column;
 }
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+
+.otherdetails div {
+  margin: 1%;
 }
-td select{
-  margin-left: 1%;
-  margin-right: 1%;
-  width: 40%;
+
+.leftsidenav .closebtn{
+  margin: 0.2rem 0.2rem 0rem 0.5rem;
+  font-size: 1.3rem;
+  position: absolute;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.eqdiv {
+  display: flex;
   justify-content: center;
+  width: 100%;
 }
 
-#formTwo {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  height: 400px;
-}
-
-.form2{
-  height: 400px;
-  padding:5px;
-  border: 0.5px solid rgb(216, 214, 233); ;
-  background-color: #ffffff;
-}
-
-.contact-header{
+.alignr {
   display: flex;
-}
-
-.address1 select,h3{
-  font-size: 13px;
-}
-
-.address-container{
-  display:flex;
-  
-}
-fieldset{
-  padding-left: 5px;
-  margin-bottom:20px;
-  height: 400px;
-  font-size: 13px;
-  border: 0.5px solid rgb(216, 214, 233);
-}
-#streetwidth{
-  width: 70%;
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-.address-field-header h3{
-  padding-top: 5px;
-  width: 97.4%;
-  padding-bottom: 10px;
-  font-size: 13px;
-  font-weight: 200;
-  color:#243b53;
-  display: inline-block;
-} 
-
-.phone-header{
-  display: flex;
-}
-
-.type{
-  margin-right:5px;
-  margin-top:5px;
-  margin-bottom:5px;
-  width: 15%;
-}
-.code{
-  margin:5px;
-  width:10%;
-}
-.number{
-  margin:5px;
+  justify-content: right;
   width: 50%;
 }
-#contact-bottom-details label{
-  display: inline-block;
-}
-.phone-inputs{
-  display:flex;
-}
-.phone-inputs #delete{
-  width: 250px;
- direction: rtl;
- margin: 5px;
-}
-.trash{
-  display: inline-block;
-  margin-left: 15px; 
-}
-.type-input{
-  width: 15%;
-  height: 20px;
-  margin-right:5px;
-  margin-top:5px;
-  margin-bottom:5px;
+
+.alignl {
+  display: flex;
+  width: 50%;
+  justify-content: left;
 }
 
-.code-input{
-  /* margin: 1%; */
-  width: 10%;
-  height: 20px;
+.flex {
+  display: flex;
 }
 
-.number-input{
-  margin: 5px;
-  width: 25%;
-  height: 20px;
+.d-none {
+  display: none;
 }
 
+.w-100 {
+  width: 100%;
+}
 
-/* 
+.h-100 {
+  height: 100%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.h-50 {
+  height: 50%;
+}
+
+.w-33 {
+  width: 33.33%;
+}
+
+.h-33 {
+  height: 33.33;
+}
 
 select,
 input[type=text],
 input[type=date],
 input[type=email] {
-  width: 100%;
-  border-radius: 5px;
-} */
-
-.contactdetail {
-  width: 100%;
-  /* display: flex; */
-  /* border-style: ridge;
-  border-radius: 5px; */
-  margin-bottom: 2%;
+    width: 100%;
+    border: 1px solid #d5dce6;
+    border-radius: 4px;
+    height: 25px;
+    line-height: 2.4rem;
+    color: #243b53;
 }
 
-#multiadress{
-  overflow-x: auto;
-}
-
-.address{
-  min-width: 40%;
-  /* max-width: 100%; */
-}
-
-.contactpref {
-  width: 100%;
-  /* border-style: ridge;
-  border-radius: 5px; */
-  margin-bottom: 2%;
-  margin-right: 100px;
-}
-
-.contactpref table,td,tr,th{
-  border-collapse: collapse;
-  border: 1px solid;
-}
-
-.contactpref input[type=text]{
-  width: 98%;
-  border: none;
-  border-style: none;
-}
-
-.contactpref th{
-  width: 16.66%;
-}
-
-.otherdetails {
-  width: 100%;
-  display: flex;
-  /* border-style: ridge;
-  border-radius: 5px; */
+input[type=checkbox] {
+    cursor: pointer;
 }

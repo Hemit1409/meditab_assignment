@@ -133,285 +133,48 @@ document.getElementById("fax-collapse").onclick = function () {
   // otherContent.classList.toggle('content_large');
 }
 
-function addAddressField() {
-  // alert('hi');
-  addressHTML = `<div class="address w-100">
-  <fieldset>
-    <legend>
-      <div>
-        <select name="addressType" id="">
-          <option value="Home">Home</option>
-          <option value="Work">Work</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-    </legend>
-    <div>
-      <div class="flex">
-        <div style="width: 98%;">
-          Address
-        </div>
-        <div style="width: 2%; cursor: pointer;">
-          <i class="fa-solid fa-trash-can def-color"
-            onclick="removeAddressField(this)"></i>
-        </div>
-      </div>
-      <div>
-        Street
-        <div class="flex" style="margin-right: 50%;">
-          <input type="text" name="street">
-        </div>
-      </div>
-      <div class="flex" style="column-gap: 2%;">
-        <div style="width: 24%;">
-          Zip
-          <input type="text" name="zip" id="">
-        </div>
-        <div style="width: 24%;">
-          City
-          <input type="text" name="city" id="">
-        </div>
-        <div style="width: 24%;">
-          State
-          <input type="text" name="state" id="">
-        </div>
-        <div style="width: 24%;">
-          Country
-          <select name="country" id="">
-            <option value="IN">IN</option>
-            <option value="US">US</option>
-          </select>
-        </div>
-        <div style="width: 4%;">
-          <i class="fa-solid fa-trash-can def-color"></i>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div>
-        <div id="multiphone" style="cursor: pointer;">
-          Phone <i class="fa-solid fa-circle-plus def-color" onclick="addPhoneField()"></i>
-        </div>
-        <div class="phone">
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 20%;">
-            Type
-          </div>
-          <div style="width: 20%;">
-            Code
-          </div>
-          <div style="width: 20%;">
-            Number
-          </div>
-          <div style="width: 20%;">
-            Ext.
-          </div>
-        </div>
-        <hr>
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 20%;">
-            <select name="phonetype" id="">
-              <option value="Cell">Cell</option>
-              <option value="Landline">Landline</option>
-            </select>
-          </div>
-          <div style="width: 20%;">
-            <select name="countrtycode" id="">
-              <option value="+91">+91 India</option>
-              <option value="+1">+1 United States</option>
-            </select>
-          </div>
-          <div style="width: 20%;">
-            <input type="text" name="phoneNumber" placeholder="Number"
-              value="1">
-          </div>
-          <div style="width: 20%;">
-            <div style="width: 2%;cursor: pointer;margin-left: 30px;">
-              <i class="fa-solid fa-trash-can def-color" onclick="removePhoneField(this)"></i>
-            </div>
-          </div>
-        </div></div>
-      </div>
-      <div>
-        <div id="multifax" style="cursor: pointer;">
-          Fax <i class="fa-solid fa-circle-plus def-color" onclick="addFaxField()"></i>
-        </div>
-        <div class="fax">
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 20%;">
-            Code
-          </div>
-          <div style="width: 20%;">
-            Number
-          </div>
-        </div>
-        <hr>
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 20%;">
-            <input type="text" placeholder="Code" name="faxcode">
-          </div>
-          <div style="width: 20%;">
-            <input type="text" placeholder="Number" name="faxnumber">
-          </div>
-          <div style="width: 2%;cursor: pointer;margin-left: 30px;">
-            <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
-          </div>
-        </div>
-      </div>
-      </div>
-      <div>
-        <div id="multiemail" style="cursor: pointer;">
-          Email <i class="fa-solid fa-circle-plus def-color" onclick="addEmailField()"></i>
-        </div>
-        <div class="email">
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 50%;">
-            <input type="email" name="email">
-          </div>
-          <div style="width: 2%;cursor: pointer;">
-            <i class="fa-solid fa-trash-can def-color" onclick="removeEmailField(this)"></i>
-          </div>
-        </div></div>
-      </div>
-      <div>
-        <div id="multiweb" style="cursor: pointer;">
-          Website <i class="fa-solid fa-circle-plus def-color" onclick="addWebsiteField()"></i>
-        </div>
-        <div class="web">
-        <div class="flex" style="column-gap: 2%;">
-          <div style="width: 50%;">
-            <input type="text" name="website">
-          </div>
-          <div style="width: 2%;cursor: pointer;">
-            <i class="fa-solid fa-trash-can def-color"onclick="removeWebsiteField(this)"></i>
-          </div>
-        </div></div>
-      </div>
-    </div>
-  </fieldset>
-</div>
+function openOtherDetails() {
+  document.querySelector(".other-detail-content").style.display = "";
+  document.getElementById("closeOtherDetails").style.display = "";
+  document.getElementById("openOtherDetails").style.display = "none";
+}
 
-`
-  document.getElementById("multiadress").innerHTML += addressHTML
+function closeOtherDetails() {
+  document.querySelector(".other-detail-content").style.display = "none";
+  document.getElementById("closeOtherDetails").style.display = "none";
+  document.getElementById("openOtherDetails").style.display = "";
+}
+
+function openSidebar() {
+  document.querySelector(".sidebar").style.width = "10%";
+  
+  document.getElementById("closeSidebar").style.display = "";
+  document.getElementById("openSidebar").style.display = "none";
+}
+
+function closeSidebar() {
+  document.querySelector(".sidebar").style.width = "0.7%";
+  
+  document.getElementById("closeSidebar").style.display = "none";
+  document.getElementById("openSidebar").style.display = "";
+}
+
+function closeSideMenu(){
+  const sidemenuclosebtn = document.getElementById('side-menu-close-btn').classList;
+  const leftsidenav = document.getElementById('leftsidenav');
+  if(sidemenuclosebtn.contains('fa-angle-left')){
+      sidemenuclosebtn.remove('fa-angle-left');
+      sidemenuclosebtn.add('fa-angle-right');
+      leftsidenav.style.width = "1%";
+  }
+  else
+  {
+      sidemenuclosebtn.remove('fa-angle-right');
+      sidemenuclosebtn.add('fa-angle-left');
+      leftsidenav.style.width = "16%";
+  }
   
 }
-
-function removeAddressField(btn) {
-  btn.closest('.address').remove();
-}
-
-function addFaxField(){
-  addressHTML = `<div class="flex" style="column-gap: 2%;">
-  <div style="width: 20%;">
-    Code
-  </div>
-  <div style="width: 20%;">
-    Number
-  </div>
-</div>
-<hr>
-<div class="flex" style="column-gap: 2%;">
-  <div style="width: 20%;">
-    <input type="text" placeholder="Code" name="faxcode">
-  </div>
-  <div style="width: 20%;">
-    <input type="text" placeholder="Number" name="faxnumber">
-  </div>
-  <div style="width: 2%;cursor: pointer;margin-left: 30px;">
-    <i class="fa-solid fa-trash-can def-color" onclick="removeFaxField(this)"></i>
-  </div>
-</div>
-
-`
-  document.getElementById("multifax").innerHTML += addressHTML
-}
-
-function removeFaxField(btn) {
-  btn.closest('.fax').remove();
-}
-
-function addPhoneField(){
-  addressHTML = `<div class="flex" style="column-gap: 2%;">
-  <div style="width: 20%;">
-    Type
-  </div>
-  <div style="width: 20%;">
-    Code
-  </div>
-  <div style="width: 20%;">
-    Number
-  </div>
-  <div style="width: 20%;">
-    Ext.
-  </div>
-</div>
-<hr>
-<div class="flex" style="column-gap: 2%;">
-  <div style="width: 20%;">
-    <select name="phonetype" id="">
-      <option value="Cell">Cell</option>
-      <option value="Landline">Landline</option>
-    </select>
-  </div>
-  <div style="width: 20%;">
-    <select name="countrtycode" id="">
-      <option value="+91">+91 India</option>
-      <option value="+1">+1 United States</option>
-    </select>
-  </div>
-  <div style="width: 20%;">
-    <input type="text" name="phoneNumber" placeholder="Number"
-      value="1">
-  </div>
-  <div style="width: 20%;">
-    <div style="width: 2%;cursor: pointer;margin-left: 30px;">
-      <i class="fa-solid fa-trash-can def-color" onclick="removePhoneField(this)"></i>
-    </div>
-  </div>
-`
-  document.getElementById("multiphone").innerHTML += addressHTML
-}
-
-function removePhoneField(btn) {
-  btn.closest('.phone').remove();
-}
-
-function addEmailField(){
-  addressHTML = `<div class="flex" style="column-gap: 2%;">
-  <div style="width: 50%;">
-    <input type="email" name="email">
-  </div>
-  <div style="width: 2%;">
-    <i class="fa-solid fa-trash-can def-color"></i>
-  </div>
-</div>
-`
-  document.getElementById("multiemail").innerHTML += addressHTML
-}
-
-function removeEmailField(btn) {
-  btn.closest('.email').remove();
-}
-
-function addWebsiteField(btn){
-  addressHTML = `<div class="flex" style="column-gap: 2%;">
-  <div style="width: 50%;">
-    <input type="text" name="website">
-  </div>
-  <div style="width: 2%;cursor: pointer;">
-    <i class="fa-solid fa-trash-can def-color"onclick="removeWebsiteField(this)"></i>
-  </div>
-</div>
-`
-  document.getElementById("multiweb").innerHTML += addressHTML
-  // btn.closest('.website-section').querySelector('.multiweb').innerHTML += websiteHTML;
-}
-
-function removeWebsiteField(btn) {
-  btn.closest('.web').remove();
-}
-
-
 
 var coll = document.getElementsByClassName("formdiv2");
 var i;
@@ -431,3 +194,371 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+
+// ************************************************
+
+
+function addContactField() {
+  // alert('hi');
+  contactHTML = `<div class="single-contact w-100">
+  <fieldset>
+      <legend>
+          <div class="contact-type-div">
+              <select name="contact-type">
+                  <option value="Home">Home</option>
+                  <option value="Work">Work</option>
+                  <option value="Other">Other</option>
+              </select>
+          </div>
+      </legend>
+      <div class="address">
+          <div class="flex">
+              <div class="text-bolder" style="width: 98%;">
+                  Address <i
+                      class="fa-solid fa-circle-plus addAddressFieldBtn"
+                      onclick="addAddressField(this)"
+                      style="display: none;"></i>
+              </div>
+              <div style="width: 2%;">
+                  <i class="fa-solid fa-trash-can def-color"
+                      onclick="removeContactField(this)"></i>
+              </div>
+          </div>
+          <div class="address-section">
+              <div class="single-address">
+                  <div>
+                      Street
+                      <div class="flex" style="margin-right: 50%;">
+                          <input type="text" name="street">
+                      </div>
+                  </div>
+                  <div class="flex" style="column-gap: 2%;">
+                      <div style="width: 24%;">
+                          Zip
+                          <input type="text" name="zip">
+                      </div>
+                      <div style="width: 24%;">
+                          City
+                          <input type="text" name="city">
+                      </div>
+                      <div style="width: 24%;">
+                          State
+                          <input type="text" name="state">
+                      </div>
+                      <div style="width: 24%;">
+                          Country
+                          <select name="country">
+                              <option value="IN">IN</option>
+                              <option value="US">US</option>
+                          </select>
+                      </div>
+                      <div style="width: 4%;">
+                          <i class="fa-solid fa-trash-can def-color"
+                              onclick="removeAddressField(this)"></i>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      <div>
+          <div class="phone-main-section">
+              <div class="text-bolder">
+                  Phone <i class="fa-solid fa-circle-plus def-color"
+                      onclick="addPhoneField(this)"></i>
+              </div>
+              <div class="phone-section">
+                  <div class="phone-label-section flex"
+                      style="column-gap: 2%; margin-bottom: 0.5rem; border-bottom: solid 1px rgba(212,215,220,.5098039215686274);">
+                      <div style="width: 20%;">
+                          Type
+                      </div>
+                      <div style="width: 20%;">
+                          Code
+                      </div>
+                      <div style="width: 20%;">
+                          Number
+                      </div>
+                      <div style="width: 20%;">
+                          Ext.
+                      </div>
+                  </div>
+                  <div class="phone-input-section flex"
+                      style="column-gap: 2%;">
+                      <div style="width: 20%;">
+                          <select name="phonetype">
+                              <option value="Cell">Cell</option>
+                              <option value="Landline">Landline</option>
+                          </select>
+                      </div>
+                      <div style="width: 20%;">
+                          <select name="countrtycode">
+                              <option value="+91">+91 India</option>
+                              <option value="+1">+1 United States</option>
+                          </select>
+                      </div>
+                      <div style="width: 20%;">
+                          <input type="text" name="phoneNumber"
+                              placeholder="Number" value="">
+                      </div>
+                      <div style="width: 20%;">
+                          <input type="text" name="phoneNumber"
+                              placeholder="Ext." value=""
+                              style="display: none;">
+                      </div>
+                      <i class="fa-solid fa-trash-can def-color"
+                          onclick="removePhoneField(this)"></i>
+                  </div>
+              </div>
+          </div>
+
+          <div class="fax-main-section">
+              <div class="text-bolder">
+                  Fax <i class="fa-solid fa-circle-plus def-color"
+                      onclick="addFaxField(this)"></i>
+              </div>
+              <div class="fax-section">
+                  <div class="fax-label-section flex"
+                      style="column-gap: 2%; margin-bottom: 0.5rem; border-bottom: solid 1px rgba(212,215,220,.5098039215686274);">
+                      <div style="width: 20%;">
+                          Code
+                      </div>
+                      <div style="width: 20%;">
+                          Number
+                      </div>
+                  </div>
+                  <div class="fax-input-section flex" style="column-gap: 2%;">
+                      <div style="width: 20%;">
+                          <input type="text" placeholder="Code"
+                              name="faxcode">
+                      </div>
+                      <div style="width: 20%;">
+                          <input type="text" placeholder="Number"
+                              name="faxnumber">
+                      </div>
+                      <div style="width: 2%;">
+                          <i class="fa-solid fa-trash-can def-color"
+                          onclick="removeFaxField(this)"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="email-section">
+              <div class="text-bolder">
+                  Email <i class="fa-solid fa-circle-plus def-color"
+                      onclick="addEmailField(this)"></i>
+              </div>
+              <div class="multi-email">
+                  <div class="single-email flex" style="column-gap: 2%;">
+                      <div style="width: 50%;">
+                          <input type="email" name="email">
+                      </div>
+                      <div style="width: 2%;">
+                          <i class="fa-solid fa-trash-can def-color"
+                              onclick="removeEmailField(this)"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="website-section">
+              <div class="text-bolder">
+                  Website <i class="fa-solid fa-circle-plus def-color"
+                      onclick="addWebsiteField(this)"></i>
+              </div>
+              <div class="multi-website">
+
+                  <div class="single-website flex"
+                      style="column-gap: 2%;">
+                      <div style="width: 50%;">
+                          <input type="text" name="website">
+                      </div>
+                      <div style="width: 2%;">
+                          <i class="fa-solid fa-trash-can def-color"
+                              onclick="removeWebsiteField(this)"></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </fieldset>
+</div>`
+  document.querySelector(".multi-contact").innerHTML += contactHTML
+}
+
+function addAddressField(btn) {
+  addressHTML = `<div class="single-address">
+  <div>
+      Street
+      <div class="flex" style="margin-right: 50%;">
+          <input type="text" name="street">
+      </div>
+  </div>
+  <div class="flex" style="column-gap: 2%;">
+      <div style="width: 24%;">
+          Zip
+          <input type="text" name="zip">
+      </div>
+      <div style="width: 24%;">
+          City
+          <input type="text" name="city">
+      </div>
+      <div style="width: 24%;">
+          State
+          <input type="text" name="state">
+      </div>
+      <div style="width: 24%;">
+          Country
+          <select name="country">
+              <option value="IN">IN</option>
+              <option value="US">US</option>
+          </select>
+      </div>
+      <div style="width: 4%;">
+          <i class="fa-solid fa-trash-can def-color"
+              onclick="removeAddressField(this)"></i>
+      </div>
+  </div>
+</div>`
+  btn.closest('.address').querySelector('.address-section').innerHTML += addressHTML;
+  btn.style.display = "none";
+}
+
+function removeAddressField(btn) {
+  btn.closest('.address').querySelector('.addAddressFieldBtn').style.display = "";
+  btn.closest('.single-address').remove();
+}
+
+function removeContactField(btn) {
+  btn.closest('.single-contact').remove();
+}
+
+function addPhoneField(btn) {
+  phoneInputSectionHTML = `<div class="phone-input-section flex"
+  style="column-gap: 2%;">
+  <div style="width: 20%;">
+      <select name="phonetype">
+          <option value="Cell">Cell</option>
+          <option value="Landline">Landline</option>
+      </select>
+  </div>
+  <div style="width: 20%;">
+      <select name="countrtycode">
+          <option value="+91">+91 India</option>
+          <option value="+1">+1 United States</option>
+      </select>
+  </div>
+  <div style="width: 20%;">
+      <input type="text" name="phoneNumber"
+          placeholder="Number" value="">
+  </div>
+  <div style="width: 20%;">
+      <input type="text" name="phoneNumber"
+          placeholder="Ext." value=""
+          style="display: none;">
+  </div>
+  <i class="fa-solid fa-trash-can def-color"
+      onclick="removePhoneField(this)"></i>
+</div>`;
+
+  phoneLabelSectionHTML = `<div class="phone-label-section flex" style="column-gap: 2%; margin-bottom: 0.5rem; border-bottom: solid 1px rgba(212,215,220,.5098039215686274);">
+  <div style="width: 20%;">
+      Type
+  </div>
+  <div style="width: 20%;">
+      Code
+  </div>
+  <div style="width: 20%;">
+      Number
+  </div>
+  <div style="width: 20%;">
+      Ext.
+  </div>
+</div>`
+
+  if (btn.closest('.phone-main-section').querySelector('.phone-section').childElementCount == 0) {
+      btn.closest('.phone-main-section').querySelector('.phone-section').innerHTML += phoneLabelSectionHTML;
+  }
+  btn.closest('.phone-main-section').querySelector('.phone-section').innerHTML += phoneInputSectionHTML;
+}
+
+function removePhoneField(btn) {
+  if (btn.closest('.phone-section').childElementCount == 2) {
+      btn.closest('.phone-section').querySelector('.phone-label-section').remove();
+  }
+  btn.closest('.phone-input-section').remove();
+}
+
+function addFaxField(btn) {
+  faxInputSectionHTML = `<div class="fax-input-section flex" style="column-gap: 2%;">
+  <div style="width: 20%;">
+      <input type="text" placeholder="Code"
+          name="faxcode">
+  </div>
+  <div style="width: 20%;">
+      <input type="text" placeholder="Number"
+          name="faxnumber">
+  </div>
+  <div style="width: 2%;">
+      <i class="fa-solid fa-trash-can def-color"
+      onclick="removeFaxField(this)"></i>
+  </div>`;
+
+  faxLabelSectionHTML = `<div class="fax-label-section flex"
+  style="column-gap: 2%; margin-bottom: 0.5rem; border-bottom: solid 1px rgba(212,215,220,.5098039215686274);">
+  <div style="width: 20%;">
+      Code
+  </div>
+  <div style="width: 20%;">
+      Number
+  </div>
+</div>`
+
+  if (btn.closest('.fax-main-section').querySelector('.fax-section').childElementCount == 0) {
+      btn.closest('.fax-main-section').querySelector('.fax-section').innerHTML += faxLabelSectionHTML;
+  }
+  btn.closest('.fax-main-section').querySelector('.fax-section').innerHTML += faxInputSectionHTML;
+}
+
+function removeFaxField(btn) {
+  if (btn.closest('.fax-section').childElementCount == 2) {
+      btn.closest('.fax-section').querySelector('.fax-label-section').remove();
+  }
+  btn.closest('.fax-input-section').remove();
+}
+
+function addEmailField(add) {
+  emailHTML = `<div class="single-email flex" name="single-email"
+  style="column-gap: 2%;">
+  <div style="width: 50%;">
+      <input type="email" name="email">
+  </div>
+  <div style="width: 2%;">
+      <i class="fa-solid fa-trash-can def-color"
+          onclick="removeEmailField(this)"></i>
+  </div>
+</div>`
+  add.closest('.email-section').querySelector('.multi-email').innerHTML += emailHTML;
+}
+
+function removeEmailField(btn) {
+  btn.closest('.single-email').remove();
+}
+
+function addWebsiteField(add) {
+  websiteHTML = `<div class="single-website flex" style="column-gap: 2%;">
+  <div style="width: 50%;">
+      <input type="text" name="website">
+  </div>
+  <div style="width: 2%;">
+      <i class="fa-solid fa-trash-can def-color" onclick="removeWebsiteField(this)"></i>
+  </div>
+</div>`
+  add.closest('.website-section').querySelector('.multi-website').innerHTML += websiteHTML;
+}
+
+function removeWebsiteField(btn) {
+  btn.closest('.single-website').remove();
+}
+
