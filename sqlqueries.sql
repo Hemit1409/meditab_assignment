@@ -1,4 +1,4 @@
---1
+--run first 1
 CREATE SEQUENCE PATIENT_ID
     increment 1
     start 1;
@@ -75,7 +75,7 @@ INSERT INTO Patients(firstname,lastname,middlename,dob) VALUES('HEMIT','RANA','S
 INSERT INTO Patients(firstname,lastname,middlename,dob) VALUES('KHUSHI','RANA','S','2005-01-01');
 select * from Patients;
 
---6.5
+--7
 create table RACE(
 race_id serial primary key,
 patient_id VARCHAR(40),    
@@ -88,7 +88,7 @@ race_type_id INT,
     REFERENCES raceTYPE(race_id)
 );
 
---7
+--8
 create table Addresses(
     address_id SERIAL primary key,  
     patient_id VARCHAR(40) ,
@@ -111,22 +111,25 @@ INSERT INTO Addresses(patient_id,zip,country,prim) VALUES('HART0001','390022','I
 INSERT INTO Addresses(patient_id,zip,country,prim) VALUES('HART0002','390021','US',FALSE);
 select * from Addresses;
 
---8
+--9
 create table phone(
     ph_id serial primary key, 
     phoneID INT,
     phone varchar(10),
     ph_type INT,
     prim BOOLEAN,
-    CONSTRAINT fk_emp_phone  
+    CONSTRAINT fk_phone  
     FOREIGN KEY(phoneID)   
     REFERENCES Addresses(address_id),
-    CONSTRAINT fk_emp_phonetype  
+    CONSTRAINT fk_phonetype  
     FOREIGN KEY(ph_type)   
     REFERENCES phonetype(type_id)
 );
 
---9
+
+
+
+--10
 create table patient_zip(
 zipid SERIAL primary key,
 zip VARCHAR(200) unique,
@@ -136,13 +139,13 @@ zip VARCHAR(200) unique,
     street VARCHAR(200),
     CONSTRAINT fk_petient_zip  
     FOREIGN KEY(zip)   
-    REFERENCES Addresses(zip)  
+    REFERENCES Addresses(zip) , 
 );
 
 
 
 
-
+--11
 create table fax(
     f_ID serial primary key,
     faxID INT,
@@ -153,4 +156,37 @@ create table fax(
     REFERENCES Addresses(address_id)
 );
 
+-- 12
+create table Contact_preference_type(
+    preference_type_id serial primary key,
+    peference_type_value varchar(20) not null,
+    created_on timestamp default current_timestamp not null,
+    modified_on timestamp default current_timestamp not null
+);
 
+-- 13
+create table Contact_preference(
+    preference_contact_id serial primary key,
+    peference_type_id varchar(20),
+    patient_id int,
+    address_id int,
+    phone_id int,
+    fax_id int,
+    created_on timestamp default current_timestamp not null,
+    modified_on timestamp default current_timestamp not null,
+    CONSTRAINT fk_patient  
+    FOREIGN KEY(patient_id)   
+    REFERENCES Patients(CHART_NUMBER),
+    CONSTRAINT fk_address  
+    FOREIGN KEY(address_id)   
+    REFERENCES Addresses(address_id),
+    CONSTRAINT fk_phone  
+    FOREIGN KEY(phone_id)   
+    REFERENCES phone(phone_id),
+     CONSTRAINT fk_fax  
+    FOREIGN KEY(fax_id)   
+    REFERENCES fax(f_ID),
+     CONSTRAINT fk_contactpref  
+    FOREIGN KEY(peference_type_id)   
+    REFERENCES Contact_preference_type(preference_type_id)
+);
