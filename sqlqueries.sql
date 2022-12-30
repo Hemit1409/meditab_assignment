@@ -217,7 +217,8 @@ SELECT * FROM information;
 -- SELECT COUNT (UNIQUE firstname,lastname,dob,sex_id) FROM Patients;
 
 -- select count(*) from (select distinct firstname,lastname,dob,sex_id from Patients);
-select firstname,lastname,dob,sex_id,count(concat(firstname,lastname,dob,sex_id)) as occurance from Patients group by firstname,lastname,dob,sex_id;
+select firstname,lastname,dob,sex_id,count(concat(firstname,lastname,dob,sex_id)) as occurance 
+from Patients group by firstname,lastname,dob,sex_id;
 
 
 ------(3)
@@ -259,26 +260,7 @@ WHERE
     t3.phone = '123456789';
 -- END
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select * from Addresses;
 
 
 
