@@ -62,9 +62,9 @@ create table Patients(
     FOREIGN KEY(sex_id)   
     REFERENCES Sex(sex_id)
 );
-INSERT INTO Patients(firstname,lastname,middlename,dob) VALUES('HEMIT','RANA','S','2000-01-01');
-INSERT INTO Patients(firstname,lastname,middlename,dob) VALUES('KHUSHI','RANA','S','2005-01-01');
-INSERT INTO Patients(firstname,lastname,middlename,dob) VALUES('KHUSHI','RANA','S','2005-01-01');
+INSERT INTO Patients(firstname,lastname,middlename,sex_id,dob) VALUES('HEMIT','RANA','S',1,'2000-01-01');
+INSERT INTO Patients(firstname,lastname,middlename,sex_id,dob) VALUES('KHUSHI','RANA','S',2,'2005-01-01');
+INSERT INTO Patients(firstname,lastname,middlename,sex_id,dob) VALUES('KHUSHI','RANA','S',2,'2005-01-01');
 select * from Patients;
 
 --7
@@ -99,8 +99,8 @@ create table Addresses(
     FOREIGN KEY(AddressesType_id)   
     REFERENCES AddressesType(AddressesType_id)  
 );
-INSERT INTO Addresses(CHART_NUMBER,zip,country,prim) VALUES('CHART001','390022','India',TRUE);
-INSERT INTO Addresses(CHART_NUMBER,zip,country,prim) VALUES('CHART002','390021','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART001',1,'390022','India',TRUE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART002',2,'390021','US',FALSE);
 select * from Addresses;
 
 --9
@@ -117,7 +117,9 @@ create table phone(
     FOREIGN KEY(type_id)   
     REFERENCES phonetype(type_id)
 );
-
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(1,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(2,'987654321',2,FALSE);
+select * from phone;
 --10
 create table patient_zip(
 zipid SERIAL primary key,
@@ -130,7 +132,9 @@ zip VARCHAR(200) unique,
     FOREIGN KEY(zip)   
     REFERENCES Addresses(zip)  
 );
-
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390022,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390021,'vadodara','Gujarat','vadodara');
+select * from patient_zip;
 
 
 
@@ -144,7 +148,9 @@ create table fax(
     FOREIGN KEY(address_id)   
     REFERENCES Addresses(address_id)
 );
-
+INSERT INTO fax(address_id,fax,prim) VALUES(1,'123456',TRUE);
+INSERT INTO fax(address_id,fax,prim) VALUES(2,'654321',FALSE);
+select * from fax;
 -- 12
 create table Contact_preference_type(
     preference_type_id serial primary key,
@@ -152,7 +158,9 @@ create table Contact_preference_type(
     created_on timestamp default current_timestamp not null,
     modified_on timestamp default current_timestamp not null
 );
-
+INSERT INTO Contact_preference_type(peference_type_value) VALUES('primary');
+INSERT INTO Contact_preference_type(peference_type_value) VALUES('secondary');
+select * from Contact_preference_type;
 -- 13
 create table Contact_preference(
     preference_contact_id serial primary key,
@@ -179,4 +187,71 @@ create table Contact_preference(
     FOREIGN KEY(peference_type_id)   
     REFERENCES Contact_preference_type(preference_type_id)
 );
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART001',1,1,1);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART002',1,1,1);
+select * from Contact_preference;
+
+
+
+-------(1)
+Create View information as
+Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race
+From
+    Patients as t1
+    LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
+    LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
+    LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id;
+    -- LEFT JOIN Contact_preference as t4 ON t1.;
+    
+SELECT * FROM information;
+
+-----(2)
+-- SELECT COUNT (UNIQUE firstname,lastname,dob,sex_id) FROM Patients;
+
+-- select count(*) from (select distinct firstname,lastname,dob,sex_id from Patients);
+select firstname,lastname,dob,sex_id,count(concat(firstname,lastname,dob,sex_id)) as occurance from Patients group by firstname,lastname,dob,sex_id;
+
+
+------(3)
+
+
+
+
+-------(4)
+
+
+
+
+-----(5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
