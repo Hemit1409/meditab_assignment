@@ -79,7 +79,11 @@ race_type_id INT,
     FOREIGN KEY(race_type_id)   
     REFERENCES raceTYPE(race_type_id)
 );
-
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',1);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART002',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART003',2);
+select * from RACE;
 --8
 create table Addresses(
     address_id SERIAL primary key,  
