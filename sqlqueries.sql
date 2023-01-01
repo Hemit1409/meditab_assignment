@@ -233,8 +233,91 @@ CALL InsertPatientData('SANJAY','RANA','T',1,'1975-01-01');
 
 
 select * from Patients;
--------(4)
 
+
+
+-------(4)
+-- CREATE OR REPLACE FUNCTION get_data (condition VARCHAR, p_year INT) 
+--     RETURNS TABLE (
+--         film_title VARCHAR,
+--         film_release_year INT
+-- ) AS $$
+-- DECLARE 
+--     var_r record;
+-- BEGIN
+--     FOR var_r IN(SELECT 
+--                 title, 
+--                 release_year 
+--                 FROM film 
+--                 WHERE title ILIKE p_pattern AND 
+--                 release_year = p_year)  
+--     LOOP
+--         film_title := upper(var_r.title) ; 
+--         film_release_year := var_r.release_year;
+--         RETURN NEXT;
+--     END LOOP;
+-- END; $$ 
+-- LANGUAGE 'plpgsql';
+
+create or replace FUNCTION getdata(id varchar)
+returns TABLE(
+  firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar, race varchar, country varchar, zip varchar, city varchar, _state varchar, street varchar, phone varchar
+)
+
+LANGUAGE 'plpgsql'
+
+as 
+$body$
+BEGIN
+return query
+  Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race, t5.country, t5.zip, t6.city, t6._state, t6.street, t8.phone
+From
+    Patients as t1
+    LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
+    LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
+    LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
+    LEFT join patient_zip as t6 on t5.zip = t6.zip
+    LEFT join phone as t8 on t8.ph_id = t7.phone_id 
+    WHERE t1.firstname=id or t1.lastname=id or t1.CHART_NUMBER=id or t2.sex=id;
+END;
+$body$;
+
+
+select * from getdata('HEMIT');
+select * from getdata('RANA');
+select * from getdata('CHART002');
+select * from getdata('MALE');
+
+create or replace FUNCTION getdata(id date)
+returns TABLE(
+  firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar, race varchar, country varchar, zip varchar, city varchar, _state varchar, street varchar, phone varchar
+)
+
+LANGUAGE 'plpgsql'
+
+as 
+$body$
+BEGIN
+return query
+  Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race, t5.country, t5.zip, t6.city, t6._state, t6.street, t8.phone
+From
+    Patients as t1
+    LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
+    LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
+    LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
+    LEFT join patient_zip as t6 on t5.zip = t6.zip
+    LEFT join phone as t8 on t8.ph_id = t7.phone_id 
+    WHERE t1.dob=id;
+END;
+$body$;
+
+select * from getdata('1975-01-01');
+
+-- select patient_id,firstname  FROM Patients WHERE patient_id = id;
 
 
 
