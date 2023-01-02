@@ -432,3 +432,42 @@ WHERE
 
 select * from Addresses;
 
+
+
+-- CREATE OR REPLACE FUNCTION get_patient_data(
+--         inp varchar
+-- ) RETURNS table ( 
+--         first_name varchar, 
+--         middle_name varchar, 
+--         last_name varchar, 
+--         chart varchar, 
+--         date_of_birth date, 
+--         gender varchar ) 
+-- as $$
+-- declare 
+--         v_id integer;
+-- begin
+--     if  inp ~ '^[0-9\.]+$' then
+--         v_id = cast(inp as integer);
+--         return QUERY  
+--             select p.first_name, p.middle_name, p.last_name, p.chart, p.date_of_birth, g.sex_type  from patient p  
+--                     left join gender g on  p.sex_id = g.sex_id
+--                     where p.patient_id  = v_id   ;    
+--     end if;
+--      perform TO_DATE(inp,'YYYY-MM-DD')::date;
+--          return QUERY  
+--             select p.first_name, p.middle_name, p.last_name, p.chart, p.date_of_birth, g.sex_type  from patient p  
+--             left join gender g on  p.sex_id = g.sex_id
+--             where   p.date_of_birth = TO_DATE(inp,'YYYY-MM-DD');
+--     exception when others then
+--           return QUERY  
+--             select p.first_name, p.middle_name, p.last_name, p.chart, p.date_of_birth, g.sex_type  from patient p  
+--             left join gender g on  p.sex_id = g.sex_id
+--             where p.first_name = inp  or p.last_name = inp;
+-- end;
+-- $$
+--   LANGUAGE 'plpgsql';
+  
+--  drop function get_patient_data(inp varchar(50))
+  
+-- select * from get_patient_data( inp => 'chanpara');
