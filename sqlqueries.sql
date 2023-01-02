@@ -58,6 +58,7 @@ create table Patients(
     lastname varchar(100) not null,
     sex_id INT,
     dob date,
+    created_on timestamp default CURRENT_TIMESTAMP not null,
     CONSTRAINT fk_sex  
     FOREIGN KEY(sex_id)   
     REFERENCES Sex(sex_id)
@@ -222,19 +223,52 @@ from Patients group by firstname,lastname,dob,sex_id;
 
 
 ------(3)
-CREATE PROCEDURE InsertPatientData(fname varchar(100), mname varchar(100), lname varchar(100),
+CREATE function InsertPatientData(fname varchar(100), mname varchar(100), lname varchar(100),
                           s_id INT, do_b date)
-LANGUAGE SQL
-AS $$
-    INSERT INTO Patients(firstname,lastname,middlename,sex_id,dob) VALUES(fname,mname,lname,s_id,do_b);   
+returns INT 
+language plpgsql
+AS 
+$$
+Declare
+BEGIN
+    INSERT INTO Patients(firstname,lastname,middlename,sex_id,dob) VALUES(fname,mname,lname,s_id,do_b); 
+    return (SELECT patient_id FROM Patients ORDER BY created_on DESC LIMIT 1);  
+End;
 $$;
 
-CALL InsertPatientData('SANJAY','RANA','T',1,'1975-01-01');
-
+select InsertPatientData('SANJAY','RANA','T',1,'1975-01-01');
+select InsertPatientData('BHAVYA','RANA','T',1,'2009-01-01');
+select InsertPatientData('HIMANI','RANA','T',2,'2005-01-01');
+select InsertPatientData('GAYATRI','RANA','T',2,'1983-01-01');
+select InsertPatientData('RUPAL','RANA','T',2,'1982-01-01');
+select InsertPatientData('SHAILESH','RANA','T',1,'1978-01-01');
 
 select * from Patients;
 
 
+
+
+-- Create function generate_primary_key(FIRST_NAME VARCHAR(20), LAST_NAME VARCHAR(20),MIDDLE_NAME VARCHAR(20),DOB DATE, Sex INT)  
+-- returns int  
+-- language plpgsql  
+-- as  
+-- $$  
+-- Declare 
+
+-- Begin  
+--   INSERT INTO Patient(FIRST_NAME,LAST_NAME,MIDDLE_NAME,DOB,SEX) values(FIRST_NAME,LAST_NAME,MIDDLE_NAME,DOB,Sex);
+--   return (SELECT PATIENT_ID FROM Patient ORDER BY created_on DESC LIMIT 1);  
+-- End;  
+-- $$;  
+
+-- SELECT generate_primary_key('ruchit','shah','M','2002-01-01',1);
+
+-- SELECT generate_primary_key('Dhruvil','shah','M','2002-01-01',1);
+
+-- SELECT generate_primary_key('Dhruvil','shah','M','2002-01-01',2);
+
+-- SELECT generate_primary_key('Raj','chopda','M','2002-01-01',1);
+-- SELECT * from Patient;
 
 -------(4)
 -- CREATE OR REPLACE FUNCTION get_data (condition VARCHAR, p_year INT) 
@@ -317,7 +351,40 @@ $body$;
 
 select * from getdata('1975-01-01');
 
--- select patient_id,firstname  FROM Patients WHERE patient_id = id;
+
+
+
+CREATE OR REPLACE FUNCTION paging(
+  PageNumber INTEGER = NULL,
+  PageSize INTEGER = NULL,id varchar = NULL
+  )
+  RETURNS TABLE(
+  firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar, race varchar, country varchar, zip varchar, city varchar, _state varchar, street varchar, phone varchar
+) AS
+  $BODY$
+  BEGIN
+  RETURN QUERY
+  Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race, t5.country, t5.zip, t6.city, t6._state, t6.street, t8.phone
+From
+    Patients as t1
+    LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
+    LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
+    LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
+    LEFT join patient_zip as t6 on t5.zip = t6.zip
+    LEFT join phone as t8 on t8.ph_id = t7.phone_id
+    WHERE t1.firstname=id or t1.lastname=id or t1.CHART_NUMBER=id or t2.sex=id
+  ORDER BY t1.lastname ASC ,t1.firstname ASC, t2.sex ASC, t1.dob ASC
+  LIMIT PageSize
+  OFFSET ((PageNumber-1) * PageSize);
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+Select * from paging(1,4,'HEMIT');
+Select * from paging(2,3,'RANA');
+Select * from paging(2,3,'MALE');
 
 
 
@@ -344,6 +411,8 @@ WHERE
 -- END
 
 select * from Addresses;
+
+
 
 
 
