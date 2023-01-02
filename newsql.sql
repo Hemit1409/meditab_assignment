@@ -417,6 +417,7 @@ Select * from paging(2,3,se_x=>'MALE');--serach by sex
 Select * from paging(1,3,do_b=>'1975-01-01');--search by dob
 
 
+
 -----(5)Write Query to search the patient by patient’s phone no
 
 SELECT 
