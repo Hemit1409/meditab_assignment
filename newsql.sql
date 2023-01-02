@@ -170,6 +170,17 @@ zip VARCHAR(200) unique,
 );
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390022,'vadodara','Gujarat','vadodara');
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390021,'vadodara','Gujarat','vadodara');
+
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390023,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390024,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390025,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390026,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390027,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390028,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390029,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390030,'vadodara','Gujarat','vadodara');
+INSERT INTO patient_zip(zip,city,_state,street) VALUES(390033,'vadodara','Gujarat','vadodara');
+
 select * from patient_zip;
 
 
@@ -187,6 +198,10 @@ create table fax(
 INSERT INTO fax(address_id,fax,prim) VALUES(1,'123456',TRUE);
 INSERT INTO fax(address_id,fax,prim) VALUES(2,'654321',FALSE);
 INSERT INTO fax(address_id,fax,prim) VALUES(5,'654367',TRUE);
+INSERT INTO fax(address_id,fax,prim) VALUES(6,'123459',TRUE);
+INSERT INTO fax(address_id,fax,prim) VALUES(7,'654320',FALSE);
+INSERT INTO fax(address_id,fax,prim) VALUES(8,'654364',TRUE);
+
 select * from fax;
 -- 12
 create table Contact_preference_type(
@@ -229,6 +244,14 @@ INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_i
 
 INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART004',5,6,3);
 
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART005',6,7,4);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART006',7,8,5);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART007',8,9,6);
+
+select * from addresses;
+select * from patients;
+select * from phone;
+select * from fax;
 select * from Contact_preference;
 
 --________________________________________________________//////*ASSIGNMENT 02*//////_________________________________________________________________
@@ -246,7 +269,9 @@ From
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id;
     -- LEFT JOIN Contact_preference as t4 ON t1.;
-    
+
+   
+
 SELECT * FROM information;
 
 -----(2)
@@ -258,7 +283,7 @@ from Patients group by firstname,lastname,dob,sex_id;
 
 
 ------(3)
-CREATE function Insert_PatientData(fname varchar(100), mname varchar(100), lname varchar(100),
+CREATE or replace function Insert_PatientData(fname varchar(100), mname varchar(100), lname varchar(100),
                           s_id INT, do_b date)
 returns INT 
 language plpgsql
@@ -301,7 +326,7 @@ From
     LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
     LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
     LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
-    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER and peference_type_id=1
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id 
@@ -332,7 +357,7 @@ From
     LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
     LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
     LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
-    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER and peference_type_id=1
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id 
@@ -361,7 +386,7 @@ From
     LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
     LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
     LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
-    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER and peference_type_id=1
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id
