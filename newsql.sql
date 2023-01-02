@@ -254,9 +254,19 @@ select * from phone;
 select * from fax;
 select * from Contact_preference;
 
+
+
+
+
 --________________________________________________________//////*ASSIGNMENT 02*//////_________________________________________________________________
 
--------(1)
+
+
+
+
+
+-------(1)Create View to fetch the result of FirstName, LastName, MiddleName, DOB, Chart Number, Sex , Race , Primary Address, Primary Phone, Primary Fax.
+
 Create or replace View information as
 Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race, t5.country, t5.zip, t6.city, t6._state, t6.street, t8.phone
 From
@@ -274,7 +284,8 @@ From
 
 SELECT * FROM information;
 
------(2)
+-----(2)Write Query to fetch unique record from the Patient table based on Firstname, LastName, DOB and Sex with number of occurance(count) of same data.
+
 -- SELECT COUNT (UNIQUE firstname,lastname,dob,sex_id) FROM Patients;
 
 -- select count(*) from (select distinct firstname,lastname,dob,sex_id from Patients);
@@ -282,7 +293,7 @@ select firstname,lastname,dob,sex_id,count(concat(firstname,lastname,dob,sex_id)
 from Patients group by firstname,lastname,dob,sex_id;
 
 
-------(3)
+------(3)Create Function to stored the data into patient table. Pass all the value in the function parameter and function should return the created new primary key value of the table.
 CREATE or replace function Insert_PatientData(fname varchar(100), mname varchar(100), lname varchar(100),
                           s_id INT, do_b date)
 returns INT 
@@ -306,7 +317,7 @@ select Insert_PatientData('HARSHANG','RANA','T',1,'1996-01-01');
 select * from Patients;
 
 
--------(4)
+-------(4)Create Function to get the result of patient’s data by using patientId, lastname, firstname, sex, dob. Need to implement the pagination and sorting(LastName, Firstname, Sex, DOB) in this function.
 
 
 create or replace FUNCTION getdata(id varchar)
@@ -398,13 +409,13 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-Select * from paging(1,4,'HEMIT');
-Select * from paging(2,3,'RANA');
-Select * from paging(2,3,'MALE');
+Select * from paging(1,4,'HEMIT');--search by firstname
+Select * from paging(2,3,'RANA');--serach by lastname
+Select * from paging(2,3,'MALE');--search by gender
 
 
 
------(5)
+-----(5)Write Query to search the patient by patient’s phone no
 
 SELECT 
     t3.phone,firstname,lastname,dob,sex_id
@@ -417,12 +428,4 @@ WHERE
 -- END
 
 select * from Addresses;
-
-
-
-
-
-
-
-
 
