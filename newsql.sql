@@ -87,6 +87,17 @@ INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',1);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART002',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART003',2);
+
+
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART004',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART005',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART006',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART007',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART008',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART009',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART0010',2);
+INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART0010',1);
+
 select * from RACE;
 --8
 create table Addresses(
@@ -108,7 +119,16 @@ create table Addresses(
     REFERENCES AddressesType(AddressesType_id)  
 );
 INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART001',1,'390022','India',TRUE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART001',1,'390033','US',TRUE);
 INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART002',2,'390021','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART003',1,'390023','India',TRUE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART004',2,'390024','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART005',1,'390025','India',TRUE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART006',2,'390026','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART007',1,'390027','India',TRUE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART008',2,'390028','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART009',2,'390029','US',FALSE);
+INSERT INTO Addresses(CHART_NUMBER,AddressesType_id,zip,country,prim) VALUES('CHART0010',2,'390030','US',FALSE);
 select * from Addresses;
 
 --9
@@ -127,6 +147,14 @@ create table phone(
 );
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(1,'123456789',1,TRUE);
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(2,'987654321',2,FALSE);
+--INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(3,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(4,'987654321',2,FALSE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(5,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(6,'987654321',2,FALSE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(7,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(8,'987654321',2,FALSE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(9,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(10,'987654321',2,FALSE);
 select * from phone;
 --10
 create table patient_zip(
@@ -158,6 +186,7 @@ create table fax(
 );
 INSERT INTO fax(address_id,fax,prim) VALUES(1,'123456',TRUE);
 INSERT INTO fax(address_id,fax,prim) VALUES(2,'654321',FALSE);
+INSERT INTO fax(address_id,fax,prim) VALUES(5,'654367',TRUE);
 select * from fax;
 -- 12
 create table Contact_preference_type(
@@ -197,19 +226,22 @@ create table Contact_preference(
 );
 INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART001',1,1,1);
 INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART002',1,1,1);
+
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART004',5,6,3);
+
 select * from Contact_preference;
 
 --________________________________________________________//////*ASSIGNMENT 02*//////_________________________________________________________________
 
 -------(1)
-Create View information as
+Create or replace View information as
 Select t1.firstname, t1.lastname, t1.dob, t1.chart_number, t2.sex, t4.race, t5.country, t5.zip, t6.city, t6._state, t6.street, t8.phone
 From
     Patients as t1
     LEFT JOIN sex as t2 ON t1.sex_id = t2.sex_id
     LEFT JOIN RACE as t3 ON t1.CHART_NUMBER = t3.CHART_NUMBER
     LEFT join raceTYPE as t4 on t1.CHART_NUMBER = t3.CHART_NUMBER and t3.race_type_id=t4.race_type_id
-    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER
+    LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER and peference_type_id=1
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id;
