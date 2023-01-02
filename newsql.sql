@@ -320,7 +320,7 @@ select * from Patients;
 -------(4)Create Function to get the result of patient’s data by using patientId, lastname, firstname, sex, dob. Need to implement the pagination and sorting(LastName, Firstname, Sex, DOB) in this function.
 
 
-create or replace FUNCTION getdata(id varchar)
+create or replace FUNCTION getdata(fname varchar default  null, lname varchar default  null,chartnumber varchar default  null, se_x varchar default  null, do_b date default null)
 returns TABLE(
   firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar, race varchar, country varchar, zip varchar, city varchar, _state varchar, street varchar, phone varchar
 )
@@ -341,15 +341,16 @@ From
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
     LEFT join phone as t8 on t8.ph_id = t7.phone_id 
-    WHERE t1.firstname=id or t1.lastname=id or t1.CHART_NUMBER=id or t2.sex=id;
+    WHERE t1.firstname=fname or t1.lastname=lname or t1.CHART_NUMBER=chartnumber or t2.sex=se_x or t1.dob = do_b;
 END;
 $body$;
 
 
-select * from getdata('HEMIT');
-select * from getdata('RANA');
-select * from getdata('CHART002');
-select * from getdata('MALE');
+select * from getdata(fname=>'HEMIT');
+select * from getdata(lname=>'RANA');
+select * from getdata(chartnumber=>'CHART002');
+select * from getdata(se_x=>'MALE');
+select * from getdata(do_b=>'1975-01-01');
 
 create or replace FUNCTION getdata(id date)
 returns TABLE(
@@ -383,7 +384,7 @@ select * from getdata('1975-01-01');
 
 CREATE OR REPLACE FUNCTION paging(
   PageNumber INTEGER = NULL,
-  PageSize INTEGER = NULL,id varchar = NULL
+  PageSize INTEGER = NULL,fname varchar default  null, lname varchar default  null,chartnumber varchar default  null, se_x varchar default  null, do_b date default null
   )
   RETURNS TABLE(
   firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar, race varchar, country varchar, zip varchar, city varchar, _state varchar, street varchar, phone varchar
@@ -400,8 +401,8 @@ From
     LEFT JOIN Contact_preference as t7 on t1.CHART_NUMBER = t7.CHART_NUMBER and peference_type_id=1
     LEFT join Addresses as t5 on t1.CHART_NUMBER = t5.CHART_NUMBER and t7.address_id = t5.address_id
     LEFT join patient_zip as t6 on t5.zip = t6.zip
-    LEFT join phone as t8 on t8.ph_id = t7.phone_id
-    WHERE t1.firstname=id or t1.lastname=id or t1.CHART_NUMBER=id or t2.sex=id
+    LEFT join phone as t8 on t8.ph_id = t7.phone_id 
+    WHERE t1.firstname=fname or t1.lastname=lname or t1.CHART_NUMBER=chartnumber or t2.sex=se_x or t1.dob = do_b
   ORDER BY t1.lastname ASC ,t1.firstname ASC, t2.sex ASC, t1.dob ASC
   LIMIT PageSize
   OFFSET ((PageNumber-1) * PageSize);
@@ -409,10 +410,11 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-Select * from paging(1,4,'HEMIT');--search by firstname
-Select * from paging(2,3,'RANA');--serach by lastname
-Select * from paging(2,3,'MALE');--search by gender
-
+Select * from paging(1,4,fname=>'HEMIT');--search by firstname
+Select * from paging(2,3,lname=>'RANA');--serach by lastname
+Select * from paging(1,3,chartnumber=>'CHART002');--search by chart number
+Select * from paging(2,3,se_x=>'MALE');--serach by sex
+Select * from paging(1,3,do_b=>'1975-01-01');--search by dob
 
 
 -----(5)Write Query to search the patient by patient’s phone no
