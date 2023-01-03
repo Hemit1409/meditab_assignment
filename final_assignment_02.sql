@@ -335,6 +335,7 @@ select Insert_PatientData('GAYATRI','RANA','T',2,'1983-01-01');
 select Insert_PatientData('RUPAL','RANA','T',2,'1982-01-01');
 select Insert_PatientData('SHAILESH','RANA','T',1,'1978-01-01');
 select Insert_PatientData('HARSHANG','RANA','T',1,'1996-01-01');
+select Insert_PatientData('RANA','PATEL','T',1,'1996-01-01');
 select * from Patients;
 
 
@@ -382,7 +383,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 Select * from pagination(1,4,'HEMIT');--search by firstname
-Select * from pagination(2,3,'RANA');--search by lastname
+Select * from pagination(1,8,'RANA');--search by lastname
 Select * from pagination(1,3,'CHART002');--search by chart number
 Select * from pagination(3,1,'MALE');--serach by sex
 Select * from pagination(1,3,do_b=>'1975-01-01');--search by dob
