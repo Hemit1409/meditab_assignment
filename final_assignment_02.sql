@@ -90,8 +90,6 @@ INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',1);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART001',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART002',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART003',2);
-
-
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART004',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART005',2);
 INSERT INTO RACE(CHART_NUMBER,race_type_id) VALUES('CHART006',2);
@@ -156,7 +154,7 @@ create table phone(
 
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(1,'123456789',1,TRUE);
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(2,'987654321',2,FALSE);
---INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(3,'123456789',1,TRUE);
+INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(3,'123456789',1,TRUE);
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(4,'987654321',2,FALSE);
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(5,'123456789',1,TRUE);
 INSERT INTO phone(phoneID,phone,type_id,prim) VALUES(6,'987654321',2,FALSE);
@@ -182,7 +180,6 @@ zip VARCHAR(200) unique,
 
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390022,'vadodara','Gujarat','vadodara');
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390021,'vadodara','Gujarat','vadodara');
-
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390023,'vadodara','Gujarat','vadodara');
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390024,'vadodara','Gujarat','vadodara');
 INSERT INTO patient_zip(zip,city,_state,street) VALUES(390025,'vadodara','Gujarat','vadodara');
@@ -259,13 +256,13 @@ create table Contact_preference(
 
 
 INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART001',1,1,1);
-INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART002',1,1,1);
+--INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART002',3,3,1);
 
-INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART004',5,6,3);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART004',5,5,3);
 
-INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART005',6,7,4);
-INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART006',7,8,5);
-INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART007',8,9,6);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART005',6,6,4);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART006',7,7,5);
+INSERT INTO Contact_preference(peference_type_id,CHART_NUMBER,address_id,phone_id,fax_id) VALUES(1,'CHART007',8,8,6);
 
 select * from addresses;
 select * from patients;
@@ -306,7 +303,7 @@ SELECT * FROM information;
 -----(2)Write Query to fetch unique record from the Patient table based on Firstname, LastName, DOB and Sex with number of occurance(count) of same data.
 
 -- SELECT COUNT (UNIQUE firstname,lastname,dob,sex_id) FROM Patients;
-
+--
 -- select count(*) from (select distinct firstname,lastname,dob,sex_id from Patients);
 select firstname,lastname,dob,sex_id,count(concat(firstname,lastname,dob,sex_id)) as occurance 
 from Patients group by firstname,lastname,dob,sex_id;
