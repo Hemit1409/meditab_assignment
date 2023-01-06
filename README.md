@@ -49,3 +49,10 @@ https://chartio.com/resources/tutorials/how-to-define-an-auto-increment-primary-
 
 foreignkey in postgre sql
 https://www.javatpoint.com/postgresql-foreign-key
+
+
+dotnet and db connection
+https://www.youtube.com/watch?v=yGwGLcqcJ6Q
+
+https://www.guru99.com/insert-update-delete-asp-net.html
+
