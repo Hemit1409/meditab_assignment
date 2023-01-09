@@ -24,7 +24,7 @@ namespace WebApi_hemitr.Controllers
         {
             string query = @"
                 select *
-                from Patients
+                from Patients where isdeleted=false
             ";
 
             DataTable table = new DataTable();
@@ -84,7 +84,7 @@ namespace WebApi_hemitr.Controllers
         public JsonResult Put(Patients patient_obj)
         {
             string query = @"
-               update Patients set firstname = @firstname where patient_id=@patient_id
+               update Patients set firstname = @firstname where patient_id=@patient_id and isdeleted=false
             ";
 
             DataTable table = new DataTable();
@@ -147,7 +147,7 @@ namespace WebApi_hemitr.Controllers
         {
             string query = @"
                select *
-                from Patients where patient_id=@patient_id
+                from Patients where patient_id=@patient_id and isdeleted=false
             ";
 
             DataTable table = new DataTable();
