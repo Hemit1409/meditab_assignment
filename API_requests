@@ -1,0 +1,18 @@
+post 
+
+{
+    "first_name": "Saheel",
+    "last_name": "Sapovadia",
+    "middle_name": "D",
+    "sex_id" : 1
+
+}
+
+
+Put
+{
+    "patient_id": 15,
+    "first_name": "sahil",
+    "last_name": "Sapovadia",
+    "middle_name": "D"
+}
