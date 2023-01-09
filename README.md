@@ -59,3 +59,9 @@ https://www.guru99.com/insert-update-delete-asp-net.html
 https://youtu.be/xTcBKqDCwx0
 
 
+CRUD operations
+
+Nikita: https://www.youtube.com/watch?v=Mpl4IWFob4I
+
+Saunya: https://www.youtube.com/watch?v=9MDJXUT8nwU
+
