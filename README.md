@@ -78,3 +78,9 @@ https://www.c-sharpcorner.com/article/how-to-create-and-use-procedure-and-functi
 https://www.c-sharpcorner.com/article/three-tier-architecture-in-asp-net-core-6-web-api/
 
 https://www.youtube.com/watch?v=BfEjDD8mWYg
+
+
+
+dotnet API with layerstructure
+https://www.youtube.com/playlist?list=PLwxiRZdZ4bZmnNjb7M3byWHlGr0mIG_mH
+
