@@ -63,7 +63,18 @@ CRUD operations
 
 Nikita: https://www.youtube.com/watch?v=Mpl4IWFob4I
 
-Saunya: https://www.youtube.com/watch?v=9MDJXUT8nwU
+Saumya: https://www.youtube.com/watch?v=9MDJXUT8nwU
 
 
 main folder = WebApi_hemitr
+
+
+https://www.c-sharpcorner.com/article/transaction-in-net/
+
+https://youtu.be/Zt2f0RI4hOI
+
+https://www.c-sharpcorner.com/article/how-to-create-and-use-procedure-and-function-postgresql/
+
+https://www.c-sharpcorner.com/article/three-tier-architecture-in-asp-net-core-6-web-api/
+
+https://www.youtube.com/watch?v=BfEjDD8mWYg
