@@ -79,7 +79,7 @@ select * from Patients;
 
 
 
---getalllist by pagintion and sorting
+--get all list by pagintion and sorting
 
 create  or replace function  
 getlist_search_patient_and_pagination2(
@@ -111,7 +111,12 @@ $$
 
 
 
+
+
+
 ------(3)Create
+
+
 CREATE or replace function Insert_PatientData(fname varchar(100), mname varchar(100), lname varchar(100),
                           s_id INT, do_b date)
 returns INT 
@@ -131,7 +136,11 @@ select Insert_PatientData('PRIYA','PATEL','R',2,'1994-1-13');
 
 
 
+
+
 --(4) update
+
+
 --function to update 
 create or replace function UpdateRecord(
                 patientid int,
@@ -174,6 +183,8 @@ select * from Sex;
 
   
   --(5) softdelete
+
+  
 --function to softdelete 
 create or replace function DeleteRecord(
                 patientid int
