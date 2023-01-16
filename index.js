@@ -1,3 +1,19 @@
+const formE1 = document.queryelector(".form");
+
+formE1.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const FormData = new FormData(formE1);
+    console.log(formData.get('username'));
+})
+
+fetch(`http://localhost:29713/api/Patient/1`)
+    .then(res => console.log(res.json))
+    .then(data => console.log(data))
+
+
+
+
 function newFunction() {
     var element = document.getElementById("form_id");
     element.reset();
@@ -126,12 +142,12 @@ document.getElementById("sidebar-collapse").onclick = function () {
     mainContent.classList.toggle('content_large');
 }
 
-const other = document.querySelector('.formdiv2');
+/*const other = document.querySelector('.formdiv2');
 // const otherContent = document.querySelector('.content');
 document.getElementById("fax-collapse").onclick = function () {
     other.classList.toggle('formdiv2-small');
     // otherContent.classList.toggle('content_large');
-}
+}*/
 
 function openOtherDetails() {
     document.querySelector(".other-detail-content").style.display = "";

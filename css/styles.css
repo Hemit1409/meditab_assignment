@@ -831,7 +831,6 @@ fieldset {
 
 select,
 input[type=text],
-input[type=date],
 input[type=email] {
     width: 100%;
     border: 1px solid #d5dce6;
