@@ -75,6 +75,8 @@ INSERT INTO PatientAllergy(patient_id,AllergyMasterId,Note) VALUES(1,2,'note2');
 INSERT INTO PatientAllergy(patient_id,AllergyMasterId,Note) VALUES(2,3,'note3');
 select * from PatientAllergy;
 
+ALTER TABLE PatientAllergy
+ADD isDeleted boolean default false not null;
 
 ------(1)GetById
 
@@ -129,8 +131,29 @@ select * from Update_PatientAllergy(5,3,'LATEX','S');
 
 
 ------(5)Delete
+create or replace function Deleted_PatientAllergy(
+                PatientAllergy_Id int
+                
+                )
+returns table (
+                PatientAllergyId int
+                
+)
+language plpgsql
+as
+$$
+declare 
+--_query varchar :='';
+ _query varchar:= 'update PatientAllergy set isdeleted=true'; 
+ 
+ begin
+     _query := _query || ' where PatientAllergyId='||$1||' returning PatientAllergyId';
+     raise notice '%',_query;
+     return query execute _query using PatientAllergy_Id;
+ end;
+$$  
 
-
+select * from Deleted_PatientAllergy(6);
 
 ------(6)Patch
 
