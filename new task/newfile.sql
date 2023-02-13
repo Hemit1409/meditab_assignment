@@ -36,7 +36,7 @@ ____________________________________________MAIN assignment_____________________
 --INSERT INTO Patient(firstname,lastname,middlename,sex_id,dob) VALUES('HEMIT','RANA','S',1,'2000-01-01');
 --INSERT INTO Patient(firstname,lastname,middlename,sex_id,dob) VALUES('KHUSHI','RANA','S',2,'2005-01-01');
 --INSERT INTO Patient(firstname,lastname,middlename,sex_id,dob) VALUES('KHUSHI','RANA','S',2,'2005-01-01');
-select * from Patients;
+--select * from Patient;
 
 
 create table AllergyMaster(
@@ -79,7 +79,7 @@ ALTER TABLE PatientAllergy
 ADD isDeleted boolean default false not null;
 
 ------(1)GetById
-create or replace function PatientGetbyID(
+create or replace function PatientAllergyGetbyID(
                 patientid int
                 
                 )
@@ -93,14 +93,15 @@ returns table (
                 sex varchar,
                 dob date,
                 allergyname varchar,
-                note varchar
+                note varchar,
+                code varchar
 )
 language plpgsql
 as
 $$
 declare 
 --_query varchar :='';
- _query varchar:= 'select Patients.patient_id,chart_number,firstname , lastname,middlename,Patients.sex_id,sex.sex,dob,AllergyMaster.AllergyName,PatientAllergy.Note from Patients 
+ _query varchar:= 'select Patients.patient_id,chart_number,firstname , lastname,middlename,Patients.sex_id,sex.sex,dob,AllergyMaster.AllergyName,PatientAllergy.Note,AllergyMaster.code from Patients 
 left join sex on sex.sex_id=Patients.sex_id
 LEFT JOIN PatientAllergy ON Patients.patient_id = PatientAllergy.patient_id 
 LEFT JOIN AllergyMaster ON PatientAllergy.AllergyMasterId = AllergyMaster.AllergyMasterId'; 
@@ -113,11 +114,12 @@ LEFT JOIN AllergyMaster ON PatientAllergy.AllergyMasterId = AllergyMaster.Allerg
 $$ 
 
 
-select * from PatientGetbyID(3);
+select * from PatientAllergyGetbyID(1);
+
 
 ------(2)GetList
    create  or replace function  
-patientget(
+patientallergyget(
 			PageNumber INTEGER = 1,
   			PageSize INTEGER = 20,
 			first_Name varchar default '',
@@ -126,13 +128,13 @@ patientget(
 			dateofbirth varchar default null,
 			orderby in varchar default 'Patients.patient_id'
 			)
-returns table( 	patientid integer,firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar,AllergyName VARCHAR, Note varchar
+returns table( 	patientid integer,firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar,AllergyName VARCHAR, Note varchar, code varchar
 )
 language plpgsql
 as
 $$
 declare 
-initialquery varchar(2000) := 'Select Patients.patient_id, Patients.firstname, Patients.lastname, Patients.dob, Patients.chart_number, sex.sex,AllergyMaster.AllergyName,PatientAllergy.Note
+initialquery varchar(2000) := 'Select Patients.patient_id, Patients.firstname, Patients.lastname, Patients.dob, Patients.chart_number, sex.sex,AllergyMaster.AllergyName,PatientAllergy.Note,AllergyMaster.code
 From
     Patients
     LEFT JOIN sex ON Patients.sex_id = sex.sex_id 
@@ -154,8 +156,10 @@ begin
 end;
 $$
 
- select * from patientget();  
-   select * from patientget(first_Name=>'HEMIT',dateofbirth=>'2000-01-01');
+ select * from patientallergyget();  
+   select * from patientallergyget(first_Name=>'HEMIT',dateofbirth=>'2000-01-01');
+
+  select * from patients;
 
 ------(3)create
 CREATE or replace function create_PatientAllergy(patientid INT, AllergyMaster_Id INT, note varchar(100))
@@ -203,8 +207,9 @@ select * from Update_PatientAllergy(5,3,'LATEX','S');
 
 ------(5)Delete
 create or replace function Deleted_PatientAllergy(
-                PatientAllergy_Id int
-                
+                --PatientAllergy_Id int,
+                patientid int,
+                allergyname varchar
                 )
 returns table (
                 PatientAllergyId int
@@ -218,16 +223,64 @@ declare
  _query varchar:= 'update PatientAllergy set isdeleted=true'; 
  
  begin
-     _query := _query || ' where PatientAllergyId='||$1||' returning PatientAllergyId';
+     _query := _query || ' where patient_id='||$1||' and AllergyMasterId=(select AllergyMasterId from AllergyMaster where AllergyName='''||$2||''') returning PatientAllergyId';
      raise notice '%',_query;
-     return query execute _query using PatientAllergy_Id;
+     return query execute _query using patientid;
  end;
 $$  
 
-select * from Deleted_PatientAllergy(6);
+select * from Deleted_PatientAllergy(108,'LATEX');
+select * from patientallergy;
+
+create or replace function Deleted_PatientanditsAllergy(
+                --PatientAllergy_Id int,
+                patientid int
+
+                )
+returns table (
+                PatientAllergyId int
+                
+)
+language plpgsql
+as
+$$
+declare 
+--_query varchar :='';
+ _query varchar:= 'update PatientAllergy set isdeleted=true'; 
+ 
+ begin
+     _query := _query || ' where patient_id='||$1||' returning PatientAllergyId';
+     raise notice '%',_query;
+     return query execute _query using patientid;
+ end;
+$$ 
+
+select * from Deleted_PatientanditsAllergy(2);
+select * from patients;
+
 
 ------(6)Patch
+create or replace function patchPatientAllergy(PatientAllergy_Id int,patient_id int default null,allergyname varchar default null , note varchar default null)
+returns  TABLE(
+    PatientAllergyId int
+) 
+LANGUAGE PLPGSQL
+as 
+$$
+declare
+    _initialquery varchar :='update PatientAllergy set '
+	   || case when $3 is not null then 'AllergyMasterId=(select AllergyMasterId from AllergyMaster where AllergyName = '''||$3||''')' else 'AllergyMasterId=AllergyMasterId' end
+	  || case when $4 is not null then ',Note='''||$4||'''' else ',Note=Note' end
+	 ||',lastmodifieddate = current_timestamp ' ||'where patient_id='||$2||' and PatientAllergyId='||$1||' returning PatientAllergyId';
+    begin
 
+         RAISE notice '%',_initialquery;
+    return query execute _initialquery using PatientAllergy_Id,patient_id,allergyname,note;
+    end;
+$$
+
+
+select* from patchPatientAllergy(PatientAllergy_Id=>14, patient_id=> 4,note=>'note354356463');
 
 
 
