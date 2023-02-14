@@ -126,7 +126,9 @@ patientallergyget(
 			last_Name varchar default '',
 			gender varchar default '',
 			dateofbirth varchar default null,
-			orderby in varchar default 'Patients.patient_id'
+			allergy_name varchar default '',
+			orderby in varchar default 'Patients.patient_id',
+			ordertype in varchar default 'ASC'
 			)
 returns table( 	patientid integer,firstname varchar, lastname varchar, dob date, chart_number varchar, sex varchar,AllergyName VARCHAR, Note varchar, code varchar
 )
@@ -149,17 +151,20 @@ begin
 	||case when $4 != '' then ' and Patients.lastname = '''||$4||'''' else '' end 
 	||case when $5 != '' then ' and sex.sex = '''||$5||'''' else '' end
 	||case when $6 != '' then ' and Patients.dob = '''||$6::date||'''' else '' end
-	||' ORDER BY '|| $7|| ' ASC LIMIT '|| $2 ||' OFFSET (('||$1||'-1) *'|| $2||')';
+	||case when $7 != '' then ' and AllergyMaster.AllergyName = '''||$7||'''' else '' end
+	||' ORDER BY '|| $8|| ' ' || $9||' LIMIT '|| $2 ||' OFFSET (('||$1||'-1) *'|| $2||')';
 
 	raise notice 'sql %' , initialquery;
-	return query execute initialquery using PageNumber,PageSize,first_Name,last_Name,gender,dateofbirth,orderby;
+	return query execute initialquery using PageNumber,PageSize,first_Name,last_Name,gender,dateofbirth,allergy_name,orderby,ordertype;
 end;
 $$
 
- select * from patientallergyget();  
-   select * from patientallergyget(first_Name=>'HEMIT',dateofbirth=>'2000-01-01');
-
-  select * from patients;
+ select * from patientallergyget();
+ select * from patientallergyget(ordertype=>'DESC'); 
+   select * from patientallergyget(first_Name=>'HEMIT');
+select * from patientallergyget(allergy_name=>'MILK');
+  select * from patients order by patient_id asc;
+ select * from AllergyMaster;
 
 ------(3)create
 CREATE or replace function create_PatientAllergy(patientid INT, AllergyMaster_Id INT, note varchar(100))
@@ -269,8 +274,8 @@ as
 $$
 declare
     _initialquery varchar :='update PatientAllergy set '
-	   || case when $3 is not null then 'AllergyMasterId=(select AllergyMasterId from AllergyMaster where AllergyName = '''||$3||''')' else 'AllergyMasterId=AllergyMasterId' end
-	  || case when $4 is not null then ',Note='''||$4||'''' else ',Note=Note' end
+	   || case when $3 != '' then 'AllergyMasterId=(select AllergyMasterId from AllergyMaster where AllergyName = '''||$3||''')' else 'AllergyMasterId=AllergyMasterId' end
+	  || case when $4 != '' then ',Note='''||$4||'''' else ',Note=Note' end
 	 ||',lastmodifieddate = current_timestamp ' ||'where patient_id='||$2||' and PatientAllergyId='||$1||' returning PatientAllergyId';
     begin
 
@@ -1014,7 +1019,7 @@ select * from patientupdate(14,'SUMEET','PATEL','S','MALE','2003-01-01');
 select * from Sex;  
   
  select * from Patients order by patient_id asc;
-  
+ select * from patientallergy order by patient_id asc;
   
   --update Patients set firstname = @firstname where patient_id=@patient_id and isdeleted=false
   
