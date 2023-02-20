@@ -1,0 +1,188 @@
+        [HttpPost("GetList")]
+        public List<Patients> patientget(Patients patient_obj, int PageNumber = 1, int PageSize = 10)
+        {
+
+            List<Patients>? patient_Allergy = new List<Patients>();
+
+            string query = @"
+                --select * FROM patientallergyget(@PageNumber,@PageSize,first_Name=>@first_name,last_Name=>@last_name,gender=>@sex,dateofbirth=>@dob,allergy_name=>@allergyname,orderby=>@orderby,ordertype=>@OrderType);
+                select * FROM patientallergygetCombined(" + PageNumber + ","+ PageSize + ",first_Name=>"+ GetValue(patient_obj.first_name) + ",last_Name=>"+ GetValue(patient_obj.last_name) + ",gender=>"+ GetValue(patient_obj.sex) + ",dateofbirth=>" + GetValue(patient_obj.dob) + ",allergy_name=>"+ GetValue(patient_obj.allergyname) + ",orderby=>"+ GetValue(patient_obj.Orderby) + ",ordertype=>"+ GetValue(patient_obj.OrderType) + ");";
+
+            Console.WriteLine(query);
+
+            /*string Allergyquery = @"
+                select * from allergyget(@patientid);";*/
+
+            DataTable table = new DataTable();
+            DataTable table2 = new DataTable();
+            DataTable table3 = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;//,myReader2, myReader3;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            //Allergy[] allergy = new Allergy[10];
+            List<Allergy> allergyList = new List<Allergy>();
+
+            ListtoDataTableConverter converter = new ListtoDataTableConverter();
+            //DataTable dt; //= converter.ToDataTable(allergyList);
+
+            List<Patients> patientList = new List<Patients>();
+            List<Patients> patientList2 = new List<Patients>();
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@PageNumber", PageNumber);
+                    myCommand.Parameters.AddWithValue("@PageSize", PageSize);
+                    myCommand.Parameters.AddWithValue("@first_name", patient_obj.first_name);
+                    myCommand.Parameters.AddWithValue("@last_name", patient_obj.last_name);
+                    myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);
+                    myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+                    myCommand.Parameters.AddWithValue("@allergyname", patient_obj.allergyname);
+                    myCommand.Parameters.AddWithValue("@orderby", patient_obj.Orderby);
+                    myCommand.Parameters.AddWithValue("@OrderType", patient_obj.OrderType);
+
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    int j = 0, k = 0;
+                    Console.WriteLine(table.Rows.Count);
+                    for(int i=0;i< table.Rows.Count; i=j)
+                    {
+                        Patients p= new Patients();
+                        List<Allergy> list = new List<Allergy>();
+
+                        p.patient_id = Convert.ToInt32(table.Rows[i]["patientid"].ToString());
+                        p.first_name = table.Rows[i]["firstname"].ToString();
+                        p.last_name = table.Rows[i]["lastname"].ToString();
+                        for(k=j;k<table.Rows.Count;k++)
+                        {
+                            j = k;
+                            if(p.patient_id == Convert.ToInt32(table.Rows[k]["patientid"].ToString()))
+                            {
+                                Allergy a= new Allergy();
+                                a.patientAllergyId = Convert.ToInt32(table.Rows[k]["_PatientAllergyId"].ToString());
+                                a.allergyname = table.Rows[k]["_AllergyName"].ToString();
+                                a.note= table.Rows[k]["_Note"].ToString();
+                                list.Add(a);
+                            }
+                            else
+                            {
+                                j = k;
+                                break;
+                            }
+                        }
+                        p.PatientAllergies = list.ToList();
+                        patient_Allergy.Add(p);
+                        if (k == (table.Rows.Count))
+                        {
+                            break;
+                        }
+
+
+                    }
+
+
+
+                    /*for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        int pid = (int)table.Rows[i][0];
+                        *//*using (NpgsqlCommand myCommand2 = new NpgsqlCommand(Allergyquery, myCon))
+                        {
+                            myCommand2.Parameters.AddWithValue("@patientid", pid);
+
+
+                            myReader2 = myCommand2.ExecuteReader();
+                            table2.Load(myReader2);
+                            Patients.GetListByTable(table);//, table2);*//*
+                            string Allergyquery2 = @"select * from allergyget(" + pid + ");";
+
+                            using (NpgsqlCommand myCommand3 = new NpgsqlCommand(Allergyquery2, myCon))
+                            {
+                                //myCommand.Parameters.AddWithValue("@patientid", id);
+
+
+                                myReader3 = myCommand3.ExecuteReader();
+                                table3.Load(myReader3);
+                                Console.WriteLine(pid);
+                                foreach (DataRow dataRow in table3.Rows)
+                                {
+                                    foreach (var item in dataRow.ItemArray)
+                                    {
+                                        Console.Write(item + "  ");
+                                    }
+                                    Console.WriteLine();
+                                }
+                                myReader3.Close();
+                                //myCon.Close();
+
+                            }
+
+
+                            //myReader2.Close();
+
+
+                        //}
+                    }*/
+                    //Console.WriteLine(dt);
+
+                    //table.Merge(dt);
+                    myCon.Close();
+
+                    //table.Merge(dt);
+
+                    //patientList = Patients.GetListByTable(table);//, table2);
+
+
+
+                    myReader.Close();
+                    //myCon.Close();
+
+                }
+                
+                myCon.Close();
+
+                    //table.Merge(dt);
+
+                    
+
+            }
+
+            /*List<Patients> patientList = new List<Patients>();
+
+            //table.Merge(dt);
+
+            patientList = Patients.GetListByTable(table,table2);
+*/
+
+            //List<string> result = patientList.Join(allergyList);
+
+            //List<object> objectList = patientList.Cast<object>().Concat(allergyList).ToList();
+            patientList = Patients.GetListByTable(table);
+            //patientList = Patients.GetPatientWithAllergy(table);
+
+            var json = System.Text.Json.JsonSerializer.Serialize(patientList);
+            //Console.WriteLine(json);
+
+            //Patients jObj2 = JsonConvert.DeserializeObject<Patients>(json);
+
+            /*var result = jObj2.Allergy
+            .GroupBy(x => x.patient_id)
+            .Select(group => new
+            {
+                Language = group.Key,
+                Ids = group.Select(x => x.Id).ToList(),
+                FullNames = group.Select(x => x.Full_Name).ToList(),
+                Names = group.Select(x => x.Name).ToList()
+            })
+            .ToArray();*/
+
+
+            //return patientList;
+            return patient_Allergy;
+            //return new JsonResult((table));
+        }
