@@ -1,0 +1,94 @@
+
+                [HttpPost("getall")]
+                public List<Patient> patientget(Patient pat)
+                {
+                    string query = "select * from patientget(PageNumber=>" + pat.PageNumber + ",PageSize=>" + pat.PageSize + ",lname=>'" + pat.last_name + "',fname=>'" + pat.first_name + "',mname=>'" + pat.middle_name + "',_sex=>'" + pat._sex + "',Allergy_Name=>'" + pat.AllergyName + "',do_b=>'" + pat.dob + "',orderby=>'" + pat.orderby + "',sortby=>'" + pat.sortby + "')";
+                    List<Patient>? pat_allergy = new List<Patient>();
+                    string sqlDataSource = _configuration.GetConnectionString("EmployeeAppCon");
+                    NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+
+                    List<Patient> patient_list = myCon.Query<dynamic>(query)
+                                           .Select(item => new Patient()
+                                           {
+                                               //model fields     //return fields procedure
+                                               /*  PageNumber= (int)item.pageNumber,
+                                                 PageSize= (int)item.pageSize,
+                                                 orderby= (string)item.orderby,
+                                                 sortby= (string)item.sortby,*/
+                                               Patient_id = (int)item.patient_id,
+                                               chart_number = (string)item.chart_number,
+                                               first_name = (string)item.first_name,
+                                               last_name = (string)item.last_name,
+                                               middle_name = (string)item.middle_name,
+                                               sex = (int)item.sex_id,
+                                               _sex = (string)item.sex,
+                                               dob = item.dob.ToString(),
+                                               AllergyName = (string)item.allergyname,
+                                               Allergy = new List<allergies>()
+                                                {
+                                                        new allergies()
+                                                        {
+                                                            PatientAllergyId = (int)item.patientallergyid,
+                                                            AllergyMaster_id = (int)item.allergymasterid,
+                                                            allergyName = (string)item.allergyname,
+                                                            Note = (string)item.note
+                                                        }
+
+                                                }
+
+                                           })
+                                            .ToList();
+
+                        var PatientList = new List<Patient>();
+                        int pointer1 = 0, pointer2 = 0;
+
+                        //for (int index = 1; index <= dt.Rows.Count - 1; ++index)
+                        for (int index = 0; index < patient_list.Count; index = pointer1)
+                        {
+                            Patient pobj = new Patient();
+                            List<allergies> allergyModelList = new List<allergies>();
+                            pobj.Patient_id = Convert.ToInt32(patient_list[index].Patient_id.ToString());
+                            pobj.chart_number = Convert.ToString(patient_list[index].chart_number);
+                            pobj.first_name = Convert.ToString(patient_list[index].first_name);
+                            pobj.middle_name = Convert.ToString(patient_list[index].middle_name);
+                            pobj.last_name = Convert.ToString(patient_list[index].last_name);
+                            pobj._sex = Convert.ToString(patient_list[index]._sex);
+                            pobj.sex = Convert.ToInt32(patient_list[index].sex);
+                            pobj.dob = Convert.ToString(patient_list[index].dob);
+
+                            for (pointer2 = pointer1; pointer2 < patient_list.Count; pointer2++)
+                            {
+                                pointer1 = pointer2;
+                                if (pobj.Patient_id == Convert.ToInt32(patient_list[pointer2].Patient_id.ToString()))
+                                {
+                                    allergies aobj = new allergies();
+                                    aobj.PatientAllergyId = Convert.ToInt32(patient_list[pointer2].Allergy[0].PatientAllergyId.ToString());
+                                    aobj.AllergyMaster_id = Convert.ToInt32(patient_list[pointer2].Allergy[0].AllergyMaster_id.ToString());
+                                    aobj.allergyName = patient_list[pointer2].Allergy[0].allergyName.ToString();
+                                    aobj.Note = Convert.ToString(patient_list[pointer2].Allergy[0].Note);
+                                    if (Convert.ToInt32(patient_list[pointer2].Allergy[0].PatientAllergyId.ToString()) != 0)
+                                    {
+                                        allergyModelList.Add(aobj);
+                                        Console.WriteLine("add only when patientallergyid is not zero");
+                                    }
+
+                                }
+                                else
+                                {
+                                    pointer1 = pointer2;
+                                    break;
+                                }
+                            }
+                            pobj.Allergy = allergyModelList.ToList();
+                            PatientList.Add(pobj);
+                            if (pointer2 == (patient_list.Count))
+                            {
+                                break;
+                            }
+                        }
+
+                        /*List<Patient> distinctModelList = ModelList.Distinct().ToList<Patient>();*/
+                        return PatientList;
+
+                    }
+                }
