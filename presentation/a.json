@@ -1,237 +1,465 @@
-aka
-: 
-null
-appointmentId
-: 
-null
-birthPlace
-: 
-null
-chartNumber
-: 
-"PT0000000002"
-citizenshipId
-: 
-null
-contactDetail
-: 
-{created: [],…}
-contactDetailPreference
-: 
-[{id: 1000799, resourceId: 100072, resourceTypeId: 10007465, prefCommTypeId: null,…},…]
-customStatusId
-: 
-[1000718]
-dOB
-: 
--155606400000
-deceasedDate
-: 
-null
-driverLicense
-: 
-null
-employmentId
-: 
-null
-ethnicity
-: 
-[]
-extGuid
-: 
-null
-extId
-: 
-null
-extMessageGuid
-: 
-null
-extRefId
-: 
-null
-extUpdateDate
-: 
-null
-facilityId
-: 
-100072
-feeScheduleDetailId
-: 
-null
-firstCalledDate
-: 
-null
-firstName
-: 
-"Judelyn"
-genderIdentityId
-: 
-null
-id
-: 
-100072
-initialPatientLabPreferenceMap
-: 
-null
-isActive
-: 
-true
-isCreateCase
-: 
-false
-isDeceased
-: 
-false
-isInsured
-: 
-false
-isInterpreter
-: 
-false
-isMultipleBirth
-: 
-false
-isPCPSameAsProvider
-: 
-false
-isProspect
-: 
-false
-isSOF
-: 
-false
-isSelfPay
-: 
-false
-isUseCurrentPharmacyForAllRx
-: 
-false
-isVerified
-: 
-false
-lastModifiedDate
-: 
-1678184475215
-lastName
-: 
-"Dela"
-lastName2
-: 
-"Cruz"
-lastPatientStatementId
-: 
-null
-mailingContactDetail
-: 
-null
-maritalStatusId
-: 
-null
-middleName
-: 
-"Ra"
-mothersIdentifier
-: 
-null
-mothersMaidenFirstName
-: 
-null
-mothersMaidenLastName
-: 
-null
-mothersMaidenMiddleName
-: 
-null
-multipleBirthOrder
-: 
-null
-nationality
-: 
-null
-note
-: 
-null
-pCPId
-: 
-null
-pCPTypeId
-: 
-null
-patientDLList
-: 
-null
-patientLabPreferenceMap
-: 
-{created: [], updated: [], deleted: []}
-patientPharmacyList
-: 
-null
-patientRisk
-: 
-{created: [], updated: [], deleted: []}
-photoId
-: 
-1000710
-preferredLanguageId
-: 
-100071
-prefix
-: 
-null
-primaryLabCode
-: 
-null
-primaryLabId
-: 
-null
-primaryLabName
-: 
-null
-primaryPharmacy
-: 
-null
-primaryPharmacyId
-: 
-null
-providerId
-: 
-100072
-race
-: 
-null
-referralSourceId
-: 
-null
-religionId
-: 
-null
-sOFDate
-: 
-null
-sexId
-: 
-100071136
-sexualOrientationId
-: 
-null
-sourceId
-: 
-100072
-sourceTypeId
-: 
-100073692
-suffix
-: 
-null
-tags
-: 
-null
-timeZoneId
-: 
-10007257
-uID
-: 
-null
-veteransMilitaryStatusId
-: 
-null
+{
+    "id": 1000722,
+    "isActive": true,
+    "chartNumber": "CH00000022",
+    "facilityId": 1000720,
+    "providerId": 1000753,
+    "prefix": null,
+    "firstName": "Rowena",
+    "lastName": "Acacianna",
+    "lastName2": null,
+    "middleName": "Baylie add",
+    "suffix": null,
+    "uID": null,
+    "dOB": -55555200000,
+    "isMultipleBirth": false,
+    "multipleBirthOrder": null,
+    "sexId": 100071136,
+    "genderIdentityId": null,
+    "sexualOrientationId": null,
+    "maritalStatusId": null,
+    "aka": null,
+    "preferredLanguageId": null,
+    "isInterpreter": false,
+    "driverLicense": null,
+    "isSOF": false,
+    "primaryPharmacyId": 1000713,
+    "isUseCurrentPharmacyForAllRx": false,
+    "referralSourceId": null,
+    "deceasedDate": null,
+    "note": null,
+    "photoId": null,
+    "isSelfPay": true,
+    "isVerified": false,
+    "firstCalledDate": null,
+    "isInsured": false,
+    "lastModifiedDate": 1677659831534,
+    "contactDetail": {
+        "created": [],
+        "updated": [
+            {
+                "id": 10007206,
+                "createdById": 0,
+                "createdDate": 0,
+                "isPrimary": false,
+                "lastModifiedById": 0,
+                "lastModifiedDate": 1677659831207,
+                "resourceId": 1000722,
+                "resourceType": 10007465,
+                "addressType": {
+                    "text": "Home",
+                    "createdBy": null,
+                    "lastModifiedBy": null,
+                    "clientId": null,
+                    "id": 1000720,
+                    "code": "Home",
+                    "name": null,
+                    "count": null,
+                    "isActive": null,
+                    "statusColor": null,
+                    "color": null,
+                    "sequence": null,
+                    "fromVendor": null,
+                    "isCustom": null,
+                    "valueTypeId": null,
+                    "min": null,
+                    "max": null,
+                    "type": null,
+                    "typeId": null,
+                    "jobTitle": null,
+                    "duration": null,
+                    "isSelect": null,
+                    "toTime": null,
+                    "fromTime": null,
+                    "description": "Home",
+                    "isPrimary": null,
+                    "extCode": null,
+                    "clientUserId": null,
+                    "codeTypeId": null,
+                    "codeTypeCode": null
+                },
+                "addressTypeId": 1000720,
+                "prefComm": null,
+                "contactAddress": {
+                    "id": 10007168,
+                    "feId": null,
+                    "text": null,
+                    "city": "ALBUQUERQUE",
+                    "contactDetailId": 10007206,
+                    "countryCode": "US",
+                    "countryId": 1000732,
+                    "createdById": 0,
+                    "createdDate": 0,
+                    "lastModifiedById": 0,
+                    "lastModifiedDate": 1677659831207,
+                    "stateObj": null,
+                    "state": "NEW MEXICO",
+                    "stateCode": "NM",
+                    "street": "2798 Parsifal St NE",
+                    "street2": null,
+                    "zipCode": "87112",
+                    "createdBy": null,
+                    "lastModifiedBy": null,
+                    "country": {
+                        "text": "(US) United States",
+                        "createdBy": null,
+                        "lastModifiedBy": null,
+                        "clientId": null,
+                        "id": 1000732,
+                        "code": "US",
+                        "name": "United States",
+                        "count": null,
+                        "isActive": null,
+                        "statusColor": null,
+                        "color": null,
+                        "sequence": null,
+                        "fromVendor": null,
+                        "isCustom": null,
+                        "valueTypeId": null,
+                        "min": null,
+                        "max": null,
+                        "type": null,
+                        "typeId": null,
+                        "jobTitle": null,
+                        "duration": null,
+                        "isSelect": null,
+                        "toTime": null,
+                        "fromTime": null,
+                        "description": null,
+                        "isPrimary": null,
+                        "extCode": null,
+                        "clientUserId": null,
+                        "codeTypeId": null,
+                        "codeTypeCode": null,
+                        "numericCode": "1",
+                        "countryWithCode": "(US) United States"
+                    },
+                    "contactAddressFEId": 1
+                },
+                "contactFax": [],
+                "contactPhone": [
+                    {
+                        "contactDetailId": 10007206,
+                        "id": 10007111,
+                        "createdById": 0,
+                        "createdDate": 0,
+                        "isPrimary": false,
+                        "lastModifiedById": 0,
+                        "lastModifiedDate": 1677659831207,
+                        "phone": "5052936547",
+                        "phoneType": {
+                            "text": "Cell",
+                            "createdBy": null,
+                            "lastModifiedBy": null,
+                            "clientId": null,
+                            "id": 100071727,
+                            "code": "Cell",
+                            "name": null,
+                            "count": null,
+                            "isActive": null,
+                            "statusColor": null,
+                            "color": null,
+                            "sequence": null,
+                            "fromVendor": null,
+                            "isCustom": null,
+                            "valueTypeId": null,
+                            "min": null,
+                            "max": null,
+                            "type": null,
+                            "typeId": null,
+                            "jobTitle": null,
+                            "duration": null,
+                            "isSelect": null,
+                            "toTime": null,
+                            "fromTime": null,
+                            "description": "Cell",
+                            "isPrimary": null,
+                            "extCode": null,
+                            "clientUserId": null,
+                            "codeTypeId": null,
+                            "codeTypeCode": null
+                        },
+                        "phoneTypeId": 100071727,
+                        "prefix": "1",
+                        "suffix": null,
+                        "feId": 2,
+                        "contactPhoneFEId": 2,
+                        "countryId": 1000732
+                    }
+                ],
+                "contactEmail": [
+                    {
+                        "contactDetailId": 10007206,
+                        "id": 1000749,
+                        "createdById": 0,
+                        "createdDate": 0,
+                        "email": "Rowena.A@yahoo.com",
+                        "isPrimary": false,
+                        "lastModifiedById": 0,
+                        "lastModifiedDate": 1677659831207,
+                        "feId": 3,
+                        "contactEmailFEId": 3
+                    }
+                ],
+                "contactWebsite": []
+            },
+            {
+                "id": 10007207,
+                "createdById": 0,
+                "createdDate": 0,
+                "isPrimary": false,
+                "lastModifiedById": 0,
+                "lastModifiedDate": 1677659831207,
+                "resourceId": 1000722,
+                "resourceType": 10007465,
+                "addressType": {
+                    "text": "Work",
+                    "createdBy": null,
+                    "lastModifiedBy": null,
+                    "clientId": null,
+                    "id": 1000727,
+                    "code": "Work",
+                    "name": null,
+                    "count": null,
+                    "isActive": null,
+                    "statusColor": null,
+                    "color": null,
+                    "sequence": null,
+                    "fromVendor": null,
+                    "isCustom": null,
+                    "valueTypeId": null,
+                    "min": null,
+                    "max": null,
+                    "type": null,
+                    "typeId": null,
+                    "jobTitle": null,
+                    "duration": null,
+                    "isSelect": null,
+                    "toTime": null,
+                    "fromTime": null,
+                    "description": "Work",
+                    "isPrimary": null,
+                    "extCode": null,
+                    "clientUserId": null,
+                    "codeTypeId": null,
+                    "codeTypeCode": null
+                },
+                "addressTypeId": 1000727,
+                "prefComm": null,
+                "contactAddress": {
+                    "id": 10007169,
+                    "feId": null,
+                    "text": null,
+                    "city": null,
+                    "contactDetailId": 10007207,
+                    "countryCode": "US",
+                    "countryId": 1000732,
+                    "createdById": 0,
+                    "createdDate": 0,
+                    "lastModifiedById": 0,
+                    "lastModifiedDate": 1677659831207,
+                    "stateObj": null,
+                    "state": null,
+                    "stateCode": null,
+                    "street": null,
+                    "street2": null,
+                    "zipCode": null,
+                    "createdBy": null,
+                    "lastModifiedBy": null,
+                    "country": {
+                        "text": "+1 United States",
+                        "createdBy": null,
+                        "lastModifiedBy": null,
+                        "clientId": null,
+                        "id": 1000732,
+                        "code": "US",
+                        "name": "United States",
+                        "count": null,
+                        "isActive": null,
+                        "statusColor": null,
+                        "color": null,
+                        "sequence": null,
+                        "fromVendor": null,
+                        "isCustom": null,
+                        "valueTypeId": null,
+                        "min": null,
+                        "max": null,
+                        "type": null,
+                        "typeId": null,
+                        "jobTitle": null,
+                        "duration": null,
+                        "isSelect": null,
+                        "toTime": null,
+                        "fromTime": null,
+                        "description": null,
+                        "isPrimary": null,
+                        "extCode": null,
+                        "clientUserId": null,
+                        "codeTypeId": null,
+                        "codeTypeCode": null,
+                        "numericCode": "1",
+                        "countryWithCode": "(US) United States"
+                    },
+                    "contactAddressFEId": 4
+                },
+                "contactFax": [],
+                "contactPhone": [],
+                "contactEmail": [],
+                "contactWebsite": []
+            }
+        ],
+        "deleted": []
+    },
+    "race": null,
+    "ethnicity": [],
+    "sOFDate": null,
+    "isCreateCase": false,
+    "mailingContactDetail": null,
+    "birthPlace": null,
+    "isDeceased": false,
+    "mothersIdentifier": null,
+    "mothersMaidenFirstName": null,
+    "mothersMaidenLastName": null,
+    "mothersMaidenMiddleName": null,
+    "religionId": null,
+    "veteransMilitaryStatusId": null,
+    "citizenshipId": null,
+    "nationality": null,
+    "isPCPSameAsProvider": false,
+    "pCPId": null,
+    "pCPTypeId": null,
+    "employmentId": null,
+    "primaryLabId": null,
+    "patientPharmacyList": null,
+    "patientDLList": null,
+    "primaryPharmacy": null,
+    "timeZoneId": 10007257,
+    "appointmentId": null,
+    "contactDetailPreference": [
+        {
+            "id": 10007595,
+            "resourceId": 1000722,
+            "resourceTypeId": 10007465,
+            "prefCommTypeId": null,
+            "prefCommValueId": null,
+            "prefCommValueFEId": null,
+            "preferenceTypeId": 10007441,
+            "contactAddressId": null,
+            "contactPhoneId": null,
+            "contactFaxId": null,
+            "contactEmailId": null,
+            "lastModifiedDate": 1677659831207,
+            "contactAddressFEId": null,
+            "contactPhoneFEId": null,
+            "contactFaxFEId": null,
+            "contactEmailFEId": null,
+            "contactWebsiteId": null,
+            "contactWebsiteFEId": null
+        },
+        {
+            "id": 10007596,
+            "resourceId": 1000722,
+            "resourceTypeId": 10007465,
+            "prefCommTypeId": null,
+            "prefCommValueId": null,
+            "prefCommValueFEId": null,
+            "preferenceTypeId": 10007443,
+            "contactAddressId": null,
+            "contactPhoneId": null,
+            "contactFaxId": null,
+            "contactEmailId": null,
+            "lastModifiedDate": 1677659831207,
+            "contactAddressFEId": null,
+            "contactPhoneFEId": null,
+            "contactFaxFEId": null,
+            "contactEmailFEId": null,
+            "contactWebsiteId": null,
+            "contactWebsiteFEId": null
+        },
+        {
+            "id": 10007597,
+            "resourceId": 1000722,
+            "resourceTypeId": 10007465,
+            "prefCommTypeId": null,
+            "prefCommValueId": null,
+            "prefCommValueFEId": null,
+            "preferenceTypeId": 10007445,
+            "contactAddressId": 10007168,
+            "contactPhoneId": 10007111,
+            "contactFaxId": null,
+            "contactEmailId": null,
+            "lastModifiedDate": 1677659831207,
+            "contactAddressFEId": null,
+            "contactPhoneFEId": null,
+            "contactFaxFEId": null,
+            "contactEmailFEId": null,
+            "contactWebsiteId": null,
+            "contactWebsiteFEId": null
+        },
+        {
+            "id": 10007598,
+            "resourceId": 1000722,
+            "resourceTypeId": 10007465,
+            "prefCommTypeId": null,
+            "prefCommValueId": null,
+            "prefCommValueFEId": null,
+            "preferenceTypeId": 10007446,
+            "contactAddressId": null,
+            "contactPhoneId": null,
+            "contactFaxId": null,
+            "contactEmailId": null,
+            "lastModifiedDate": 1677659831207,
+            "contactAddressFEId": null,
+            "contactPhoneFEId": null,
+            "contactFaxFEId": null,
+            "contactEmailFEId": null,
+            "contactWebsiteId": null,
+            "contactWebsiteFEId": null
+        },
+        {
+            "id": 10007599,
+            "resourceId": 1000722,
+            "resourceTypeId": 10007465,
+            "prefCommTypeId": null,
+            "prefCommValueId": null,
+            "prefCommValueFEId": null,
+            "preferenceTypeId": 10007444,
+            "contactAddressId": null,
+            "contactPhoneId": null,
+            "contactFaxId": null,
+            "contactEmailId": null,
+            "lastModifiedDate": 1677659831207,
+            "contactAddressFEId": null,
+            "contactPhoneFEId": null,
+            "contactFaxFEId": null,
+            "contactEmailFEId": null,
+            "contactWebsiteId": null,
+            "contactWebsiteFEId": null
+        }
+    ],
+    "primaryLabName": null,
+    "primaryLabCode": null,
+    "patientRisk": {
+        "created": [],
+        "updated": [],
+        "deleted": []
+    },
+    "tags": null,
+    "customStatusId": null,
+    "patientLabPreferenceMap": {
+        "created": [],
+        "updated": [],
+        "deleted": []
+    },
+    "initialPatientLabPreferenceMap": null,
+    "sourceId": null,
+    "sourceTypeId": null,
+    "extGuid": null,
+    "extId": null,
+    "extUpdateDate": null,
+    "lastPatientStatementId": null,
+    "feeScheduleDetailId": null,
+    "extRefId": null,
+    "isProspect": false,
+    "extMessageGuid": null
+}
