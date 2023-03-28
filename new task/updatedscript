@@ -1695,3 +1695,9 @@ select * from Sex;
   
   
   
+  public.uspnewpatientreadlist(_patientid text, _isactive boolean, 
+  _chartnumber character varying, _facilityid character varying, _firstname character varying,
+   _lastname character varying, _dob timestamp without time zone, _ismovedinresident boolean, 
+   _machineid character varying, _oldsystemid character varying, _isdeleted boolean, _issample boolean,
+    _patientsearch character varying, _isshowrecentitem character varying, _clientidin character varying, 
+    _clientidnotin character varying, _tpauserid integer, _userid bigint, _langid character varying, _page integer, _size integer, _orderby character varying)

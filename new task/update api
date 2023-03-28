@@ -1,0 +1,224 @@
+using BusinessModel;
+using BusinessService;
+using BusinessServiceInterface;
+using Common;
+using Dapper;
+using DataModel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Transactions;
+
+namespace EHRAPI.Controllers
+{
+    [Route("hemit")]
+    [ApiController]
+    public class HemitPatientController :  ControllerBase
+    {
+        private readonly IConfiguration _configuration;
+
+        public IHemitPatientService _service { get; set; }
+
+        /*public Hemit_PatientController(IHemit_PatientService service)
+        {
+            _service = service;
+            //_reportService = reportService;
+        }*/
+        public HemitPatientController(IConfiguration configuration, IHemitPatientService service)
+        {
+            _configuration = configuration;
+            _service = service;
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool NullCheck(string field)
+        {
+            if (field == null || field == string.Empty)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool NullintCheck(int? field)
+        {
+            if (field == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public static string GetValue(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                return "'" + value + "'";
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
+        public static int GetintValue(int value)
+        {
+            if (value != 0)
+            {
+                return value;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        
+        
+
+
+        //[Route("id/{id}")]
+        /*get by ID*/
+        /// <summary>
+        /// This method returns the patient record by the patient_id
+        /// <example>
+        /// For example:
+        /// id = 1
+        /// results in records of patient having patient_id 3.
+        /// </example>
+        /// </summary>
+        /// <param name="id">
+        ///         1
+        /// </param>
+        /// <returns>
+        /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
+        /// </returns>
+        [HttpGet("id/{id}")]
+        public async Task<IActionResult> HemitGetById(int id, bool Allergy=false,bool sex=false){
+            //return await Task.FromResult(Ok("hemit"));
+            var query = _service.HemitGetById(id, Allergy, sex);
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+        }
+
+        //[Route("")]
+        [HttpGet("")]
+        public async Task<IActionResult> HemitGetList(string model = "", int page = 1, int size = 20, string orderBy = "HemitPatients.patient_id", string search = "")
+        {
+            if (model == "id")
+            {
+                var query = _service.HemitGetListId(page, size, orderBy, search: search).Result;
+                return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query, page, size)));
+            }
+            else
+            {
+                return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(null)));
+            }
+        }
+
+
+
+        //[Route]
+        /// <summary>
+        /// This method returns the patient record by the firstname, lastname, sex and dateofbirth according to the pagenumber and pagesize and orderby sorting
+        /// </summary>
+        /// <example>
+        /// For example:
+        /// /api/Patient/GetList?PageNumber=1&PageSize=5
+        /// results in records of patient having paginayion of pagesize of 5 records and 1 page number
+        /// </example>
+        /// <param name="patient_obj"></param>
+        /// <param name="PageNumber">1</param>
+        /// <param name="PageSize">10</param>
+        /// 
+        /// <returns>
+        /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
+        /// </returns>
+        [HttpPost("HemitFetch")]
+        public async Task<IActionResult> HemitFetch([FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true, bool isShowCount = true, int page = 0, int size = 0)
+        {
+            // dynamic result = null;
+            var query = _service.Fetch(objPatientBORequest, returnResponse: returnResponse, isShowCount, page, size).Result;
+
+            switch (layoutType)
+            {
+                case BUCKETLAYOUTVIEWTYPE.INTERACTIVE:
+                    result = Ok(Common.SeqResponse.CreateResponse(query, page, size));
+                    break;
+                case BUCKETLAYOUTVIEWTYPE.PRINT:
+                    objRequest.report.data = query;
+                    objRequest.report.screen = SCREEN.PATIENT;
+                    var reportData = _reportService.GenerateScreenPDFReport(objRequest: objRequest.report);
+                    result = File(reportData, objRequest.report.printType.GetEnumDescription());
+                    break;
+
+            }
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query, page, size)));
+        }
+
+
+        /*[HttpPost("create/patient")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> HemitcreatePatient([FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true)
+        {
+
+            var query = _service.Create(objPatientBORequest, returnResponse: returnResponse).Result;
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+
+
+        }*/
+
+
+        /*[Route("update/{PatientId}")]
+        [HttpPut]
+        public async Task<IActionResult> Put(long PatientId, [FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true)
+        {
+            var query = _service.Update(PatientId, objPatientBORequest, returnResponse).Result;
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+        }*/
+
+        /*
+                [Route("delete/{patientId}")]
+                [HttpDelete]
+                public async Task<IActionResult> Delete([FromBody] dynamic objPatientBORequest, long patientId, bool returnResponse = false)
+                {
+                    var query = _service.Delete((int)patientId).Result;
+                    return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+                }*/
+
+
+
+
+
+
+
+
+
+
+
+
+        /*[Route("patch/{patientId}")]
+        [HttpPatch]
+        public async Task<IActionResult> Patch([FromBody] dynamic objPatientBORequest, long patientId, bool returnResponse = false)
+        {
+            var query = _service.Patch(patientId, objPatientBORequest, returnResponse: returnResponse).Result;
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+        }*/
+
+
+    }
+}
