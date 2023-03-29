@@ -1,0 +1,412 @@
+using BusinessModel;
+using BusinessServiceInterface;
+using Common;
+using DataModel;
+using DataServiceInterface;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
+using ChoETL;
+using System.Drawing;
+using RTBC;
+using iTextSharp.text;
+using MailKit.Search;
+using System.Linq;
+
+namespace BusinessService
+{
+    public class HemitPatientService : IHemitPatientService
+    {
+        Lazy<IHemitPatientDataService> _dataService { get; set; }
+        Lazy<IHemitPatientAllergyService> _allergydataService { get; set; }
+
+        Lazy<IStaticMiscValueMapService> _staticMiscValueMapService { get; set; }
+        public HemitPatientService(Lazy<IHemitPatientDataService> dataService, Lazy<IHemitPatientAllergyService> allergydataService, Lazy<IStaticMiscValueMapService> staticMiscValueMapService)
+        {
+            _dataService = dataService;
+            _allergydataService=allergydataService;
+            _staticMiscValueMapService = staticMiscValueMapService;
+        }
+        public async Task<dynamic> HemitGetById(int id, bool Allergy = false, bool sex = false)
+        {
+
+            HemitPatientResponse response = new HemitPatientResponse();
+            //response.Patient = _dataService.Value.HemitGetByIdAsync(id).Result;
+
+            response.Patient = _dataService.Value.GetByIdAsync(new HemitPatientFilter() { patientid = id }).Result;
+            if (Allergy)
+            {
+                var allergyList = _allergydataService.Value.GetListId(patientId: response.Patient.patientid, page: -1, size: 0).Result;
+                response.Allergy = allergyList.Select(x => (KeyValueBOResponse)x);
+            }
+            return await System.Threading.Tasks.Task.FromResult(response); //return patient_list;
+        }
+
+
+
+        /* public async Task<dynamic> Delete(int id)
+         {
+
+             *//*HemitPatientResponse response = new HemitPatientResponse();
+             response.Patient = _dataService.Value.HemitGetByIdAsync(id).Result;*//*
+
+             long patient_list = _dataService.Value.HemitDeleteAsync(new HemitPatientFilter() { patientid = id }).Result;
+
+             return await System.Threading.Tasks.Task.FromResult(patient_list);//return patient_list;
+         }*/
+
+        /*public async Task<dynamic> Create(HemitPatientBORequest objPatientBORequest, bool returnResponse = true)
+        {
+            HemitPatientRequest request = HemitPatientBORequest.Create(objPatientBORequest);
+            dynamic result = null;
+            int patientId = 0, allergyId=0;
+
+            HemitPatientBOReponse response = new HemitPatientBOReponse();
+
+            
+
+            patientId = (int)_dataService.Value.HemitCreateAsync(request.Patient).Result;
+
+
+            for (int index = 0; index < request.Patient.Allergy.created_.Length; index++)
+            {
+                allergyId = (int)_allergydataService.Value.HemitAllergyCreateAsync(patientId, request.Patient.Allergy.created_[index]).Result;
+            }
+
+            result = patientId;
+
+            *//*if (returnResponse)
+            {
+                result = this.HemitGetById(patientId).Result;
+            }
+            else
+            {
+                result = patientId;
+            }*//*
+
+            return await System.Threading.Tasks.Task.FromResult(result);
+        }*/
+
+
+        public async Task<IEnumerable<HemitPatientBOResponse>> Filter(HemitPatientSearchBORequest objPatientBORequest, bool returnResponse = true, bool isShowCount = true, int page = 1, int size = 20, string orderby = "")
+        {
+            List<HemitPatientBOResponse> result = new List<HemitPatientBOResponse>();
+            //objPatientRequest.patient_id = (int)patientId;
+            //int patientId = 0;
+            //HemitPatientRequest request = HemitPatientBORequest.Create(objPatientBORequest);
+
+            //var objSearch = ObjectExtentions.SplitSearch(objPatientBORequest);
+
+            //Create a new transaction 
+
+            var lstPatient = _dataService.Value.GetPatientFilter(new HemitPatientDataFilter()
+            {
+                pagesize = size,//request.Patient.pagesize,
+                PageNumber = page,//request.Patient.PageNumber,
+                patientid = objPatientBORequest.uID,
+                firstname = objPatientBORequest.firstName,
+                lastname = objPatientBORequest.lastName,
+               // sex = objPatientBORequest.Patient.sex,
+                dob = objPatientBORequest.dOB.ToString(),
+                /*allergyname = objPatientBORequest.Patient.allergyname,
+                Orderby = objPatientBORequest.Patient.Orderby,
+                OrderType = objPatientBORequest.Patient.OrderType,*/
+
+            });
+            if (isShowCount)
+            {
+                var objBOResponse = new HemitPatientBOResponse();
+                objBOResponse.count = lstPatient.FirstOrDefault()?.Count ?? 0;
+                result.Add(objBOResponse);
+            }
+            else if (lstPatient != null && lstPatient.Any())
+            {
+                // for patientNoteCount in patient object
+               /* List<PatientOtherData> lstPatientOtherData = null;
+
+                List<long> patientIds = lstPatient.Select(x => x.PatientId).Distinct().ToList();
+                var lstPatientNoteModule = _staticMiscValueMapService.Value.GetByType(STATIC.PATIENTNOTEMODULE.ToString()).Result;
+                List<long> moduleIds = lstPatientNoteModule.Where(x => x.code.ToUpperString() == PATIENTNOTEMODULE.PATIENTCHART.ToString()).Select(x => x.id).Distinct().ToList();
+
+                var lstPatientNoteCount = this.GetPatientNoteCount(new PatientNoteCountBORequest()
+                {
+                    patientId = patientIds,
+                    moduleId = moduleIds
+
+                }).Result.ToList();
+
+                if (patientIds != null && patientIds.Any())
+                {
+                    lstPatientOtherData = _dataService.Value.GetPatientOtherData(new PatientOtherDataFilter()
+                    {
+                        PatientId = patientIds.ToGetString()
+
+                    });
+                }
+
+                result = PatientBOResponse.Create(lstPatient: lstPatient, lstPatientNoteCount: lstPatientNoteCount, lstPatientOtherData: lstPatientOtherData);*/
+            }
+
+            //result = PatientBOResponse.Create(lstPatient: lstPatient, lstPatientNoteCount: lstPatientNoteCount, lstPatientOtherData: lstPatientOtherData);
+
+
+
+            //List<HemitPatientBOResponse> result = new List<HemitPatientBOResponse>();
+
+
+
+            //Creating a request object
+            //HemitPatientRequest request = Hemit_PatientBORequest.Create(objPatientRequest);
+
+            //Get id of the record to be updated
+            //request.Patient.patient_id = (int)patientId;
+
+            /*int chartNoCount = 0;
+            var dupCount = 0;
+
+
+
+            //validating data
+            // PatientRequestValidator.validate(request, chartNoCount, dupCount);
+
+            PatientBOResponse response = new PatientBOResponse();
+
+            //Updating Patient object
+            patientId = _dataService.Value.HemitFetchAsync(request.Patient).Result;
+
+            //Transaction complete
+            //ts.Complete();
+
+
+            var list = lstPatient;
+
+            //Return Updated Patient
+            if (returnResponse)
+            {
+                result = this.HemitGetById(lstPatient[0].patient_id).Result;
+            }
+            else
+            {
+                result = request.Patient.patient_id;
+            }
+            var objBOResponse = new HemitPatientBOReponse();
+            for (int i = 0; i < lstPatient.Count; i++)
+            {
+                if (isShowCount)
+                {
+
+                    lstPatient[i].count = lstPatient.Count;
+                    //lstPatient.Add(objBOResponse);
+                }
+            }
+            //list.Add(objBOResponse);
+
+            //lstPatient.Add(new KeyValuePair<string, int>("count", objBOResponse.count));
+            //result = Hemit_PatientBOReponse.Create(lstPatient: lstPatient);*/
+            return await System.Threading.Tasks.Task.FromResult(result);
+
+        }
+
+        public async Task<IEnumerable<dynamic>> HemitGetListId(int page = 1, int size = 20, string orderBy = "HemitPatients.patient_id", int patientId = 0, string search = "", long? facilityId = null, bool isMovedInResident = false)
+        {
+            var objSearch = ObjectExtentions.SplitSearch(search);
+
+            var lstPatient = _dataService.Value.GetListAsync(new HemitPatientListFilter()
+            {
+                patientid = patientId,
+                firstname = objSearch.FirstName,
+                lastname = objSearch.LastName,
+                chartnumber = objSearch.ChartNumber,
+                dob = objSearch.DOB.ToDateString(),
+                searchby = objSearch.PatientSearch,
+                pagesize = size,
+                PageNumber = page,
+                Orderby = orderBy,
+            }, page: page, size: size, orderBy: orderBy).Result;
+
+            /*for (int i = 0; i < lstPatient.Count; i++)
+            {
+
+
+
+                lstPatient[i].count = lstPatient.Count;
+
+            }*/
+
+
+            var response = KeyValueBOResponse.Create(lstPatient, TABLE.PATIENT);
+            return await System.Threading.Tasks.Task.FromResult(response);
+
+
+        }
+
+
+        /*public async Task<dynamic> Update(long patientId, HemitPatientBORequest objPatientRequest, bool returnResponse = true)
+        {
+            dynamic result = null;
+            objPatientRequest.patientid = (int)patientId;
+            //Create a new transaction 
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted }))
+            {
+                //Creating a request object
+                HemitPatientRequest request = HemitPatientBORequest.Create(objPatientRequest);
+                int  allergyId = 0;
+                //Get id of the record to be updated
+                request.Patient.patientid = (int)patientId;
+
+                //int chartNoCount = 0;
+                //var dupCount = 0;
+                
+
+
+                //validating data
+                // PatientRequestValidator.validate(request, chartNoCount, dupCount);
+
+                PatientBOResponse response = new PatientBOResponse();
+
+                //Updating Patient object
+                patientId = (int)_dataService.Value.HemitUpdateAsync(request.Patient).Result;
+
+                for (int index = 0; index < request.Patient.Allergy.created_.Length; index++)
+                {
+                    allergyId = (int)_allergydataService.Value.HemitAllergyCreateAsync((int)patientId, request.Patient.Allergy.created_[index]).Result;
+                }
+                for (int index = 0; index < request.Patient.Allergy.updated_.Length; index++)
+                {
+                    allergyId = (int)_allergydataService.Value.HemitAllergyUpdatedAsync((int)patientId, request.Patient.Allergy.updated_[index]).Result;
+                }
+                for (int index = 0; index < request.Patient.Allergy.deleted_.Length; index++)
+                {
+                    allergyId = (int)_allergydataService.Value.HemitAllergyDeletedAsync((int)patientId, request.Patient.Allergy.deleted_[index]).Result;
+                }
+
+
+
+                //Transaction complete
+                ts.Complete();
+            }
+
+            //Return Updated Patient
+            if (returnResponse)
+            {
+                result = this.HemitGetById((int)patientId).Result;
+            }
+            else
+            {
+                result = patientId;
+            }
+
+            return await System.Threading.Tasks.Task.FromResult(result);
+
+        }*/
+
+
+
+
+        /*public async Task<dynamic> Patch(long patientId, dynamic objRequest, bool returnResponse = false, bool isUpdatePFPatient = false)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted }))
+            {
+
+
+                JObject obj = JObject.FromObject(objRequest);
+
+                if (patientId != 0 && objRequest != null)
+                {
+                    //update patient
+                    //List<string> updatedFields = Helper.GetUpdatedFields(typeof(Patient), objRequest);
+
+                    PatientRequest request = PatientBORequest.Create(JsonConvert.DeserializeObject<PatientBORequest>(objRequest.ToString()));
+
+                    if (request.Patient != null)
+                    {
+                        request.Patient.PatientId = patientId;
+
+                        await _dataService.Value.HemitPatchAsync(request.Patient, obj, null);
+                    }
+
+                    *//*//PF - Update Patient ADT Bidirectional Integration
+                    if (AppSession.ProductCode == PRODUCTCODE.BILLRMDPF && !AppSession.IsPMRCMCall && isUpdatePFPatient)
+                    {
+                        PMRCMPFUpdatePatientBORequest objPFUpdatePatientBORequest = new PMRCMPFUpdatePatientBORequest();
+                        objPFUpdatePatientBORequest.patientId = patientId;
+
+                        //publish to socket
+                        RabbitMQService.WorkerQueuePublish(new WorkerQueueData
+                        {
+                            sendBackToURL = ApplicationSettings.WorkerQueueAPI + EndPointConstant.WorkerQueueEvent,
+                            payload = new WorkerQueuePayloadData()
+                            {
+                                eventType = WORKERQUEUEEVENTTYPE.BILLRMDPFUPDATEPATIENT.ToString(),
+                                data = Helper.Serialize(objPFUpdatePatientBORequest)
+                            }
+                        }, _rabbitManager: _rabbitManager);
+                    }*//*
+
+
+                    //complete transaction
+                    ts.Complete();
+                }
+            }
+
+            //return result
+            if (returnResponse)
+            {
+                return await this.HemitGetById(id: (int)patientId);
+            }
+            else
+            {
+                return await System.Threading.Tasks.Task.FromResult(patientId);
+            }
+        }*/
+
+
+        /*public async Task<dynamic> Delete(long patientId, dynamic objRequest, bool returnResponse = false, bool isUpdatePFPatient = false)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted }))
+            {
+
+
+                JObject obj = JObject.FromObject(objRequest);
+
+                if (patientId != 0 && objRequest != null)
+                {
+                    //update patient
+                    //List<string> updatedFields = Helper.GetUpdatedFields(typeof(Patient), objRequest);
+
+                    PatientRequest request = PatientBORequest.Create(JsonConvert.DeserializeObject<PatientBORequest>(objRequest.ToString()));
+
+                    if (request.Patient != null)
+                    {
+                        request.Patient.PatientId = patientId;
+
+                        await _dataService.Value.HemitDeleteAsync(request.Patient, obj, null);
+                    }
+
+                    
+
+
+                    //complete transaction
+                    ts.Complete();
+                }
+            }
+
+            //return result
+            if (returnResponse)
+            {
+                return await this.HemitGetById(id: (int)patientId);
+            }
+            else
+            {
+                return await System.Threading.Tasks.Task.FromResult(patientId);
+            }
+        }*/
+
+
+    }
+    
+}
