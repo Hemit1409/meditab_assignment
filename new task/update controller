@@ -109,15 +109,15 @@ namespace EHRAPI.Controllers
         /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
         /// </returns>
         [HttpGet("id/{id}")]
-        public async Task<IActionResult> HemitGetById(int id, bool Allergy=false,bool sex=false){
+        public async Task<IActionResult> HemitGetById(int hemitpetientid, bool Allergy=false,bool sex=false){
             //return await Task.FromResult(Ok("hemit"));
-            var query = _service.HemitGetById(id, Allergy, sex);
+            var query = _service.HemitGetById(hemitpetientid, Allergy, sex);
             return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
         }
 
         //[Route("")]
         [HttpGet("")]
-        public async Task<IActionResult> HemitGetList(string model = "", int page = 1, int size = 20, string orderBy = "HemitPatients.patient_id", string search = "")
+        public async Task<IActionResult> HemitGetList(string model = "", int page = 1, int size = 20, string orderBy = "HemitPatient.hemitpatientid", string search = "")
         {
             if (model == "id")
             {
@@ -149,12 +149,12 @@ namespace EHRAPI.Controllers
         /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
         /// </returns>
         [HttpPost("HemitFetch")]
-        public async Task<IActionResult> HemitFetch([FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true, bool isShowCount = true, int page = 0, int size = 0)
+        public async Task<IActionResult> HemitFetch([FromBody] BusinessModel.HemitPatientSearchBORequest objPatientBORequest, bool returnResponse = true, bool isShowCount = false, int page = 0, int size = 0, string orderby = "")
         {
             // dynamic result = null;
-            var query = _service.Fetch(objPatientBORequest, returnResponse: returnResponse, isShowCount, page, size).Result;
-
-            switch (layoutType)
+            //var query = _service.Filter(objPatientBORequest:objPatientBORequest, returnResponse: returnResponse, orderby: orderby, isShowCount:isShowCount, page:page, size:size).Result;
+            var query = _service.Filter(objRequest: objPatientBORequest, orderby: orderby, isShowCount: isShowCount, page: page, size: size).Result;
+            /*switch (layoutType)
             {
                 case BUCKETLAYOUTVIEWTYPE.INTERACTIVE:
                     result = Ok(Common.SeqResponse.CreateResponse(query, page, size));
@@ -166,12 +166,12 @@ namespace EHRAPI.Controllers
                     result = File(reportData, objRequest.report.printType.GetEnumDescription());
                     break;
 
-            }
+            }*/
             return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query, page, size)));
         }
 
 
-        /*[HttpPost("create/patient")]
+        [HttpPost("create/patient")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> HemitcreatePatient([FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true)
         {
@@ -180,25 +180,25 @@ namespace EHRAPI.Controllers
             return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
 
 
-        }*/
+        }
 
 
-        /*[Route("update/{PatientId}")]
+        [Route("update/{PatientId}")]
         [HttpPut]
         public async Task<IActionResult> Put(long PatientId, [FromBody] BusinessModel.HemitPatientBORequest objPatientBORequest, bool returnResponse = true)
         {
             var query = _service.Update(PatientId, objPatientBORequest, returnResponse).Result;
             return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
-        }*/
+        }
 
-        /*
-                [Route("delete/{patientId}")]
-                [HttpDelete]
-                public async Task<IActionResult> Delete([FromBody] dynamic objPatientBORequest, long patientId, bool returnResponse = false)
-                {
-                    var query = _service.Delete((int)patientId).Result;
-                    return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
-                }*/
+
+        [Route("delete/{patientId}")]
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] dynamic objPatientBORequest, long patientId, bool returnResponse = false)
+        {
+            var query = _service.Delete(patientId, objPatientBORequest, returnResponse).Result;
+            return await Task.FromResult(Ok(Common.SeqResponse.CreateResponse(query)));
+        }
 
 
 
