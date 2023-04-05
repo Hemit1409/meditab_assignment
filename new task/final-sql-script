@@ -184,7 +184,7 @@ select * from hemitpatient;
 create or replace function uspNewHemitPatientsRead(
                 _page INTEGER = 1,
   			_size INTEGER = 20,
-			_patientid int default null,
+			_hemitpatientid int default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -215,7 +215,7 @@ v_queryStatement TEXT;
      _query := _query || ' where HemitPatient.isdeleted=false and HemitPatient.hemitpatientid='||$3;--||;--' LIMIT 1';
     v_queryStatement =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| _query ||' ) A';
      raise notice '%',v_queryStatement;
-     return query execute v_queryStatement using _patientid,_FirstName,_LastName,_MiddleName,_SexId,_DOB;
+     return query execute v_queryStatement using _hemitpatientid,_FirstName,_LastName,_MiddleName,_SexId,_DOB;
  end
 $function$
 ;
@@ -223,14 +223,14 @@ $function$
 select * from uspnewhemitpatientsread(_patientid=>'12');
 
 
-SELECT * FROM uspNewhemitpatientsRead (_patientid => '12',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL)
+SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL)
 
 
 create  or replace function  
 uspNewHemitPatientsReadList(
 			_Page INTEGER = 1,
   			_size INTEGER = 20,
-			_patientid int default null,
+			_hemitpatientid int default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -270,9 +270,9 @@ initialquery2 = ''
 
 v_countStatement = CONCAT(' SELECT count(HemitPatient.hemitpatientid) FROM HemitPatient WHERE 1 = 1 ',initialquery2);
 execute v_countStatement  using 
-_Page,_Size,_patientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype INTO _count;
+_Page,_Size,_hemitpatientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype INTO _count;
 
-initialquery = 'Select '||_count||' AS Count, HemitPatient.hemitpatientid as Id, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitSex.sex as GenderDescription,HemitPatient.hemitsexid as id,
+initialquery = 'Select '||_count||' AS Count, HemitPatient.hemitpatientid as Id, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitSex.sex as GenderDescription,HemitPatient.hemitsexid as SexId,
 DENSE_RANK() OVER (
 		ORDER BY HemitPatient.hemitpatientid
 	) as denserow 
@@ -297,14 +297,14 @@ where HemitPatient.isdeleted=false and 1=1 ';
 
 initialquery =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| initialquery || ' ) A'; 
 raise notice 'sql %' , initialquery;
-	return query execute initialquery using _Page,_Size,_patientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype;
+	return query execute initialquery using _Page,_Size,_hemitpatientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype;
 end;
 $$
 
 SELECT * FROM uspNewhemitpatientsReadList (_patientid => '0',_firstname => NULL,_lastname => NULL,_dob => NULL,_searchby => 'CHART3', _clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 1, _size => 20 , _orderby =>  'HemitPatient.hemitpatientid');
 
 
-SELECT * FROM uspNewHemitPatientsReadList(_patientid => '12',_firstname => '', _middlename => NULL,_lastname => NULL,_orderby => 'HemitPatient.hemitpatientid', _sexid => NULL,_ordertype => 'ASC', _dob => NULL,_allergyname => NULL);
+SELECT * FROM uspNewHemitPatientsReadList(_hemitpatientid => '12',_firstname => '', _middlename => NULL,_lastname => NULL,_orderby => 'HemitPatient.hemitpatientid', _sexid => NULL,_ordertype => 'ASC', _dob => NULL,_allergyname => NULL);
 
 
 /*
@@ -332,7 +332,7 @@ create  or replace function
 Hemituspgetpatientfilter(
 			_Page INTEGER = 1,
   			_size INTEGER = 20,
-			_patientid int default null,
+			_hemitpatientid int default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -386,7 +386,7 @@ begin
 
 initialquery =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| initialquery || ' ) A'; 
 raise notice 'sql %' , initialquery;
-	return query execute initialquery using _Page,_Size,_patientid,_FirstName,_LastName,_sex,_DOB,_allergyname,_orderby,_ordertype;
+	return query execute initialquery using _Page,_Size,_hemitpatientid,_FirstName,_LastName,_sex,_DOB,_allergyname,_orderby,_ordertype;
 end;
 $$
 
@@ -394,7 +394,7 @@ SELECT * FROM Hemituspgetpatientfilter (_patientid => '0',_firstname => 'Hemit',
 
 SELECT * FROM Hemituspgetpatientfilter (_patientid => '0',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '')
 
-SELECT * FROM Hemituspgetpatientfilter (_patientid => '0',_firstname => 'Hemit', _middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_ordertype => 'ASC', _allergyname => NULL,_sex => 'FEMALE', _clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '')
+SELECT * FROM Hemituspgetpatientfilter (_hemitpatientid => '0',_firstname => 'Hemit', _middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_ordertype => 'ASC', _allergyname => NULL,_sex => 'FEMALE', _clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '')
 ;
 
 
@@ -465,11 +465,11 @@ _langid varchar default null,
 _orderby varchar default null);*/
 
 create or replace function uspNewHemitPatientAllergyRead(
-_patientid INT, 
-_allergymasterid INT default null, 
+_hemitpatientid INT, 
+_hemitallergyid INT default null, 
 _note varchar(100) default null,
 _allergyname varchar(100) default null,
-_patientallergyid int default null,
+_hemitpatientallergyid int default null,
 _page integer default 0, 
 _size integer default 0,
 _clientidin varchar default null, 
@@ -494,21 +494,21 @@ LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemi
      _query := _query || ' where HemitPatient.isdeleted=false and HemitPatient.hemitpatientid='||$1;--||;--' LIMIT 1';
      raise notice '%',_query;
      v_queryStatement =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| _query || ' ) A';  
-     return query execute v_queryStatement using _patientid;
+     return query execute v_queryStatement using _hemitpatientid;
  end;
 $$ 
 
 
 select * from Hemit_uspNewPatientsRead(4);
 
-select * from uspNewHemitPatientAllergyRead(_patientid=>12);
+select * from uspNewHemitPatientAllergyRead(_hemitpatientid=>12);
 
 select * from HemitPatientAllergy;
 
 SELECT * FROM uspNewhemitpatientallergyRead (_allergyname => NULL,_note => NULL,_patientallergyid => '11',_allergymasterid => NULL,_patientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL);
 
 
-CREATE OR REPLACE FUNCTION public.uspnewhemitpatientallergyreadlist(_patientallergyid text, _allergyname character varying, _allergymasterid character varying, _note boolean, _patientid integer, _clientidin character varying, _clientidnotin character varying, _tpauserid integer, _userid bigint, _langid character varying, _page integer, _size integer, _orderby character varying)
+CREATE OR REPLACE FUNCTION public.uspnewhemitpatientallergyreadlist(_hemitpatientallergyid text, _allergyname character varying, _hemitallergyid character varying, _note boolean, _hemitpatientid integer, _clientidin character varying, _clientidnotin character varying, _tpauserid integer, _userid bigint, _langid character varying, _page integer, _size integer, _orderby character varying)
  RETURNS SETOF json
  LANGUAGE plpgsql
 AS $function$
@@ -522,10 +522,10 @@ BEGIN
 
 
 v_whereStatement = ''
-|| CASE WHEN _patientallergyid IS NOT NULL THEN ' AND (HemitPatientAllergy.PatientAllergyId  = ANY(STRING_TO_ARRAY('||$1||', '','')::bigint[]) )'  ELSE ''  END
-|| CASE WHEN _allergymasterid IS NOT NULL THEN ' AND (hemitallergy.hemitallergyid  = ANY(STRING_TO_ARRAY('||$3||', '','')::bigint[]) )'  ELSE ''  END
+|| CASE WHEN _hemitpatientallergyid IS NOT NULL THEN ' AND (HemitPatientAllergy.PatientAllergyId  = ANY(STRING_TO_ARRAY('||$1||', '','')::bigint[]) )'  ELSE ''  END
+|| CASE WHEN _hemitallergyid IS NOT NULL THEN ' AND (hemitallergy.hemitallergyid  = ANY(STRING_TO_ARRAY('||$3||', '','')::bigint[]) )'  ELSE ''  END
 || CASE WHEN _note IS NOT NULL THEN ' AND (HemitPatientAllergy.note = '||$4||')'  ELSE ''  END
-|| CASE WHEN _patientid IS NOT NULL THEN ' AND (HemitPatientAllergy.hemitpatientid = '||$5||')'  ELSE ''  END
+|| CASE WHEN _hemitpatientid IS NOT NULL THEN ' AND (HemitPatientAllergy.hemitpatientid = '||$5||')'  ELSE ''  END
 || ' AND ('
 || CASE WHEN _allergyname IS NOT NULL THEN ' OR (hemitallergy.name ILIKE ''%'' || '||$2||' || ''%'')' ELSE '' END 
 --|| CASE WHEN _code IS NOT NULL THEN ' OR (allergy.code ILIKE ''%'' || $3 || ''%'')' ELSE '' END 
@@ -537,11 +537,11 @@ v_whereStatement = replace(v_whereStatement,' AND ()','');
 
 v_countStatement = CONCAT(' SELECT count(HemitPatientAllergy.hemitpatientallergyid) FROM HemitPatientAllergy WHERE 1 = 1 ',v_whereStatement);
 execute v_countStatement  using 
-_patientallergyid,_allergyname,_allergymasterid,_note,_patientid,_clientidin,_clientidnotin,_tpauserid INTO _count;
+_hemitpatientallergyid,_allergyname,_hemitallergyid,_note,_hemitpatientid,_clientidin,_clientidnotin,_tpauserid INTO _count;
   
 
 
-v_queryStatement ='SELECT '||_count||' AS Count, HemitPatientAllergy.hemitpatientallergyid as id,hemitallergy.hemitallergyid , hemitallergy.name as name, HemitPatientAllergy.note as note,hemitallergy.code
+v_queryStatement ='SELECT '||_count||' AS Count, HemitPatientAllergy.hemitpatientallergyid as id,hemitallergy.hemitallergyid , hemitallergy.name as name, HemitPatientAllergy.note as note,hemitallergy.code,HemitPatientAllergy.hemitpatientid as PatientId,HemitPatientAllergy.lastmodifieddate as lastmodifieddate
 FROM HemitPatientAllergy LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid WHERE 1=1 ' || v_whereStatement || ' ORDER BY HemitPatientAllergy.hemitpatientallergyid'
 || CASE WHEN _page = -1 THEN '' ELSE ' LIMIT '||_size||' OFFSET '|| (_page-1)*_size END;    
 
@@ -549,23 +549,24 @@ FROM HemitPatientAllergy LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitalle
  v_queryStatement =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| v_queryStatement || ' ) A';  
  RETURN QUERY
  execute v_queryStatement using 
-_patientallergyid,_allergyname,_allergymasterid,_note,_patientid,_clientidin,_clientidnotin,_tpauserid;	
+_hemitpatientallergyid,_allergyname,_hemitallergyid,_note,_hemitpatientid,_clientidin,_clientidnotin,_tpauserid;	
 
 END
 $function$
 ;
 
+_patientallergyid
 SELECT * FROM uspNewHemitPatientAllergyReadList (_allergyname => NULL,_note => NULL,_patientallergyid => NULL,_allergymasterid => NULL,_patientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
 
 
 SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_patientallergyid => NULL,_allergymasterid => NULL,_patientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
 
-
+SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
 
 CREATE or replace function uspNewHemitPatientscreate(
 			_PageNumber INTEGER = 1,
   			_PageSize INTEGER = 20,
-			_patientid int default null,
+			_hemitpatientid int default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -592,7 +593,7 @@ begin
 
     _initialquery:='INSERT INTO HemitPatient(firstname,lastname,middlename,hemitsexid,dob) VALUES('''||$4||''','''||$6||''','''||$5||''','||sexid||','''||$9||'''::date) returning hemitpatientid;' ;
     raise notice '%',_initialquery;
-     return query execute _initialquery using _patientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
+     return query execute _initialquery using _hemitpatientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
     
     --return id;
  
@@ -601,13 +602,13 @@ $$ language plpgsql;
 
 select uspNewHemitPatientscreate(_FirstName=>'RIMA',_MiddleName=>'R',_LastName=>'PATEL',_SexId=>3,_DOB=>'1994-1-13');
 
-SELECT * FROM uspNewHemitPatientsCreate (_patientid => '0',_firstname => 'Priyam', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '1', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
+SELECT * FROM uspNewHemitPatientsCreate (_hemitpatientid => '0',_firstname => 'Priyam', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '1', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
 
 select * from HemitPatient;
 
 create or replace function uspNewHemitPatientsupdate(_PageNumber INTEGER = 1,
   			_PageSize INTEGER = 20,
-			_patientid int default null,
+			_hemitpatientid int default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -631,7 +632,7 @@ _initialquery varchar :='update HemitPatient set firstname = '''||$4||''',middle
  begin
      --_initialquery := _updatequery || _selectquery ||'';
      raise notice '%',_initialquery;
-     return query execute _initialquery using _patientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
+     return query execute _initialquery using _hemitpatientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
  end;
 $$  
 
@@ -645,11 +646,11 @@ select * from HemitPatient;
 
 
 CREATE or replace function uspNewHemitPatientAllergycreate(
-_patientid INT, 
-_allergymasterid INT, 
+_hemitpatientid INT, 
+_hemitallergyid INT, 
 _note varchar(100),
 _allergyname varchar(100) default null,
-_patientallergyid int default null,
+_hemitpatientallergyid int default null,
 _userId varchar default null,
 			_langId varchar default null
 )
@@ -660,7 +661,7 @@ $$
 declare
 primarykey integer;
 BEGIN
-    INSERT INTO HemitPatientAllergy(hemitpatientid,hemitallergyid,note) VALUES(_patientid,_allergymasterid,_note) returning hemitpatientallergyid into primarykey; 
+    INSERT INTO HemitPatientAllergy(hemitpatientid,hemitallergyid,note) VALUES(_hemitpatientid,_hemitallergyid,_note) returning hemitpatientallergyid into primarykey; 
     return primarykey;
 --   (SELECT patient_id FROM Patients ORDER BY created_on DESC LIMIT 1);  
 End;
@@ -680,11 +681,11 @@ select * from HemitPatientAllergy;
 
 
 CREATE or replace function uspNewHemitPatientAllergyupdate(
-_patientid INT default null, 
-_allergymasterid INT default null, 
+_hemitpatientid INT default null, 
+_hemitallergyid INT default null, 
 _note varchar(100) default null,
 _allergyname varchar(100) default null,
-_patientallergyid int default null,
+_hemitpatientallergyid int default null,
 _userId varchar default null,
 			_langId varchar default null
 )
@@ -701,7 +702,7 @@ _initialquery varchar :='update HemitPatientAllergy set hemitallergyid=(select h
      --_initialquery := _updatequery || _selectquery ||'';
 
     raise notice '%',_initialquery;
-    return query execute _initialquery using _patientid,_allergymasterid,_note,_allergyname,_patientallergyid;
+    return query execute _initialquery using _hemitpatientid,_hemitallergyid,_note,_allergyname,_hemitpatientallergyid;
     
  end;
 $$ language plpgsql;
@@ -714,6 +715,7 @@ SELECT * FROM uspNewHemitPatientAllergyupdate ( _patientid =>2,_allergyname => '
 
 SELECT * FROM uspNewhemitpatientallergyUpdate (_allergyname => 'MILK',_note => 'updated2', _patientallergyid => '14',_allergymasterid => NULL,_patientid => '12',_userId => '1000768',_langId => '');
 
+SELECT * FROM uspNewhemitpatientallergyUpdate (_allergyname => 'PEANUT',_note => 'updated2peanut', _hemitpatientallergyid => '0',_hemitallergyid => NULL,_hemitpatientid => '12',_userId => '1000768',_langId => '');
 
 CREATE or replace function uspNewHemitPatientAllergydelete(
 
