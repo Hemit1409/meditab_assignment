@@ -4,7 +4,7 @@ CREATE TABLE public.hemitpatient (
 	firstname varchar(50) NOT NULL,
 	lastname varchar(50) NOT NULL,
 	middlename varchar(50) NULL,
-	hemitsexid int4 NULL,
+	sexid int4 NULL,
 	chartnumber varchar(20) NULL GENERATED ALWAYS AS ((('CHART'::text || pk::text))) STORED,
 	dob timestamp NULL,
 	createddate timestamp NOT NULL,
@@ -18,12 +18,11 @@ CREATE TABLE public.hemitpatient (
 	isactive bool NOT NULL DEFAULT true,
 	issample bool NOT NULL DEFAULT false,
 	requestid uuid NOT NULL DEFAULT uuid_generate_v1(),
-	CONSTRAINT pk_hemitpatient PRIMARY KEY (hemitpatientid),
-	CONSTRAINT fk_hemitsexid FOREIGN KEY (hemitsexid) REFERENCES public.hemitsex(hemitsexid)
+	CONSTRAINT pk_hemitpatient PRIMARY KEY (hemitpatientid)
 );
 
 
-
+update hemitpatient set sexid = 100071136 where sexid=3;
 
 CREATE TABLE public.hemitallergy (
 	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -139,7 +138,7 @@ end;
 $function$
 ;
 
-CREATE OR REPLACE FUNCTION public.uspnewhemitpatientread(_pk character varying DEFAULT NULL::character varying, _hemitpatientid text DEFAULT NULL::text, _firstname character varying DEFAULT NULL::character varying, _lastname character varying DEFAULT NULL::character varying, _hemitsexid character varying DEFAULT NULL::character varying, _dob timestamp without time zone DEFAULT NULL::timestamp without time zone, _orderby character varying DEFAULT NULL::character varying, _page integer DEFAULT 0, _size integer DEFAULT 0, _middlename character varying DEFAULT NULL::character varying, _chartnumber character varying DEFAULT NULL::character varying, _isactive boolean DEFAULT NULL::boolean, _isdeleted boolean DEFAULT false, _issample boolean DEFAULT NULL::boolean, _createddate timestamp without time zone DEFAULT NULL::timestamp without time zone, _createdbyid bigint DEFAULT NULL::bigint, _lastmodifieddate timestamp without time zone DEFAULT NULL::timestamp without time zone, _lastmodifiedbyid bigint DEFAULT NULL::bigint, _clientid smallint DEFAULT NULL::smallint, _machineid character varying DEFAULT NULL::character varying, _oldsystemid character varying DEFAULT NULL::character varying, _requestid uuid DEFAULT NULL::uuid, _clientidin character varying DEFAULT NULL::character varying, _clientidnotin character varying DEFAULT NULL::character varying, _tpauserid integer DEFAULT NULL::integer, _userid bigint DEFAULT NULL::bigint, _langid character varying DEFAULT NULL::character varying)
+CREATE OR REPLACE FUNCTION public.uspnewhemitpatientread(_pk character varying DEFAULT NULL::character varying, _hemitpatientid text DEFAULT NULL::text, _firstname character varying DEFAULT NULL::character varying, _lastname character varying DEFAULT NULL::character varying, _sexid character varying DEFAULT NULL::character varying, _dob timestamp without time zone DEFAULT NULL::timestamp without time zone, _orderby character varying DEFAULT NULL::character varying, _page integer DEFAULT 0, _size integer DEFAULT 0, _middlename character varying DEFAULT NULL::character varying, _chartnumber character varying DEFAULT NULL::character varying, _isactive boolean DEFAULT NULL::boolean, _isdeleted boolean DEFAULT false, _issample boolean DEFAULT NULL::boolean, _createddate timestamp without time zone DEFAULT NULL::timestamp without time zone, _createdbyid bigint DEFAULT NULL::bigint, _lastmodifieddate timestamp without time zone DEFAULT NULL::timestamp without time zone, _lastmodifiedbyid bigint DEFAULT NULL::bigint, _clientid smallint DEFAULT NULL::smallint, _machineid character varying DEFAULT NULL::character varying, _oldsystemid character varying DEFAULT NULL::character varying, _requestid uuid DEFAULT NULL::uuid, _clientidin character varying DEFAULT NULL::character varying, _clientidnotin character varying DEFAULT NULL::character varying, _tpauserid integer DEFAULT NULL::integer, _userid bigint DEFAULT NULL::bigint, _langid character varying DEFAULT NULL::character varying)
  RETURNS SETOF json
  LANGUAGE plpgsql
 AS $function$ 
@@ -148,14 +147,13 @@ get_query varchar;
 --search_by varchar := '';
 begin 
  
-	get_query :=  'select p.hemitpatientid, p.firstname, p.lastname, p.middlename, s.hemitsexid, s.sex, p.chartnumber, p.dob, p.createddate, p.createdbyId, p.lastmodifieddate, p.lastmodifiedbyid, p.isactive, p.isdeleted,
+	get_query :=  'select p.hemitpatientid, p.firstname, p.lastname, p.middlename, p.sexid, p.chartnumber, p.dob, p.createddate, p.createdbyId, p.lastmodifieddate, p.lastmodifiedbyid, p.isactive, p.isdeleted,
 	p.clientid, p.machineid, p.oldsystemid, p.requestid, p.issample
-    from hemitpatient p inner join 
-	hemitsex s on p.hemitsexid = s.hemitsexid where p.isdeleted = false' ||
+    from hemitpatient p  where p.isdeleted = false' ||
 	case when _hemitpatientid is not null then (case when _hemitpatientid != '0' then ' and (p.hemitpatientid  = ANY(STRING_TO_ARRAY($1, '','')::bigint[]) )' else ' and 1 != 1' end) else '' end ||
 	case when _firstName is not null then ' and (p.firstname ILIKE ANY(ARRAY[$2]))' else '' end ||
 	case when _lastName is not null then ' and (p.lastname ILIKE ANY(ARRAY[$3]))' else '' end ||
-	case when _hemitsexId is not null then ' and ( p.hemitsexId = ANY(STRING_TO_ARRAY($4, '','')::bigint[]) )' else '' end ||
+	case when _sexId is not null then ' and ( p.sexid = ANY(STRING_TO_ARRAY($4, '','')::bigint[]) )' else '' end ||
 	case when _dob is not null then ' and p.dob = $5' else '' end ||
 	case when _middleName is not null then ' and (p.middlename ILIKE ANY(ARRAY[$9]))' else '' end ||
 	case when _chartNumber is not null then ' and (p.chartnumber ILIKE ANY(ARRAY[$10]))' else '' end ||
@@ -170,7 +168,7 @@ begin
 	
 	raise notice '%',get_query;
 	
-	return query execute get_query using _hemitpatientid, _firstName, _lastName, _hemitsexId, _dob, _orderBy, _page, _size, _middleName, _chartNumber, _isActive, _createddate, _lastmodifieddate;
+	return query execute get_query using _hemitpatientid, _firstName, _lastName, _sexId, _dob, _orderBy, _page, _size, _middleName, _chartNumber, _isActive, _createddate, _lastmodifieddate;
 end;
 $function$
 ;
@@ -206,8 +204,8 @@ RETURNS SETOF json
 AS $function$
 declare 
 --_query varchar :='';
- _query varchar:= 'select HemitPatient.hemitpatientid as hemitpatientid,chartnumber,firstname , lastname,middlename,HemitPatient.hemitsexid,HemitSex.sex,dob from HemitPatient 
-left join HemitSex on HemitSex.hemitsexid=HemitPatient.hemitsexid
+ _query varchar:= 'select HemitPatient.hemitpatientid as hemitpatientid,chartnumber,firstname , lastname,middlename, gender.code as gendercode,gender.description as genderdescription,dob,HemitPatient.sexid as sexid,HemitPatient.createdbyid as CreatedById,HemitPatient.lastmodifiedbyid as LastModifiedById from HemitPatient 
+left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid
 LEFT JOIN HemitPatientAllergy ON HemitPatient.hemitpatientid = HemitPatientAllergy.hemitpatientid 
 LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid'; 
 v_queryStatement TEXT;
@@ -263,7 +261,7 @@ initialquery2 = ''
 	|| case when $3 != 0 then ' and HemitPatient.hemitpatientid = '''||$3||'''' else '' end 
 	|| case when $4 != '' then ' and HemitPatient.firstname = '''||$4||'''' else '' end 
 	||case when $6 != '' then ' and HemitPatient.lastname = '''||$6||'''' else '' end 
-	||case when $8 != '' then ' and HemitSex.sex = '''||$8||'''' else ''  end
+	--||case when $8 != '' then ' and HemitSex.sex = '''||$8||'''' else ''  end
 	|| case when $9 != '' then ' and HemitPatient.dob = '''||$9::date||'''' else ''  end
 	--||case when $10 != '' then ' and hemitallergy.name = '''||$10||'''' else '' end
 	||case when $13 != '' then ' and (HemitPatient.firstname = '''||$13||''' or HemitPatient.lastname = '''||$13||'''or HemitPatient.chartnumber = '''||$13||''')' else '' end;
@@ -272,13 +270,13 @@ v_countStatement = CONCAT(' SELECT count(HemitPatient.hemitpatientid) FROM Hemit
 execute v_countStatement  using 
 _Page,_Size,_hemitpatientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype INTO _count;
 
-initialquery = 'Select '||_count||' AS Count, HemitPatient.hemitpatientid as Id, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitSex.sex as GenderDescription,HemitPatient.hemitsexid as SexId,
+initialquery = 'Select '||_count||' AS Count, HemitPatient.hemitpatientid as Id, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,gender.code as gendercode,gender.description as genderdescription,
 DENSE_RANK() OVER (
 		ORDER BY HemitPatient.hemitpatientid
 	) as denserow 
 From
     HemitPatient
-    LEFT JOIN HemitSex ON HemitPatient.hemitsexid = HemitSex.hemitsexid 
+    left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid 
 
 where HemitPatient.isdeleted=false and 1=1 ';
 
@@ -286,7 +284,7 @@ where HemitPatient.isdeleted=false and 1=1 ';
 	|| case when $3 != 0 then ' and HemitPatient.hemitpatientid = '''||$3||'''' else '' end 
 	|| case when $4 != '' then ' and HemitPatient.firstname = '''||$4||'''' else '' end 
 	||case when $6 != '' then ' and HemitPatient.lastname = '''||$6||'''' else '' end 
-	||case when $8 != '' then ' and HemitSex.sex = '''||$8||'''' else ''  end
+	--||case when $8 != '' then ' and HemitSex.sex = '''||$8||'''' else ''  end
 	|| case when $9 != '' then ' and HemitPatient.dob = '''||$9::date||'''' else ''  end
 	--||case when $10 != '' then ' and hemitallergy.name = '''||$10||'''' else '' end
 	||case when $13 != '' then ' and (HemitPatient.firstname = '''||$13||''' or HemitPatient.lastname = '''||$13||'''or HemitPatient.chartnumber = '''||$13||''')' else '' end
@@ -355,13 +353,13 @@ as
 $$
 declare 
 _count INT; 
-initialquery varchar(2000) := 'Select HemitPatient.hemitpatientid as hemitpatientid, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.middlename, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitSex.sex as description,HemitPatient.hemitsexid as hemitsexid,
+initialquery varchar(2000) := 'Select HemitPatient.hemitpatientid as hemitpatientid, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.middlename, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitPatient.sexid as hemitsexid,gender.code as sex,gender.description as description,
 DENSE_RANK() OVER (
 		ORDER BY HemitPatient.hemitpatientid
 	) as denserow 
 From
     HemitPatient
-    LEFT JOIN HemitSex ON HemitPatient.hemitsexid = HemitSex.hemitsexid 
+    left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid
 
 where HemitPatient.isdeleted=false and 1=1 ';
 initialquery2 varchar(2000) := '';
@@ -374,7 +372,7 @@ begin
 	|| case when $3 != 0 then ' and HemitPatient.hemitpatientid = '''||$3||'''' else '' end 
 	|| case when $4 != '' then ' and HemitPatient.firstname = '''||$4||'''' else '' end 
 	||case when $6 != '' then ' and HemitPatient.lastname = '''||$6||'''' else '' end 
-	||case when $8 != '0' then ' and HemitSex.sex = '''||$8||'''' else ''  end
+	--||case when $8 != '0' then ' and HemitSex.sex = '''||$8||'''' else ''  end
 	|| case when $9 != '' then ' and HemitPatient.dob = '''||$9::date||'''' else ''  end
 	--||case when $10 != '' then ' and hemitallergy.AllergyName = '''||$10||'''' else '' end
 	||case when $13 != '' then ' and (HemitPatient.firstname = '''||$13||''' or HemitPatient.lastname = '''||$13||''')' else '' end
@@ -397,6 +395,7 @@ SELECT * FROM Hemituspgetpatientfilter (_patientid => '0',_firstname => NULL,_mi
 SELECT * FROM Hemituspgetpatientfilter (_hemitpatientid => '0',_firstname => 'Hemit', _middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_ordertype => 'ASC', _allergyname => NULL,_sex => 'FEMALE', _clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '')
 ;
 
+SELECT * FROM Hemituspgetpatientfilter (_size => '20',_page => '1',_hemitpatientid => '0',_firstname => NULL,_middlename => NULL,_lastname => 'WARGHESE', _sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000769',_langId => '');
 
 create or replace function uspNewHemitPatientsdelete(
                 _PageNumber INTEGER = 1,
@@ -591,7 +590,7 @@ begin
 	--sexid= (select sex_id from HemitSex where sex=_SexId);
 	sexid=_SexId;
 
-    _initialquery:='INSERT INTO HemitPatient(firstname,lastname,middlename,hemitsexid,dob) VALUES('''||$4||''','''||$6||''','''||$5||''','||sexid||','''||$9||'''::date) returning hemitpatientid;' ;
+    _initialquery:='INSERT INTO HemitPatient(firstname,lastname,middlename,sexid,dob) VALUES('''||$4||''','''||$6||''','''||$5||''','||sexid||','''||$9||'''::date) returning hemitpatientid;' ;
     raise notice '%',_initialquery;
      return query execute _initialquery using _hemitpatientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
     
@@ -602,7 +601,7 @@ $$ language plpgsql;
 
 select uspNewHemitPatientscreate(_FirstName=>'RIMA',_MiddleName=>'R',_LastName=>'PATEL',_SexId=>3,_DOB=>'1994-1-13');
 
-SELECT * FROM uspNewHemitPatientsCreate (_hemitpatientid => '0',_firstname => 'Priyam', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '1', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
+SELECT * FROM uspNewHemitPatientsCreate (_hemitpatientid => '0',_firstname => 'KAVI', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '1', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
 
 select * from HemitPatient;
 
@@ -626,7 +625,7 @@ language plpgsql
 as
 $$
 declare 
-_initialquery varchar :='update HemitPatient set firstname = '''||$4||''',middlename='''||$5||''',lastname='''||$6||''',hemitsexid='||$8||',dob='''||$9||''' where hemitpatientid='||$3||' and isdeleted=false returning hemitpatientid';
+_initialquery varchar :='update HemitPatient set firstname = '''||$4||''',middlename='''||$5||''',lastname='''||$6||''',sexid='||$8||',dob='''||$9||''' where hemitpatientid='||$3||' and isdeleted=false returning hemitpatientid';
 -- _updatequery varchar:= ; 
 -- _selectquery varchar:= '';
  begin
