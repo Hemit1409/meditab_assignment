@@ -1,0 +1,691 @@
+create
+
+http://localhost:57000/api/hemit/create/patient
+
+{
+
+
+  "firstName": "Priyas",
+  "lastName": "WARGHESE",
+  "middleName": "S",
+
+  "sexId": 100071137,
+  "dOB": "2003-01-01",
+  "Allergy": {
+    "created": [
+
+{
+      "note": "PEANUT added again",
+"hemitpatientid":12,
+      "hemitallergyid": 11
+    }
+    ],
+    "deleted": [ ],
+    "updated": [ ]
+  }
+  
+}
+
+{
+    "data": {
+        "messages": [],
+        "result": {
+            "Patient": {
+                "LastModifiedDate": "/Date(-62135596800000)/",
+                "CreatedDate": "/Date(-62135596800000)/",
+                "IsActive": false,
+                "IsDeleted": false,
+                "sexid": 100071137,
+                "Count": 0,
+                "hemitpatientid": 150,
+                "pk": 0,
+                "LastModifiedById": 1000768,
+                "CreatedById": 1000768,
+                "dob": "2003-01-01T00:00:00",
+                "MiddleName": "S",
+                "LastName": "WARGHESE",
+                "FirstName": "Priyas",
+                "ChartNumber": "CHART50"
+            },
+            "Allergy": [
+                {
+                    "count": 1,
+                    "hemitpatientid": 150,
+                    "lastmodifieddate": 1680846517356,
+                    "hemitpatientallergyid": 151,
+                    "note": "PEANUT added again",
+                    "name": "MILK"
+                }
+            ]
+        }
+    },
+    "status": "success"
+}
+
+byid
+
+http://localhost:57000/api/hemit/id/12?createdBy=true&sex=true&allergy=true
+
+{
+    "data": {
+        "messages": [],
+        "result": {
+            "Id": 312,
+            "IsCanceled": false,
+            "IsCompleted": true,
+            "IsCompletedSuccessfully": true,
+            "IsFaulted": false,
+            "Result": {
+                "Patient": {
+                    "LastModifiedDate": "/Date(-62135596800000)/",
+                    "CreatedDate": "/Date(-62135596800000)/",
+                    "IsActive": false,
+                    "IsDeleted": false,
+                    "sexid": 100071137,
+                    "Count": 0,
+                    "hemitpatientid": 12,
+                    "pk": 0,
+                    "LastModifiedById": 1000768,
+                    "CreatedById": 1000768,
+                    "dob": "2003-01-01T00:00:00",
+                    "MiddleName": "S",
+                    "LastName": "RANA",
+                    "FirstName": "SHIV",
+                    "ChartNumber": "CHART2"
+                },
+                "Allergy": [
+                    {
+                        "count": 3,
+                        "hemitpatientid": 12,
+                        "lastmodifieddate": 1680196412770,
+                        "hemitpatientallergyid": 11,
+                        "note": "milk is good but bad for you",
+                        "name": "MILK"
+                    },
+                    {
+                        "count": 3,
+                        "hemitpatientid": 12,
+                        "lastmodifieddate": 1680271812358,
+                        "hemitpatientallergyid": 13,
+                        "note": "updated2peanut",
+                        "name": "PEANUT"
+                    },
+                    {
+                        "count": 3,
+                        "hemitpatientid": 12,
+                        "lastmodifieddate": 1680763096554,
+                        "hemitpatientallergyid": 150,
+                        "note": "PEANUT added again",
+                        "name": "MILK"
+                    }
+                ],
+                "Sex": {
+                    "id": 100071137,
+                    "clientId": 10007,
+                    "lastModifiedDate": 1695180163001,
+                    "sequence": 1,
+                    "count": 0,
+                    "isSelectable": true,
+                    "description": "Male",
+                    "type": "Gender",
+                    "code": "Male"
+                },
+                "CreatedBy": {
+                    "id": 1000768,
+                    "employee": {
+                        "id": 1000773,
+                        "clientId": 10007,
+                        "isSchedulable": false,
+                        "isProvider": true,
+                        "facilityId": 1000719,
+                        "isActive": true,
+                        "displayName": "Hemit_Patient",
+                        "lastName": "Rana",
+                        "firstName": "Hemit"
+                    },
+                    "clientId": 10007,
+                    "count": 1,
+                    "isActive": true,
+                    "isShowStickyNoteOnLogin": false,
+                    "userName": "Hemit_Patient"
+                },
+                "LastModifiedBy": {
+                    "id": 1000768,
+                    "employee": {
+                        "id": 1000773,
+                        "clientId": 10007,
+                        "isSchedulable": false,
+                        "isProvider": true,
+                        "facilityId": 1000719,
+                        "isActive": true,
+                        "displayName": "Hemit_Patient",
+                        "lastName": "Rana",
+                        "firstName": "Hemit"
+                    },
+                    "clientId": 10007,
+                    "count": 1,
+                    "isActive": true,
+                    "isShowStickyNoteOnLogin": false,
+                    "userName": "Hemit_Patient"
+                }
+            },
+            "Status": "RanToCompletion",
+            "CreationOptions": "None"
+        }
+    },
+    "status": "success"
+}
+
+update
+
+http://localhost:57000/api/hemit/update/12
+
+{
+
+
+  "firstName": "SHIV",
+  "lastName": "RANA",
+  "middleName": "S",
+
+  "sexId": 100071137,
+  "dOB": "2003-01-01",
+   "Allergy": {
+    "created": [
+    {
+      "note": "PEANUT added again",
+       "hemitpatientid":12,
+      "hemitallergyid": 11
+    }
+    ],
+    "deleted": [
+      {
+        "id": 11
+       
+      }
+    ],
+    "updated": [
+      {
+"allergyname": "PEANUT",
+        "note": "updated2peanut",
+        "hemitpatientallergyid": 13
+       
+      }
+    ]
+  }
+}
+
+{
+    "data": {
+        "messages": [],
+        "result": {
+            "Patient": {
+                "LastModifiedDate": "/Date(-62135596800000)/",
+                "CreatedDate": "/Date(-62135596800000)/",
+                "IsActive": false,
+                "IsDeleted": false,
+                "sexid": 100071137,
+                "Count": 0,
+                "hemitpatientid": 12,
+                "pk": 0,
+                "LastModifiedById": 1000768,
+                "CreatedById": 1000768,
+                "dob": "2003-01-01T00:00:00",
+                "MiddleName": "S",
+                "LastName": "RANA",
+                "FirstName": "SHIV",
+                "ChartNumber": "CHART2"
+            },
+            "Allergy": [
+                {
+                    "count": 4,
+                    "hemitpatientid": 12,
+                    "lastmodifieddate": 1680196412770,
+                    "hemitpatientallergyid": 11,
+                    "note": "milk is good but bad for you",
+                    "name": "MILK"
+                },
+                {
+                    "count": 4,
+                    "hemitpatientid": 12,
+                    "lastmodifieddate": 1680271812358,
+                    "hemitpatientallergyid": 13,
+                    "note": "updated2peanut",
+                    "name": "PEANUT"
+                },
+                {
+                    "count": 4,
+                    "hemitpatientid": 12,
+                    "lastmodifieddate": 1680763096554,
+                    "hemitpatientallergyid": 150,
+                    "note": "PEANUT added again",
+                    "name": "MILK"
+                },
+                {
+                    "count": 4,
+                    "hemitpatientid": 12,
+                    "lastmodifieddate": 1680846560381,
+                    "hemitpatientallergyid": 152,
+                    "note": "PEANUT added again",
+                    "name": "MILK"
+                }
+            ]
+        }
+    },
+    "status": "success"
+}
+
+delete
+
+http://localhost:57000/api/hemit/delete/12
+
+{
+    "data": {
+        "messages": [],
+        "result": 12
+    },
+    "status": "success"
+}
+
+fetch
+
+http://localhost:57000/api/hemit/HemitFetch?page=1&size=20&isShowCount=false
+
+{
+    "lastName": "WARGHESE"
+}
+
+{
+    "data": {
+        "messages": [],
+        "pagination": {
+            "count": 14,
+            "size": 20,
+            "page": 1
+        },
+        "result": [
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 111,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART11"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 112,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART12"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 114,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART14"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 115,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART15"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 130,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART30"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 131,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART31"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 132,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART32"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 133,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART33"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 134,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART34"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 135,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART35"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 147,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART47"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 148,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "KAVI",
+                "chartnumber": "CHART48"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 149,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART49"
+            },
+            {
+                "modified_on": "/Date(-62135596800000)/",
+                "created_on": "/Date(-62135596800000)/",
+                "isdeleted": false,
+                "rank": 0,
+                "sex_id": 100071137,
+                "count": 14,
+                "patientid": 150,
+                "LastModifiedById": 0,
+                "CreatedById": 0,
+                "sexdata": {
+                    "id": 100071137,
+                    "description": "Male"
+                },
+                "OrderType": "ASC",
+                "Orderby": "HemitPatients.patient_id",
+                "allergyname": "",
+                "dob": "2003-01-01T00:00:00",
+                "sex": "",
+                "middlename": "S",
+                "lastname": "WARGHESE",
+                "firstname": "Priyas",
+                "chartnumber": "CHART50"
+            }
+        ]
+    },
+    "status": "success"
+}
+
+model=id
+
+http://localhost:57000/api/hemit?model=id&page=1&size=2&search=WARGHESE Priyas
+
+{
+    "data": {
+        "messages": [],
+        "pagination": {
+            "count": 11,
+            "size": 2,
+            "page": 1
+        },
+        "result": [
+            {
+                "id": 111,
+                "sex": {
+                    "id": 0,
+                    "description": "Male",
+                    "code": "Male"
+                },
+                "isInsurance": false,
+                "dOB": 1041379200000,
+                "count": 11,
+                "chartNumber": "CHART11",
+                "lastName": "WARGHESE",
+                "firstName": "Priyas"
+            },
+            {
+                "id": 112,
+                "sex": {
+                    "id": 0,
+                    "description": "Male",
+                    "code": "Male"
+                },
+                "isInsurance": false,
+                "dOB": 1041379200000,
+                "count": 11,
+                "chartNumber": "CHART12",
+                "lastName": "WARGHESE",
+                "firstName": "Priyas"
+            }
+        ]
+    },
+    "status": "success"
+}
