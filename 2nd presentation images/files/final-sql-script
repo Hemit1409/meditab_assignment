@@ -43,6 +43,9 @@ CREATE TABLE public.hemitallergy (
 	CONSTRAINT pk_hemitallergy PRIMARY KEY (hemitallergyid)
 );
 
+update hemitallergy set createdbyid = 1000768 where createdbyid=1;
+update hemitallergy set lastmodifiedbyid = 1000768 where lastmodifiedbyid=1;
+
 CREATE TABLE public.hemitpatientallergy (
 	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
 	hemitpatientallergyid int8 NOT NULL GENERATED ALWAYS AS (fngetprimarykey(pk, clientid)) STORED,
@@ -64,6 +67,9 @@ CREATE TABLE public.hemitpatientallergy (
 	CONSTRAINT fk_hemitpatient FOREIGN KEY (hemitpatientid) REFERENCES public.hemitpatient(hemitpatientid)
 );
 
+
+update hemitpatientallergy set createdbyid = 1000768 where createdbyid=1;
+update hemitpatientallergy set lastmodifiedbyid = 1000768 where lastmodifiedbyid=1;
 
 CREATE TABLE public.hemitsex (
 	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -182,7 +188,7 @@ select * from hemitpatient;
 create or replace function uspNewHemitPatientsRead(
                 _page INTEGER = 1,
   			_size INTEGER = 20,
-			_hemitpatientid int default null,
+			_hemitpatientid text default null,
 			_FirstName varchar default '',
 			_MiddleName varchar(100) default '', 
 			_LastName varchar default '',
@@ -197,7 +203,8 @@ create or replace function uspNewHemitPatientsRead(
                 _clientidin varchar default null,
                 _clientidnotin varchar default null,
                 _tpauserid varchar default null,
-                _searchby varchar default null
+                _searchby varchar default null,
+                _chartnumber varchar default null
                 )
 RETURNS SETOF json
  LANGUAGE plpgsql
@@ -206,11 +213,11 @@ declare
 --_query varchar :='';
  _query varchar:= 'select HemitPatient.hemitpatientid as hemitpatientid,chartnumber,firstname , lastname,middlename, gender.code as gendercode,gender.description as genderdescription,dob,HemitPatient.sexid as sexid,HemitPatient.createdbyid as CreatedById,HemitPatient.lastmodifiedbyid as LastModifiedById from HemitPatient 
 left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid
-LEFT JOIN HemitPatientAllergy ON HemitPatient.hemitpatientid = HemitPatientAllergy.hemitpatientid 
-LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid'; 
+/*LEFT JOIN HemitPatientAllergy ON HemitPatient.hemitpatientid = HemitPatientAllergy.hemitpatientid 
+LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid*/'; 
 v_queryStatement TEXT;
  begin
-     _query := _query || ' where HemitPatient.isdeleted=false and HemitPatient.hemitpatientid='||$3;--||;--' LIMIT 1';
+     _query := _query || ' where HemitPatient.isdeleted=false and (HemitPatient.hemitpatientid  = ANY(STRING_TO_ARRAY('''||$3||''', '','')::bigint[]) )';--||;--' LIMIT 1';
     v_queryStatement =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| _query ||' ) A';
      raise notice '%',v_queryStatement;
      return query execute v_queryStatement using _hemitpatientid,_FirstName,_LastName,_MiddleName,_SexId,_DOB;
@@ -221,7 +228,14 @@ $function$
 select * from uspnewhemitpatientsread(_patientid=>'12');
 
 
-SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL)
+SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12,13',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  null,_chartnumber=>null)
+
+
+SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM (select HemitPatient.hemitpatientid as hemitpatientid,chartnumber,firstname , lastname,middlename, gender.code as gendercode,gender.description as genderdescription,dob,HemitPatient.sexid as sexid,HemitPatient.createdbyid as CreatedById,HemitPatient.lastmodifiedbyid as LastModifiedById from HemitPatient 
+left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid
+LEFT JOIN HemitPatientAllergy ON HemitPatient.hemitpatientid = HemitPatientAllergy.hemitpatientid 
+LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid where HemitPatient.isdeleted=false and (HemitPatient.hemitpatientid  = ANY(STRING_TO_ARRAY('12', ',')::bigint[]) ) ) A
+
 
 
 create  or replace function  
@@ -243,7 +257,8 @@ uspNewHemitPatientsReadList(
 			_langId varchar default null,
                 _clientidin varchar default null,
                 _clientidnotin varchar default null,
-                _tpauserid varchar default null
+                _tpauserid varchar default null,
+                _chartnumber varchar default null
 			)
 RETURNS SETOF json
 language plpgsql
@@ -345,7 +360,8 @@ Hemituspgetpatientfilter(
 			_langId varchar default null,
                 _clientidin varchar default null,
                 _clientidnotin varchar default null,
-                _tpauserid varchar default null
+                _tpauserid varchar default null,
+                _chartnumber varchar default null
 			)
 RETURNS SETOF json
 language plpgsql
@@ -410,17 +426,17 @@ create or replace function uspNewHemitPatientsdelete(
 			_allergyname varchar default '',
 			_orderby in varchar default 'HemitPatient.hemitpatientid',
 			_ordertype in varchar default 'ASC',
-			_userId varchar default null,
+			_userId int default null,
 			_langId varchar default null,
-			_lastmodifieddate varchar default null,
-			_clientid varchar default null,
+			_lastmodifieddate timestamp without time zone default null,
+			_clientid int default null,
 			_machineid varchar default null,
 			_oldsystemid varchar default null,
 			_requestid varchar default null,
 			_issample varchar default null
                 )
 returns table (
-                id bigint
+                id int
                 /*firstname varchar,
                 lastname varchar,
                 middlename varchar,
@@ -432,17 +448,40 @@ $$
 declare 
 --_query varchar :='';
  _query varchar:= 'update HemitPatient set isdeleted=true'; 
- 
+ errormsg VARCHAR(500);_currentdate timestamp;
  begin
-     _query := _query || ' where hemitpatientid='||$3||' returning hemitpatientid';
+     /*_query := _query || ' where hemitpatientid='||$3||' returning hemitpatientid';
      raise notice '%',_query;
      return query execute _query using _hemitpatientsid;--,_FirstName,_MiddleName,_LastName,_DOB;
+    */
+    select (now() at time zone 'utc') :: timestamp(3) into _currentdate;
+
+	IF EXISTS(SELECT 1 FROM HemitPatient WHERE HemitPatient.hemitpatientid = _hemitpatientsid AND HemitPatient.isdeleted = false) THEN
+
+		  UPDATE HemitPatient SET 
+		  isdeleted = true,
+		  lastmodifiedbyid = _userId,
+		  lastmodifieddate = _currentdate
+		  WHERE HemitPatient.hemitpatientid = _hemitpatientsid;
+		  RETURN QUERY 
+		  select _hemitpatientsid;
+
+  ELSE
+  SELECT fnErrorMessageRead('Concurrency') INTO errormsg;
+  RAISE EXCEPTION '%',errormsg; 
+  END IF;
+    
  end;
 $$  
 
 select * from uspNewHemitPatientsdelete(_hemitpatientsid=>3);
 SELECT * FROM uspNewHemitPatientsDelete (_hemitpatientsid => '1',_lastmodifieddate => '0001-01-01 00:00:00.000',_clientid => '10007',_machineid => '::1',_oldsystemid => NULL,_issample => 'false',_requestid => '13a81649-e3b8-41c5-9f57-f1aefd1f0e45',_userId => '1000769',_langId => '');
 
+
+SELECT * FROM uspNewhemitpatientsDelete (_hemitpatientsid => '12',_lastmodifieddate => '0001-01-01 00:00:00.000',_clientid => '10007',_machineid => '::1',_oldsystemid => NULL,_issample => 'false',_requestid => '31bfb294-4216-4024-bd9d-4df099b8be66',_userId => '1000768',_langId => '');
+
+
+select (now() at time zone 'utc') :: timestamp(3);
 
 update HemitPatient set isdeleted=true where hemitpatientid=12 returning hemitpatientid,firstname , lastname,middlename,hemitsexid,dob;
 
@@ -454,6 +493,9 @@ SELECT * FROM uspNewhemitpatientsDelete (_hemitpatientsid => '12',_lastmodifiedd
 
 update HemitPatient set isdeleted=true where hemitpatientid=12 returning hemitpatientid,firstname , lastname,middlename,dob
 
+
+
+SELECT * FROM uspNewHemitPatientsdelete (_hemitpatientsid => '19',_lastmodifieddate => '0001-01-01 00:00:00.000',_clientid => '10007',_machineid => '::1',_oldsystemid => NULL,_issample => 'false',_requestid => 'c2962e46-245c-4a99-a72c-b665ac3a759c',_userId => '1000768',_langId => '');
 /*uspnewhemitpatientallergyread(_allergyname => unknown, _note => unknown, _patientallergyid => unknown, _allergymasterid => unknown, _patientid => unknown, 
 _clientidin varchar default null, 
 _clientidnotin varchar default null, 
@@ -505,6 +547,10 @@ select * from uspNewHemitPatientAllergyRead(_hemitpatientid=>12);
 select * from HemitPatientAllergy;
 
 SELECT * FROM uspNewhemitpatientallergyRead (_allergyname => NULL,_note => NULL,_patientallergyid => '11',_allergymasterid => NULL,_patientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL);
+
+
+SELECT * FROM uspNewhemitpatientallergyRead (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => '0',_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  NULL);
+
 
 
 CREATE OR REPLACE FUNCTION public.uspnewhemitpatientallergyreadlist(_hemitpatientallergyid text, _allergyname character varying, _hemitallergyid character varying, _note boolean, _hemitpatientid integer, _clientidin character varying, _clientidnotin character varying, _tpauserid integer, _userid bigint, _langid character varying, _page integer, _size integer, _orderby character varying)
@@ -562,6 +608,10 @@ SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => N
 
 SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
 
+SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '13',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
+
+SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL)
+
 CREATE or replace function uspNewHemitPatientscreate(
 			_PageNumber INTEGER = 1,
   			_PageSize INTEGER = 20,
@@ -577,7 +627,8 @@ CREATE or replace function uspNewHemitPatientscreate(
 			_ordertype in varchar default 'ASC',
 			_userId varchar default null,
 			_langId varchar default null,
-			_searchby varchar default null)
+			_searchby varchar default null,
+			_chartnumber varchar default null)
 returns table (id bigint)
 
 AS 
@@ -586,11 +637,12 @@ declare
 _initialquery varchar:='';
 id integer;
 sexid int;
+_currentdate timestamp = current_timestamp;
 begin
 	--sexid= (select sex_id from HemitSex where sex=_SexId);
-	sexid=_SexId;
-
-    _initialquery:='INSERT INTO HemitPatient(firstname,lastname,middlename,sexid,dob) VALUES('''||$4||''','''||$6||''','''||$5||''','||sexid||','''||$9||'''::date) returning hemitpatientid;' ;
+	--sexid=_SexId;
+	select (now() at time zone 'utc') :: timestamp(3) into _currentdate;
+    _initialquery:='INSERT INTO HemitPatient(firstname,lastname,chartnumber,middlename,sexid,dob,createdbyid,lastmodifiedbyid,createddate,lastmodifieddate) VALUES('''||$4||''','''||$6||''','''||$16||''','''||$5||''','||_SexId||','''||$9||'''::date,'||_userId||','||_userId||','''||_currentdate||''','''||_currentdate||''') returning hemitpatientid;' ;
     raise notice '%',_initialquery;
      return query execute _initialquery using _hemitpatientid,_FirstName,_MiddleName,_LastName,_SexId,_DOB;
     
@@ -602,6 +654,17 @@ $$ language plpgsql;
 select uspNewHemitPatientscreate(_FirstName=>'RIMA',_MiddleName=>'R',_LastName=>'PATEL',_SexId=>3,_DOB=>'1994-1-13');
 
 SELECT * FROM uspNewHemitPatientsCreate (_hemitpatientid => '0',_firstname => 'KAVI', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '1', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
+
+SELECT * FROM uspNewhemitpatientsCreate (_hemitpatientid => '0',_firstname => 'Priyas', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '100071137', _dob => '2003-01-01 00:00:00.000',_searchby => NULL,_userId => '1000768',_langId => '');
+
+SELECT * FROM uspNewhemitpatientsCreate (_hemitpatientid => '0',_firstname => 'Priyas', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '100071137', _dob => '2003-01-01 00:00:00.000',_searchby => NULL,_chartnumber => 'CH00000119', _userId => '1000768',_langId => '');
+
+
+SELECT * FROM uspNewhemitpatientsCreate (_hemitpatientid => '0',_firstname => 'SHREY', _middlename => 'S', _lastname => 'PARMAR', _sexid => '100071137', _dob => '2003-01-01 00:00:00.000',_searchby => NULL,_chartnumber => 'CH00000127', _userId => '1000768',_langId => '');
+
+INSERT INTO HemitPatient(firstname,lastname,chartnumber,middlename,sexid,dob,createdbyid,lastmodifiedbyid,createddate,lastmodifieddate) VALUES('SHREY','PARMAR','CH00000127','S',100071137,'2003-01-01 00:00:00.000'::date,1000768,1000768,2023-04-10 12:27:41.215,2023-04-10 12:27:41.215) returning hemitpatientid;
+
+
 
 select * from HemitPatient;
 
@@ -619,13 +682,14 @@ create or replace function uspNewHemitPatientsupdate(_PageNumber INTEGER = 1,
 			_ordertype in varchar default 'ASC',
 			_userId varchar default null,
 			_langId varchar default null,
-			_searchby varchar default null)
+			_searchby varchar default null,
+			_chartnumber varchar default null)
 returns table (id bigint)
 language plpgsql
 as
 $$
 declare 
-_initialquery varchar :='update HemitPatient set firstname = '''||$4||''',middlename='''||$5||''',lastname='''||$6||''',sexid='||$8||',dob='''||$9||''' where hemitpatientid='||$3||' and isdeleted=false returning hemitpatientid';
+_initialquery varchar :='update HemitPatient set firstname = '''||$4||''',middlename='''||$5||''',lastname='''||$6||''',sexid='||$8||',dob='''||$9||''',createdbyid='||_userId||',lastmodifiedbyid='||_userId ||'where hemitpatientid='||$3||' and isdeleted=false returning hemitpatientid';
 -- _updatequery varchar:= ; 
 -- _selectquery varchar:= '';
  begin
@@ -637,10 +701,13 @@ $$
 
 select * from uspNewHemitPatientsupdate(_patientid=>4,_FirstName=>'SHRUTI',_MiddleName=>'S',_LastName=>'RANA',_SexId=>'FEMALE',_DOB=>'2002-01-01');
 
-SELECT * FROM uspNewHemitPatientsUpdate (_patientid => '1',_firstname => 'Priya', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '2', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '');
+SELECT * FROM uspNewHemitPatientsUpdate (_patientid => '1',_firstname => 'Priya', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '2', _dob => '2003-01-01 00:00:00.000',_ordertype => 'ASC', _allergyname => NULL,_searchby => NULL,_userId => '1000769',_langId => '',_chartnumber=>null);
 
 --select * from uspNewHemitPatientsupdate(4,'SUMEET','PATEL','S','MALE','2003-01-01');
 SELECT * FROM uspNewHemitPatientsUpdate (_pagesize => '0',_pagenumber => '0',_patientid => '19',_firstname => 'Priya', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '3', _dob => '2003-01-01 00:00:00.000',_orderby => 'HemitPatient.hemitpatientid', _ordertype => 'ASC', _allergyname => NULL);
+
+
+
 select * from HemitPatient;
 
 
