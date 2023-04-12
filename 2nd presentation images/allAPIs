@@ -1,0 +1,1580 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Npgsql;
+using Npgsql.Replication.PgOutput.Messages;
+using System.Collections.Generic;
+using System.Data;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Transactions;
+using WebApi_hemitr.Models;
+using System.Text.Json;
+using System.IO.Pipelines;
+using System.Security.Cryptography.X509Certificates;
+using Dapper;
+using System;
+using Microsoft.Extensions.Configuration;
+using System.Collections;
+
+namespace WebApi_hemitr.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PatientController : ControllerBase
+    {
+        private readonly IConfiguration _configuration;
+        
+
+        public PatientController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool NullCheck(string? field)
+        {
+            if (field == null || field == string.Empty)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public bool NullintCheck(int? field)
+        {
+            if (field == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public static string GetValue(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                return "'"+value+"'";
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
+        public static int GetintValue(int value)
+        {
+            if (value != 0)
+            {
+                return value;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /* [ApiExplorerSettings(IgnoreApi = true)]
+         public static int GetintValue(int value)
+         {
+             if (NullintCheck(value))
+             {
+                 return 0;
+             }
+             else
+             {
+                 return value;
+             }
+         }*/
+
+        /*[ApiExplorerSettings(IgnoreApi = true)]
+        public class ListtoDataTableConverter
+        {
+            public DataTable ToDataTable<T>(List<T> items)
+            {
+                DataTable dataTable = new DataTable(typeof(T).Name);
+                //Get all the properties
+                PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                foreach (PropertyInfo prop in Props)
+                {
+                    //Setting column names as Property names
+                    dataTable.Columns.Add(prop.Name);
+                }
+                foreach (T item in items)
+                {
+                    var values = new object[Props.Length];
+                    for (int i = 0; i < Props.Length; i++)
+                    {
+                        //inserting property values to datatable rows
+                        values[i] = Props[i].GetValue(item, null);
+                    }
+                    dataTable.Rows.Add(values);
+                }
+                //put a breakpoint here and check datatable
+                return dataTable;
+            }
+        }*/
+
+        /*get by ID*/
+        /// <summary>
+        /// This method returns the patient record by the patient_id
+        /// <example>
+        /// For example:
+        /// id = 1
+        /// results in records of patient having patient_id 3.
+        /// </example>
+        /// </summary>
+        /// <param name="id">
+        ///         1
+        /// </param>
+        /// <returns>
+        /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
+        /// </returns>
+        [HttpGet("{id}")]
+        public List<Patients> PatientGetbyID(int id)
+        {
+            string query = @"
+
+                select *  from PatientAllergyGetbyID("+id+");";
+
+            string Allergyquery = @"
+                select * from allergyget("+id+");";
+
+            DataTable table = new DataTable();
+            DataTable table2 = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader, myReader2;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    //myCommand.Parameters.AddWithValue("@patient_id", id);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    //myCon.Close();
+
+
+                }
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(Allergyquery, myCon))
+                {
+                    //myCommand.Parameters.AddWithValue("@patientid", id);
+
+
+                    myReader2 = myCommand.ExecuteReader();
+                    table2.Load(myReader2);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+
+
+            }
+            List<Patients> patientList = new List<Patients>();
+
+            patientList = Patients.GetListByID(table,table2);
+
+            return patientList;
+            //return new JsonResult((table));
+        }
+
+
+       
+
+
+        /*getlist with Pagination and orderby*/
+        /// <summary>
+        /// This method returns the patient record by the firstname, lastname, sex and dateofbirth according to the pagenumber and pagesize and orderby sorting
+        /// </summary>
+        /// <example>
+        /// For example:
+        /// /api/Patient/GetList?PageNumber=1&PageSize=5
+        /// results in records of patient having paginayion of pagesize of 5 records and 1 page number
+        /// </example>
+        /// <param name="patient_obj"></param>
+        /// <param name="PageNumber">1</param>
+        /// <param name="PageSize">10</param>
+        /// 
+        /// <returns>
+        /// [{"patient_id": 1, "chartnumber": "CHART001","first_name": "HEMIT","last_name": "RANA","middle_name": "sanjaykumar","sex_id": 1,"sex": "MALE","dob": "9/13/2001 12:00:00 AM","isdeleted": false,"created_on": "0001-01-01T00:00:00","modified_on": "0001-01-01T00:00:00","allergyname": "MILK","note": "note1","orderby": "Patients.patient_id","patientAllergyId": 0,"allergyMasterId": 0}]
+        /// </returns>
+        [HttpPost("GetList")]
+        public List<Patients> patientget(Patients patient_obj, int PageNumber = 1, int PageSize = 10)
+        {
+
+            List<Patients>? patient_Allergy = new List<Patients>();
+
+            string query = @"
+                --select * FROM patientallergyget(@PageNumber,@PageSize,first_Name=>@first_name,last_Name=>@last_name,gender=>@sex,dateofbirth=>@dob,allergy_name=>@allergyname,orderby=>@orderby,ordertype=>@OrderType);
+                select * FROM patientallergygetCombined(" + PageNumber + ","+ PageSize + ",_first_Name=>"+ GetValue(patient_obj.first_name) + ",_last_Name=>"+ GetValue(patient_obj.last_name) + ",_gender=>"+ GetValue(patient_obj.sex) + ",_dateofbirth=>" + GetValue(patient_obj.dob) + ",_allergy_name=>"+ GetValue(patient_obj.allergyname) + ",_orderby=>"+ GetValue(patient_obj.Orderby) + ",_ordertype=>"+ GetValue(patient_obj.OrderType) + ",_PatientId=>"+GetintValue(patient_obj.patient_id) +");";
+
+            Console.WriteLine(query);
+
+            /*string Allergyquery = @"
+                select * from allergyget(@patientid);";*/
+
+            DataTable table = new DataTable();
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;//,myReader2, myReader3;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            
+
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    /*myCommand.Parameters.AddWithValue("@PageNumber", PageNumber);
+                    myCommand.Parameters.AddWithValue("@PageSize", PageSize);
+                    myCommand.Parameters.AddWithValue("@first_name", patient_obj.first_name);
+                    myCommand.Parameters.AddWithValue("@last_name", patient_obj.last_name);
+                    myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);
+                    myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+                    myCommand.Parameters.AddWithValue("@allergyname", patient_obj.allergyname);
+                    myCommand.Parameters.AddWithValue("@orderby", patient_obj.Orderby);
+                    myCommand.Parameters.AddWithValue("@OrderType", patient_obj.OrderType);*/
+                    //myCommand.Parameters.AddWithValue("@patient_id", patient_obj.patient_id);
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    int current_ptr = 0, forward_ptr = 0;
+                    
+                    for(int i=0;i< table.Rows.Count; i=current_ptr)
+                    {
+                        Patients patientdata= new Patients();
+                        List<Allergy> list = new List<Allergy>();
+
+                        patientdata.patient_id = (int)table.Rows[i]["patientid"];
+                        patientdata.first_name = (string)table.Rows[i]["firstname"];
+                        patientdata.last_name = (string)table.Rows[i]["lastname"];
+                        patientdata.chartnumber= (string)table.Rows[i]["chart_number"];
+                        patientdata.sex = (string)table.Rows[i]["sex"];
+                        patientdata.dob = ((DateTime)table.Rows[i]["dob"]).ToString();
+                        //((DateTime)(rw["dob"])).ToString(),
+                        for (forward_ptr = current_ptr; forward_ptr <table.Rows.Count; forward_ptr++)
+                        {
+                            current_ptr = forward_ptr;
+                            if(patientdata.patient_id == ((int)table.Rows[forward_ptr]["patientid"]))
+                            {
+                                Allergy a= new Allergy();
+                                
+                                a.patientAllergyId = (int)table.Rows[forward_ptr]["_PatientAllergyId"];
+                                a.allergyname = (string)table.Rows[forward_ptr]["_AllergyName"];
+                                a.note= (string)table.Rows[forward_ptr]["_Note"];
+                                /*allergyname = (rw["AllergyName"] == null) ? string.Empty : rw["AllergyName"].ToString(),
+                                 note = (rw["Note"] == null) ? string.Empty : rw["Note"].ToString(),
+                                 code = (rw["code"] == null) ? string.Empty : rw["code"].ToString(),*/
+                                //PatientAllergies = GetListAllergy2(dt)
+                                /*PatientAllergies = new List<Allergy>()
+                                 {
+
+                                    new Allergy(){
+                                         patientAllergyId = (int)(rw["_PatientAllergyId"]),
+                                         allergyMasterId = (int)(rw["_AlergyMasterID"]),
+                                         allergyname = (string)(rw["_AllergyName"]),
+                                        note = (string)(rw["_Note"])
+                                    }
+
+
+                                 }*/
+                                list.Add(a);
+                            }
+                            else
+                            {
+                                current_ptr = forward_ptr;break;
+                            }
+                        }
+                        patientdata.PatientAllergies = list.ToList();
+                        patient_Allergy.Add(patientdata);
+                        if (forward_ptr == (table.Rows.Count))
+                        {
+                            break;
+                        }
+                    }
+
+                    myCon.Close();
+                    myReader.Close();
+                }
+
+            }
+
+            return patient_Allergy;
+
+        }
+
+        /*[HttpGet("getByDapperID/{id}")]
+       public List<Patients> PatientGetbyIDDapper(int id)
+       {
+           string query = @"
+
+               select *  from PatientAllergyGetbyID(" + id + ");";
+
+           string Allergyquery = @"
+               select * from allergyget(" + id + ");";
+
+           string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+
+
+           NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+           myCon.Open();
+
+
+           //IList<Patients> patientResponses;
+
+           var patientList = myCon.Query<Patients>(query).ToList();
+           var AllergyList = myCon.Query(Allergyquery);
+
+           List<Patients> patientList2 = new List<Patients>();
+           List<Patients> patientList3 = Patients.GetListByID3(patientList2);
+
+           *//*List<Patients> patientList = new List<Patients>();
+
+           patientList = Patients.GetListByID2(table, table2);*//*
+           myCon.Close();
+           return patientList;
+           //return new JsonResult((table));
+       }*/
+
+
+        [HttpGet("getByDapperID/{id}")]
+        public List<Patients> PatientGetbyIDDapper(int id)
+        {
+            string query = @"
+
+                select *  from PatientAllergyGetbyID(" + id + ");";
+
+            /*string Allergyquery = @"
+                select * from allergyget(" + id + ");";*/
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+
+
+            NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+            myCon.Open();
+
+            List<Patients> patient = myCon.Query<dynamic>(query)
+                                   .Select(item => new Patients()
+                                   {
+                                       patient_id = (int)item.patient_id,
+                                       chartnumber = (string)item.chart_number,
+                                       first_name = (string)item.firstname,
+                                       last_name = (string)item.lastname,
+                                       middle_name = (string)item.middlename,
+                                       sex_id = (int)item.sex_id,
+                                       sex = (string)item.sex,
+                                       dob = item.dob.ToString(),
+                                       allergyname = (string)item.allergyname,
+                                       /*allergyname = (rw["AllergyName"] == null) ? string.Empty : rw["AllergyName"].ToString(),
+                                 note = (rw["Note"] == null) ? string.Empty : rw["Note"].ToString(),
+                                 code = (rw["code"] == null) ? string.Empty : rw["code"].ToString(),*/
+                                       //PatientAllergies = GetListAllergy2(dt)
+                                       /*PatientAllergies = new List<Allergy>()
+                                        {
+
+                                           new Allergy(){
+                                                patientAllergyId = (int)(rw["_PatientAllergyId"]),
+                                                allergyMasterId = (int)(rw["_AlergyMasterID"]),
+                                                allergyname = (string)(rw["_AllergyName"]),
+                                               note = (string)(rw["_Note"])
+                                           }
+
+
+                                        }*/
+                                       PatientAllergies = new List<Allergy>()
+                                        {
+                                            new Allergy()
+                                            {
+                                                patientAllergyId = (int)item.patientallergyid,
+                                                allergyMasterId = (int)item.allergymasterid,
+                                                allergyname = (string)item.allergyname,
+                                                note = (string)item.note
+                                            }
+
+                                        }
+
+                                   })
+                                    .ToList();
+
+
+            Patients patientdata = new Patients();
+
+
+            var PatientList = new List<Patients>();
+            int current_ptr = 0, frwrd_pointer = 0;
+
+            //for (int index = 1; index <= dt.Rows.Count - 1; ++index)
+
+            Patients patientObject = new Patients();
+            List<Allergy> allergyModelList = new List<Allergy>();
+
+            //List<Allergy> aobj = new List<Allergy>();
+
+            /*var result = from s in person
+                         select s;
+
+            foreach (var st in result)
+                Console.WriteLine(st.patient_id);*/
+
+            Console.WriteLine(patient[0].patient_id + " " + patient[0].last_name + " " + patient[0].PatientAllergies.Count);
+
+
+            patientObject.patient_id = Convert.ToInt32(id);
+            patientObject.chartnumber = Convert.ToString(patient[0].chartnumber);
+            patientObject.first_name = Convert.ToString(patient[0].first_name);
+            /*allergyname = (rw["AllergyName"] == null) ? string.Empty : rw["AllergyName"].ToString(),
+                                 note = (rw["Note"] == null) ? string.Empty : rw["Note"].ToString(),
+                                 code = (rw["code"] == null) ? string.Empty : rw["code"].ToString(),*/
+            //PatientAllergies = GetListAllergy2(dt)
+            /*PatientAllergies = new List<Allergy>()
+             {
+
+                new Allergy(){
+                     patientAllergyId = (int)(rw["_PatientAllergyId"]),
+                     allergyMasterId = (int)(rw["_AlergyMasterID"]),
+                     allergyname = (string)(rw["_AllergyName"]),
+                    note = (string)(rw["_Note"])
+                }
+
+
+             }*/
+            patientObject.middle_name = Convert.ToString(patient[0].middle_name);
+            patientObject.last_name = Convert.ToString(patient[0].last_name);
+            patientObject.sex = Convert.ToString(patient[0].sex);
+            patientObject.dob = Convert.ToString(patient[0].dob);
+
+
+            Console.WriteLine("person count : " + patient.Count);
+
+            for (frwrd_pointer = current_ptr; frwrd_pointer < patient.Count; frwrd_pointer++)
+            {
+                current_ptr = frwrd_pointer;
+
+                Console.WriteLine(frwrd_pointer + " " + current_ptr);
+
+                if (patientObject.patient_id == Convert.ToInt32(patient[frwrd_pointer].patient_id.ToString()))
+                {
+                    Allergy allergyObject = new Allergy();
+                    allergyObject.patientAllergyId = Convert.ToInt32(patient[frwrd_pointer].PatientAllergies[0].patientAllergyId.ToString());
+                    allergyObject.allergyMasterId = Convert.ToInt32(patient[frwrd_pointer].PatientAllergies[0].allergyMasterId.ToString());
+                    allergyObject.allergyname = patient[frwrd_pointer].PatientAllergies[0].allergyname.ToString();
+                    allergyObject.note = Convert.ToString(patient[frwrd_pointer].PatientAllergies[0].note.ToString());
+                    /*allergyname = (rw["AllergyName"] == null) ? string.Empty : rw["AllergyName"].ToString(),
+                                 note = (rw["Note"] == null) ? string.Empty : rw["Note"].ToString(),
+                                 code = (rw["code"] == null) ? string.Empty : rw["code"].ToString(),*/
+                    //PatientAllergies = GetListAllergy2(dt)
+                    /*PatientAllergies = new List<Allergy>()
+                     {
+
+                        new Allergy(){
+                             patientAllergyId = (int)(rw["_PatientAllergyId"]),
+                             allergyMasterId = (int)(rw["_AlergyMasterID"]),
+                             allergyname = (string)(rw["_AllergyName"]),
+                            note = (string)(rw["_Note"])
+                        }
+
+
+                     }*/
+                    allergyModelList.Add(allergyObject);
+                }
+                else
+                {
+                    current_ptr = frwrd_pointer;
+                    break;
+                }
+
+                //pobj.PatientAllergies = aobj;
+
+                patientObject.PatientAllergies = allergyModelList.ToList();
+
+                if (frwrd_pointer == (patient.Count))
+                {
+                    break;
+                }
+            }
+            PatientList.Add(patientObject);
+
+
+
+            myCon.Close();
+            return PatientList;
+            //return new JsonResult((table));
+        }
+
+
+
+        [HttpPost("GetListbyDapper")]
+        public List<Patients> patientgetbyDapper(Patients patient_obj, int PageNumber = 1, int PageSize = 10)
+        {
+
+
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+            var patients = myCon.Query("select * FROM patientallergygetCombined(" + PageNumber + "," + PageSize + ",_first_Name=>" + GetValue(patient_obj.first_name) + ",_last_Name=>" + GetValue(patient_obj.last_name) + ",_gender=>" + GetValue(patient_obj.sex) + ",_dateofbirth=>" + GetValue(patient_obj.dob) + ",_allergy_name=>" + GetValue(patient_obj.allergyname) + ",_orderby=>" + GetValue(patient_obj.Orderby) + ",_ordertype=>" + GetValue(patient_obj.OrderType) + ",_PatientId=>" + GetintValue(patient_obj.patient_id) + ");");
+            var patients2 = "select * FROM patientallergygetCombined(" + PageNumber + "," + PageSize + ",_first_Name=>" + GetValue(patient_obj.first_name) + ",_last_Name=>" + GetValue(patient_obj.last_name) + ",_gender=>" + GetValue(patient_obj.sex) + ",_dateofbirth=>" + GetValue(patient_obj.dob) + ",_allergy_name=>" + GetValue(patient_obj.allergyname) + ",_orderby=>" + GetValue(patient_obj.Orderby) + ",_ordertype=>" + GetValue(patient_obj.OrderType) + ",_PatientId=>" + GetintValue(patient_obj.patient_id) + ");";
+            
+
+            Console.WriteLine(patients);
+            
+
+
+
+            List<Patients> patient = myCon.Query<dynamic>(patients2)
+                                   .Select(item => new Patients()
+                                   {
+                                       patient_id = (int)item.patientid,
+                                       chartnumber = (string)item.chart_number,
+                                       first_name = (string)item.firstname,
+                                       last_name = (string)item.lastname,
+                                       //middle_name = (string)item.middlename,
+                                       //sex_id = 0,
+                                       sex = (string)item.sex,
+                                       dob = item.dob.ToString(),
+                                       allergyname = (string)item._allergyname,
+                                       //rank = (int)item.rownumber,
+                                       PatientAllergies = new List<Allergy>()
+                                        {
+                                            new Allergy()
+                                            {
+                                                patientAllergyId = (int)item._patientallergyid,
+                                                allergyMasterId = (int)item._alergymasterid,
+                                                allergyname = (string)item._allergyname,
+                                                note = (string)item._note
+                                            }
+
+                                        }
+
+                                   }).ToList();
+
+            int current_ptr = 0, frwrd_pointer = 0;
+            List<Patients>? patient_Allergy = new List<Patients>();
+
+            for (int i = 0; i < patient.Count; i = current_ptr)
+            {
+
+                Patients patientdata = new Patients();
+
+
+                var PatientList = new List<Patients>();
+
+
+                
+
+                Patients patientObject = new Patients();
+                List<Allergy> allergyModelList = new List<Allergy>();
+
+                
+
+
+                patientObject.patient_id = Convert.ToInt32(patient[i].patient_id);
+                patientObject.chartnumber = Convert.ToString(patient[i].chartnumber);
+                patientObject.first_name = Convert.ToString(patient[i].first_name);
+
+                patientObject.middle_name = Convert.ToString(patient[i].middle_name);
+                patientObject.last_name = Convert.ToString(patient[i].last_name);
+                patientObject.sex = Convert.ToString(patient[i].sex);
+                patientObject.dob = Convert.ToString(patient[i].dob);
+
+
+                Console.WriteLine("person count : " + patient.Count);
+
+                for (frwrd_pointer = current_ptr; frwrd_pointer < patient.Count; frwrd_pointer++)
+                {
+                    current_ptr = frwrd_pointer;
+
+                    Console.WriteLine(frwrd_pointer + " " + current_ptr);
+
+                    if (patientObject.patient_id == Convert.ToInt32(patient[frwrd_pointer].patient_id.ToString()))
+                    {
+                        Allergy allergyobject = new Allergy();
+                        allergyobject.patientAllergyId = Convert.ToInt32(patient[frwrd_pointer].PatientAllergies[0].patientAllergyId.ToString());
+                        allergyobject.allergyMasterId = Convert.ToInt32(patient[frwrd_pointer].PatientAllergies[0].allergyMasterId.ToString());
+                        allergyobject.allergyname = patient[frwrd_pointer].PatientAllergies[0].allergyname.ToString();
+                        allergyobject.note = Convert.ToString(patient[frwrd_pointer].PatientAllergies[0].note.ToString());
+                        
+                        allergyModelList.Add(allergyobject);
+                    }
+                    else
+                    {
+                        current_ptr = frwrd_pointer;
+                        break;
+                    }
+
+                    //pobj.PatientAllergies = aobj;
+
+                    
+                }
+                patientObject.PatientAllergies = allergyModelList.ToList();
+
+                patient_Allergy.Add(patientObject);
+                
+                if (frwrd_pointer == (patient.Count))
+                {
+                    break;
+                }
+            }
+            
+
+            //return Ok(patients);
+            return patient_Allergy;
+
+
+
+        }
+
+
+
+        [HttpPost("GetAllergyList")]
+        public List<Allergy> patientAllergyget(int id)
+        {
+            string query = @"
+        select * from allergyget(" + id + ");";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    //myCommand.Parameters.AddWithValue("@id", id);
+
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+            List<Allergy> patientAllergyList = new List<Allergy>();
+
+            patientAllergyList = Allergy.GetListAllergy3(table);
+
+            return patientAllergyList;
+            //return new JsonResult((table));
+        }
+
+
+
+        [HttpPost("create")]
+
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult createPatientWithAllergy(Patients patient_obj)
+        {
+            Console.WriteLine("post method call");
+            
+
+            string patientcreatequery = @"
+                
+                --select patientcreate(@firstname,@lastname,@middlename,@sex,@dob::date)
+                --select create_PatientAllergy(@patientid,@AllergyMaster_Id,@note)
+                    select patientcreate("+ GetValue(patient_obj.first_name) + ","+ GetValue(patient_obj.last_name) + ","+ GetValue(patient_obj.middle_name) + ","+ GetValue(patient_obj.sex) + ",@dob::date)";
+
+            /*INSERT INTO Patients(firstname, lastname, middlename, sex_id) VALUES(@firstname, @lastname, @middlename, @sex_id)*/
+            DataTable table = new DataTable();
+            DataTable table2= new DataTable();
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;
+            NpgsqlDataReader myReader2;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            int id;
+
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+                    {
+                        myCon.Open();
+                        using (NpgsqlCommand myCommand = new NpgsqlCommand(patientcreatequery, myCon))
+                        {
+                            if (!(NullCheck(patient_obj.first_name) || NullCheck(patient_obj.last_name) || NullCheck(patient_obj.sex)))
+                            {
+                                /*myCommand.Parameters.AddWithValue("@firstname", patient_obj.first_name);
+                                myCommand.Parameters.AddWithValue("@lastname", patient_obj.last_name);
+                                myCommand.Parameters.AddWithValue("@middlename", patient_obj.middle_name);
+                                myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);*/
+                                myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+                            }
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status400BadRequest, "either firstname or lastname or sex field is empty");
+                            }
+                            /*if (patient_obj.first_name == "")
+                            {
+                                throw new InvalidOperationException("firstname is required");
+                            }*/
+
+                            myReader = myCommand.ExecuteReader();
+
+                            table2.Load(myReader);
+                            id = table2.Rows.Count > 0 ? (int)table2.Rows[0][0] : 0;
+                            Console.WriteLine(id);
+
+                            myReader.Close();
+                            //myCon.Close();
+
+                        }
+
+                        if (patient_obj.Allergy.created_.Length != 0)
+                        {
+                            
+
+                            Console.WriteLine(patient_obj.Allergy.created_.Length);
+                            for (int i = 0; i < patient_obj.Allergy.created_.Length; i++)
+                            {
+                                string allergycreatequery = @"
+                                select create_PatientAllergy(@patientid,@AllergyMaster_Id,@note)";
+                                    //select create_PatientAllergy("+id+","+ patient_obj.Allergy.created_[i].allergyMasterId + ","+ patient_obj.Allergy.created_[i].note + ")";
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergycreatequery, myCon))
+                                {
+                                    myCommand.Parameters.AddWithValue("@patientid", id);
+                                    myCommand.Parameters.AddWithValue("@AllergyMaster_Id", patient_obj.Allergy.created_[i].allergyMasterId);
+                                    myCommand.Parameters.AddWithValue("@note", patient_obj.Allergy.created_[i].note);
+
+                                    //Console.WriteLine(patient_obj.Allergy.created_[i].patientid);
+
+                                    myReader2 = myCommand.ExecuteReader();
+                                    table2.Load(myReader2);
+
+                                    myReader2.Close();
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+
+                        myCon.Close();
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (TransactionAbortedException ex)
+            {
+                writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+            }
+            
+            return new JsonResult((table2));
+
+
+        }
+
+
+        [HttpPost("createByDapper")]
+
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult createPatientWithAllergybyDapper(Patients patient_obj)
+        {
+            Console.WriteLine("post method call");
+            int IDcreated=0;
+
+        string patientcreatequery = @"select patientcreate(" + GetValue(patient_obj.first_name) + "," + GetValue(patient_obj.last_name) + "," + GetValue(patient_obj.middle_name) + "," + GetValue(patient_obj.sex) + ",'"+ patient_obj.dob + "'::date)";
+
+            
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            IList<int> getid;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            //int id;
+
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+                    {
+                        myCon.Open();
+                        using (NpgsqlCommand myCommand = new NpgsqlCommand(patientcreatequery, myCon))
+                        {
+                            if (!(NullCheck(patient_obj.first_name) || NullCheck(patient_obj.last_name) || NullCheck(patient_obj.sex)))
+                            {
+
+                                //myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+
+
+                                getid = myCon.Query<int>(patientcreatequery).ToList();
+
+                                if (getid.Count > 0)
+                                {
+                                    IDcreated = getid[0];
+                                }
+                            }
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status400BadRequest, "either firstname or lastname or sex field is empty");
+                            }
+                           
+                            //myCon.Close();
+
+                            if (patient_obj.Allergy.created_.Length != 0)
+                            {
+
+
+                                Console.WriteLine(patient_obj.Allergy.created_.Length);
+                                for (int i = 0; i < patient_obj.Allergy.created_.Length; i++)
+                                {
+                                    string allergycreatequery = @"
+                                select create_PatientAllergy(" + IDcreated + "," + patient_obj.Allergy.created_[i].allergyMasterId + ",'" + patient_obj.Allergy.created_[i].note + "')";
+                                    
+                                }
+                            }
+
+
+
+                        }
+
+                        
+
+                        myCon.Close();
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (TransactionAbortedException ex)
+            {
+                writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+            }
+
+            return Ok(IDcreated);
+
+
+        }
+
+
+
+
+        /*Update record*/
+        /// <summary>
+        /// This method inserts the patient record with the firstname, lastname, middlename, sex, dob and returns the updated record patient id
+        /// passing sex as the string (MALE,FEMALE,UNKNOWN) and in the query retrieving the sexid through the string by joining sex table
+        /// </summary>
+        /// <param name="patient_obj">insert a JSON body containing "patient_id": 21,"firstname": "SHWETA","lastname": "SHAH","middlename": "S","sex": MALE,"dob": "2002-01-01"</param>
+        /// <returns>
+        /// [{"patientupdate":21}]
+        /// </returns>
+        [HttpPut("patientUpdate/{id}")]
+        public IActionResult patientupdate(int id,Patients patient_obj)
+        {
+            string query = @"
+    
+                    --select patientupdate(patientid=>@patient_id,first_name=>@firstname,last_name=>@lastname,middle_name=>@middlename,sex=>@sex,dateofbirth=>@dob::date);
+                    select patientupdate(_patientid=>"+id+",_first_name=>'"+ patient_obj.first_name + "',_last_name=>'"+ patient_obj.last_name + "',_middle_name=>'"+ patient_obj.middle_name + "',_sex=>'"+ patient_obj.sex + "',_dateofbirth=>'"+ patient_obj.dob + "'::date);";
+
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader, myReader2, myReader3, myReader4;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+                    {
+                        myCon.Open();
+
+                        using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                        {
+
+
+                            if (!(NullCheck(patient_obj.first_name) || NullCheck(patient_obj.last_name) || NullCheck(patient_obj.sex)))
+                            {
+                                myCommand.Parameters.AddWithValue("@patient_id", id);
+
+                                myCommand.Parameters.AddWithValue("@firstname", patient_obj.first_name);
+                                myCommand.Parameters.AddWithValue("@lastname", patient_obj.last_name);
+                                myCommand.Parameters.AddWithValue("@middlename", patient_obj.middle_name);
+                                myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);
+                                myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+                            }
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status400BadRequest, "either firstname or lastname or sex field is empty");
+                            }
+                            //Console.WriteLine(patient_obj.created_[0].patientid);
+
+                            myReader = myCommand.ExecuteReader();
+                            table.Load(myReader);
+
+                            myReader.Close();
+                            //myCon.Close();
+
+                        }
+                        
+                        if (patient_obj.Allergy.created_.Length != 0)
+                        {
+                            Console.WriteLine(patient_obj.Allergy.created_.Length);
+                            for (int i = 0; i < patient_obj.Allergy.created_.Length; i++)
+                            {
+                                string allergycreatequery = @"
+                                --select create_PatientAllergy(@patientid,@AllergyMaster_Id,@note);
+                                    select create_PatientAllergy("+id+","+ patient_obj.Allergy.created_[i].allergyMasterId + ",'"+ patient_obj.Allergy.created_[i].note + "');";
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergycreatequery, myCon))
+                                {
+                                    if (!(NullintCheck(patient_obj.Allergy.created_[i].allergyMasterId)))
+                                    {
+                                        myCommand.Parameters.AddWithValue("@patientid", id);// patient_obj.Allergy.created_[i].patientid);
+                                        myCommand.Parameters.AddWithValue("@AllergyMaster_Id", patient_obj.Allergy.created_[i].allergyMasterId);
+                                        myCommand.Parameters.AddWithValue("@note", patient_obj.Allergy.created_[i].note);
+                                    }
+                                    else
+                                    {
+                                        return StatusCode(StatusCodes.Status400BadRequest, "allergy field is empty");
+                                    }
+                                    //Console.WriteLine(patient_obj.Allergy.created_[i].patientid);
+
+                                    myReader2 = myCommand.ExecuteReader();
+                                    table.Load(myReader2);
+
+                                    myReader2.Close();
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+                        
+                        if (patient_obj.Allergy.updated_.Length != 0)
+                        {
+                            for (int i = 0; i < patient_obj.Allergy.updated_.Length; i++)
+                            {
+                                string allergyupdatequery = @"
+                                --select Update_PatientAllergy(@patientAllergyId,@patient_id,@allergyname,@note);
+                                 select Update_PatientAllergy("+ patient_obj.Allergy.updated_[i].patientAllergyId + ","+ id + ",'"+ patient_obj.Allergy.updated_[i].allergyname + "','"+ patient_obj.Allergy.updated_[i].note +"');";
+
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergyupdatequery, myCon))
+                                {
+
+                                    if (!(NullintCheck(patient_obj.Allergy.updated_[i].patientAllergyId) || NullCheck(patient_obj.Allergy.updated_[i].allergyname)))
+                                    {
+                                        myCommand.Parameters.AddWithValue("@patientAllergyId",patient_obj.Allergy.updated_[i].patientAllergyId);
+
+                                        myCommand.Parameters.AddWithValue("@patient_id", id);// patient_obj.Allergy.updated_[i].patientid);
+                                        myCommand.Parameters.AddWithValue("@allergyname", patient_obj.Allergy.updated_[i].allergyname);
+                                        myCommand.Parameters.AddWithValue("@note", patient_obj.Allergy.updated_[i].note);
+                                    }
+                                    else
+                                    {
+                                        return StatusCode(StatusCodes.Status400BadRequest, "either allergy id or name field is empty");
+                                    }
+                                    //Console.WriteLine(patient_obj.Allergy.updated_[i].patientid);
+                                    myReader3 = myCommand.ExecuteReader();
+                                    table.Load(myReader3);
+
+                                    myReader3.Close();
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+                        
+                        if (patient_obj.Allergy.deleted_.Length != 0)
+                        {
+                            for (int i = 0; i < patient_obj.Allergy.deleted_.Length; i++)
+                            {
+                                string allergydeletequery = @"
+                    --select * from Deleted_PatientAllergy(@patient_id,@allergyname);
+                    --select * from Deleted_PatientAllergy(@patientAllergyId);
+                                select * from Deleted_PatientAllergy("+ patient_obj.Allergy.deleted_[i].patientAllergyId + ");";
+
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergydeletequery, myCon))
+                                {
+                                    myCommand.Parameters.AddWithValue("@patientAllergyId", patient_obj.Allergy.deleted_[i].patientAllergyId);
+                                   /* myCommand.Parameters.AddWithValue("@patient_id", patient_obj.Allergy.deleted_[i].patientid);
+                                    myCommand.Parameters.AddWithValue("@allergyname", patient_obj.Allergy.deleted_[i].allergyname);*/
+
+                                    myReader4 = myCommand.ExecuteReader();
+
+                                    table.Load(myReader4);
+
+
+                                    myReader4.Close();
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+                        
+                        myCon.Close();
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (TransactionAbortedException ex)
+            {
+                writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+            }
+
+
+
+            //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+            return new JsonResult((table));
+
+        }
+
+
+        [HttpPut("patientUpdatebyDapper/{id}")]
+        public IActionResult patientupdateByDapper(int id, Patients patient_obj)
+        {
+            string query = @"
+    
+                    --select patientupdate(patientid=>@patient_id,first_name=>@firstname,last_name=>@lastname,middle_name=>@middlename,sex=>@sex,dateofbirth=>@dob::date);
+                    select patientupdate(_patientid=>" + id + ",_first_name=>'" + patient_obj.first_name + "',_last_name=>'" + patient_obj.last_name + "',_middle_name=>'" + patient_obj.middle_name + "',_sex=>'" + patient_obj.sex + "',_dateofbirth=>'" + patient_obj.dob + "'::date);";
+
+
+            //string patients=null;
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+
+            NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+
+            var patients = myCon.Query(query);
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                   
+                        myCon.Open();
+
+
+
+
+                    if (!(NullCheck(patient_obj.first_name) || NullCheck(patient_obj.last_name) || NullCheck(patient_obj.sex)))
+                    {
+                        
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status400BadRequest, "either firstname or lastname or sex field is empty");
+                    }
+                    //Console.WriteLine(patient_obj.created_[0].patientid);
+
+
+                    //myCon.Close();
+
+
+
+                    if (patient_obj.Allergy.created_.Length != 0)
+                        {
+                            Console.WriteLine(patient_obj.Allergy.created_.Length);
+                            for (int i = 0; i < patient_obj.Allergy.created_.Length; i++)
+                            {
+                                string allergycreatequery = @"
+                                    select create_PatientAllergy(" + id + "," + patient_obj.Allergy.created_[i].allergyMasterId + ",'" + patient_obj.Allergy.created_[i].note + "');";
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergycreatequery, myCon))
+                                {
+                                    if (!(NullintCheck(patient_obj.Allergy.created_[i].allergyMasterId)))
+                                    {
+                                        var createallergy = myCon.Query(allergycreatequery);
+                                    }
+                                    else
+                                    {
+                                        return StatusCode(StatusCodes.Status400BadRequest, "allergy field is empty");
+                                    }
+                                    //Console.WriteLine(patient_obj.Allergy.created_[i].patientid);
+
+                                    
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+
+                        if (patient_obj.Allergy.updated_.Length != 0)
+                        {
+                            for (int i = 0; i < patient_obj.Allergy.updated_.Length; i++)
+                            {
+                                string allergyupdatequery = @"
+                                 select Update_PatientAllergy(" + patient_obj.Allergy.updated_[i].patientAllergyId + "," + id + ",'" + patient_obj.Allergy.updated_[i].allergyname + "','" + patient_obj.Allergy.updated_[i].note + "');";
+
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergyupdatequery, myCon))
+                                {
+
+                                    if (!(NullintCheck(patient_obj.Allergy.updated_[i].patientAllergyId) || NullCheck(patient_obj.Allergy.updated_[i].allergyname)))
+                                    {
+                                        var updateallergy = myCon.Query(allergyupdatequery);
+                                    }
+                                    else
+                                    {
+                                        return StatusCode(StatusCodes.Status400BadRequest, "either allergy id or name field is empty");
+                                    }
+                                    //Console.WriteLine(patient_obj.Allergy.updated_[i].patientid);
+                                   
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+
+                        if (patient_obj.Allergy.deleted_.Length != 0)
+                        {
+                            for (int i = 0; i < patient_obj.Allergy.deleted_.Length; i++)
+                            {
+                                string allergydeletequery = @"
+                                select * from Deleted_PatientAllergy(" + patient_obj.Allergy.deleted_[i].patientAllergyId + ");";
+
+
+                                using (NpgsqlCommand myCommand = new NpgsqlCommand(allergydeletequery, myCon))
+                                {
+                                    var deleteallergy = myCon.Query(allergydeletequery);
+
+                                    
+                                    //myCon.Close();
+
+                                }
+                            }
+                        }
+
+                        myCon.Close();
+                    scope.Complete();
+                    
+                }
+                
+
+            }
+            catch (TransactionAbortedException ex)
+            {
+                writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+            }
+
+
+            return Ok(patients);
+            //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+            //return new JsonResult((table));
+
+        }
+
+
+
+
+
+
+
+        /*Delete by id*/
+        /// <summary>
+        /// This method takes the id as input and soft deletes the patient record with the updating the value of "isdeleted" column to TRUE
+        /// </summary>
+        /// <param name="id">21</param>
+        /// <returns>
+        /// "patient_id 21 is Deleted succesfully"
+        /// </returns>
+        [HttpDelete("patientdelete/{id}")]
+        public JsonResult patientdelete(int id, Patients patient_obj)
+        {
+            string query = @"
+
+                select * from patientdelete(patientid=>@patient_id);
+                select * from Deleted_PatientanditsAllergy(@patient_id);
+            ";
+
+
+
+            DataTable table = new DataTable();
+            DataTable table2 = new DataTable();
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;
+            
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+               
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+
+                    myCommand.Parameters.AddWithValue("@patient_id", id);
+                    //myCommand.Parameters.AddWithValue("@allergyname", patient_obj.allergyname);
+
+                    myReader = myCommand.ExecuteReader();
+
+                    table2.Load(myReader);
+                    
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+
+            //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+            return new JsonResult("patient_id " + id + " is Deleted succesfully");
+        }
+
+
+
+        [HttpDelete("patientdeletebyDapper/{id}")]
+        public IActionResult patientdeletebyDapper(int id, Patients patient_obj)
+        {
+
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+
+            //System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+            var delete = myCon.Query("select * from patientdelete(patientid=>"+id+");select * from Deleted_PatientanditsAllergy("+id+"); ");
+            Console.WriteLine(delete);
+
+            return Ok(delete);
+
+
+            //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+            //return new JsonResult("patient_id " + id + " is Deleted succesfully");
+        }
+
+
+
+
+        //HttpDelete("patientdelete/{id}")
+        [HttpPatch]
+        [Route("patchpatientallergy/{id}")]
+
+        public JsonResult patchpatientallergy(int id, Patients patient_obj)
+        {
+            //string query = $"select * from  update_data({p.patient_id},'{p.first_name}','{p.middle_name}','{p.last_name}','{p.patient_sex_id}','{p.date_of_birth}')";
+
+            string query = $"select * from patchPatientData(_patientid=>@patient_id,_first_name=>@firstname,_last_name=>@lastname,_middle_name=>@middlename,_sex=>@sex,_dateofbirth=>@dob);";
+/*
+            if (patient_obj.allergyname == null)
+            {
+                query += $",allergyname=>null";
+            }
+            else
+            {
+                query += $",allergyname=>@allergyname";
+
+            }
+            if (patient_obj.note == null)
+            {
+                query += $",note=>null";
+            }
+            else
+            {
+                query += $",note=>@note";
+            }
+            query += ")";*/
+            Console.WriteLine(query);
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;
+
+
+            using (TransactionScope Scope = new TransactionScope())
+            {
+                System.IO.StringWriter writer = new System.IO.StringWriter();
+                try
+                {
+                    
+                    using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+                    {
+                        myCon.Open();
+                        using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                        {
+
+
+
+                            myCommand.Parameters.AddWithValue("@patient_id", id);
+
+                            myCommand.Parameters.AddWithValue("@firstname", patient_obj.first_name);
+                            myCommand.Parameters.AddWithValue("@lastname", patient_obj.last_name);
+                            myCommand.Parameters.AddWithValue("@middlename", patient_obj.middle_name);
+                            myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);
+                            myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+
+                            myReader = myCommand.ExecuteReader();
+                            table.Load(myReader);
+
+                            myReader.Close();
+                            myCon.Close();
+                        }
+                    }
+                    Scope.Complete();
+                    
+                    Console.WriteLine(table);
+                    return new JsonResult(table);
+                }
+                catch (TransactionAbortedException ex)
+                {
+                    writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+                }
+
+                
+            }
+            return new JsonResult((table));
+        }
+
+        [HttpPatch]
+        [Route("patchpatientallergybyDapper/{id}")]
+
+        public IActionResult patchpatientallergybyDapper(int id, Patients patient_obj)
+        {
+            //string query = $"select * from  update_data({p.patient_id},'{p.first_name}','{p.middle_name}','{p.last_name}','{p.patient_sex_id}','{p.date_of_birth}')";
+
+            string query = $"select * from patchPatientData(_patientid=>"+id+",_first_name=>'"+ patient_obj.first_name + "',_last_name=>'"+ patient_obj.last_name + "',_middle_name=>'"+ patient_obj.middle_name + "',_sex=>'"+ patient_obj.sex + "',_dateofbirth=>'"+ patient_obj.dob + "');";
+           
+            
+            
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+
+            NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource);
+
+            
+                        myCon.Open();
+                        
+                            var patientPatch = myCon.Query(query);
+
+
+
+                            myCon.Close();
+                        
+                    
+                   // Scope.Complete();
+
+                    
+               
+
+
+            
+            return Ok(patientPatch);
+        }
+
+    }
+}
+
+
+
+
+
+
+
+    
+
+
+
+//extra codes
+
+
+
+
+/*Insert record*/
+/// <summary>
+/// This method inserts the patient record with the firstname, lastname, middlename, sex, dob and returns the newly created primary key
+/// </summary>
+/// <param name="patient_obj">insert a JSON body containing "firstname": "KRUNAL","lastname": "RANA","middlename": "T","sex_id": 1,"dob": "2009-01-01"</param>
+/// <returns>
+/// [{"patientcreate":22}]
+/// </returns>
+/*[HttpPost("create")]
+public JsonResult patientcreate(Patients patient_obj)
+{
+    Console.WriteLine("post method call");
+    string query = @"
+        select patientcreate(@firstname,@lastname,@middlename,@sex,@dob::date)
+    ";
+    *//*INSERT INTO Patients(firstname, lastname, middlename, sex_id) VALUES(@firstname, @lastname, @middlename, @sex_id)*//*
+    DataTable table = new DataTable();
+    string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+    NpgsqlDataReader myReader;
+
+    System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+
+    try
+    {
+        using (TransactionScope scope = new TransactionScope())
+        {
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@firstname", patient_obj.first_name);
+                    myCommand.Parameters.AddWithValue("@lastname", patient_obj.last_name);
+                    myCommand.Parameters.AddWithValue("@middlename", patient_obj.middle_name);
+                    myCommand.Parameters.AddWithValue("@sex", patient_obj.sex);
+                    myCommand.Parameters.AddWithValue("@dob", patient_obj.dob);
+
+                    *//*if (patient_obj.first_name == "")
+                    {
+                        throw new InvalidOperationException("firstname is required");
+                    }*//*
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+            scope.Complete();
+        }
+    }
+    catch (TransactionAbortedException ex)
+    {
+        writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+    }
+
+    return new JsonResult((table));
+
+
+}*/
+
+/*        /// <summary>
+        /// This method takes the id as input and soft deletes the patient record with the updating the value of "isdeleted" column to TRUE
+        /// </summary>
+        /// <param name="id">21</param>
+        /// <returns>
+        /// "patient_id 21 is Deleted succesfully"
+        /// </returns>
+        *//*[HttpDelete("patientallergydelete/{id}")]
+        public JsonResult DeletedPatientAllergy(int id, Patients patient_obj)
+        {
+            string query = @"
+
+                select * from Deleted_PatientAllergy(@patient_id,@allergyname);
+                --select * from patientdelete(17);
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+            NpgsqlDataReader myReader;
+
+            System.IO.StringWriter writer = new System.IO.StringWriter();
+
+
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@patient_id", id);
+                    myCommand.Parameters.AddWithValue("@allergyname", patient_obj.allergyname);
+
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+
+
+            //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+            return new JsonResult("patient_id " + id + " is Deleted succesfully");
+        }*/
+
+
+
+/// <summary>
+/// This method inserts the patient record with the @patientAllergyId,@patient_id,@allergyname,@note and returns the updated record patient id
+/// passing allergyname as the string and in the query retrieving the Allergymasterid through the string by joining AllergyMaster table
+/// </summary>
+/// <param name="patient_obj">insert a JSON body containing "patient_id": 1,"allergyname": "PEANUT","note": "note2","patientAllergyId": 0</param>
+/// <returns>
+/// [{"patientupdate":21}]
+/// </returns>
+/*[HttpPut("patientAllergyUpdate/{id}")]
+public JsonResult UpdatePatientAllergy(Patients patient_obj)
+{
+    string query = @"
+
+            select Update_PatientAllergy(@patientAllergyId,@patient_id,@allergyname,@note);
+    ";
+
+    DataTable table = new DataTable();
+    string sqlDataSource = _configuration.GetConnectionString("PatientsAppConnection");
+    NpgsqlDataReader myReader;
+
+    System.IO.StringWriter writer = new System.IO.StringWriter();
+
+    try
+    {
+        using (TransactionScope scope = new TransactionScope())
+        {
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@patientAllergyId", patient_obj.patientAllergyId);
+
+                    myCommand.Parameters.AddWithValue("@patient_id", patient_obj.patient_id);
+                    myCommand.Parameters.AddWithValue("@allergyname", patient_obj.allergyname);
+                    myCommand.Parameters.AddWithValue("@note", patient_obj.note);
+
+                    //Console.WriteLine(patient_obj.Allergy.created_[0].patientid);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+
+                }
+            }
+            scope.Complete();
+        }
+    }
+    catch (TransactionAbortedException ex)
+    {
+        writer.WriteLine("TransactionAbortedException Message: {0}", ex.Message);
+    }
+
+
+
+    //string prettyJson = JToken.Parse(table).ToString(Formatting.Indented);
+    return new JsonResult((table));
+
+}*/
