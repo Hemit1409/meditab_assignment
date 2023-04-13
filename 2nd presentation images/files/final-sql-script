@@ -339,7 +339,9 @@ SELECT * FROM uspNewHemitPatientsReadList (_patientid => '0',_firstname => NULL,
 SELECT * FROM uspNewhemitpatientsReadList (_patientid => '0',_firstname => NULL,_lastname => NULL,_dob => NULL,_searchby => 'Rana', _clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 1, _size => 20 , _orderby =>  'HemitPatient.hemitpatientid')
 
 
+SELECT * FROM uspNewhemitpatientsReadList (_hemitpatientid => '0',_firstname => 'Priyas', _lastname => 'WARGHESE', _dob => NULL,_searchby => NULL,_chartnumber => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 1, _size => 2 , _orderby =>  'HemitPatient.hemitpatientid');
 
+SELECT * FROM uspNewhemitpatientsReadList (_hemitpatientid => '0',_firstname => 'Priyas', _lastname => 'WARGHESE', _dob => NULL,_searchby => NULL,_chartnumber => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 1, _size => 2 , _orderby =>  'HemitPatient.hemitpatientid')
 
 create  or replace function  
 Hemituspgetpatientfilter(
@@ -610,7 +612,9 @@ SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => N
 
 SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '13',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
 
-SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL)
+SELECT * FROM uspNewhemitpatientallergyReadList (_allergyname => NULL,_note => NULL,_hemitpatientallergyid => NULL,_hemitallergyid => NULL,_hemitpatientid => '12',_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => -1, _size => 0 , _orderby =>  NULL);
+
+
 
 CREATE or replace function uspNewHemitPatientscreate(
 			_PageNumber INTEGER = 1,
