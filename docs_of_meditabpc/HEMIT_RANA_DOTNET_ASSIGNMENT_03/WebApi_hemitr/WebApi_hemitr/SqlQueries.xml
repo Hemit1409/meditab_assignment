@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Quieries>
+	<AddInformation>
+		<![CDATA[
+		select Insert_PatientData(@firstname,@lastname,@middlename,@sex_id,@dob::date)
+		
+		]]>
+	</AddInformation>
+</Quieries>

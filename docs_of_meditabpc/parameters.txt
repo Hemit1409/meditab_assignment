@@ -1,0 +1,21 @@
+			_patientid int default null,
+                _FirstName varchar(100) default null, 
+                _MiddleName varchar(100) default null, 
+                _LastName varchar(100) default null,
+                          _SexId varchar default null, 
+                          _DOB date default null
+
+
+
+			_PageNumber INTEGER = 1,
+  			_PageSize INTEGER = 20,
+			_patientid int default null,
+			_FirstName varchar default '',
+			_MiddleName varchar(100) default '', 
+			_LastName varchar default '',
+			_gender varchar default '',
+			_SexId varchar default null,
+			_DOB varchar default null,
+			_allergyname varchar default '',
+			_orderby in varchar default 'Patients.patient_id',
+			_ordertype in varchar default 'ASC',

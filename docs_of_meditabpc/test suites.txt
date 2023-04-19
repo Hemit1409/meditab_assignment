@@ -1,0 +1,369 @@
+{
+
+  "patient_id": 4,
+
+  "first_name": "SANJAY",
+  "last_name": "RANA",
+  "middle_name": "T",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  
+  "created_": [
+    {
+      "patientid": 4,
+
+      "note": "newadded",
+
+      "allergyMasterId": 2
+    }
+  ],
+  "deleted_": [
+    {
+
+    }
+  ],
+  "updated_": [
+    {
+
+    }
+  ]
+}
+
+
+
+{
+   "patient_id": 5,
+
+  "first_name": "BHAVYA",
+  "last_name": "GOSAI",
+  "middle_name": "S",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+      
+    ],
+    "deleted_": [
+      
+    ],
+    "updated_": [
+      
+    ]
+  }
+}
+
+
+{
+    "patient_id": 5,
+
+  "first_name": "BHAVYA",
+  "last_name": "GOSAI",
+  "middle_name": "S",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+    ],
+    "deleted_": [
+      {
+        "patientid": 5,
+        "allergyname": "MILK"
+       
+      }
+    ],
+    "updated_": [
+      {
+        "patientid": 5,
+        "allergyname": "MILK",
+        "note": "updated",
+        "patientAllergyId": 12
+      }
+    ]
+  }
+}
+
+{
+    "patient_id": 5,
+
+  "first_name": "BHAVYA",
+  "last_name": "GOSAI",
+  "middle_name": "S",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+    ],
+    "deleted_": [
+      {
+        "patientid": 5,
+        "allergyname": "PEANUT"
+       
+      }
+    ],
+    "updated_": [
+      {
+        "patientid": 5,
+        "allergyname": "LATEX",
+        "note": "updated2",
+        "patientAllergyId": 12
+      }
+    ]
+  }
+}
+
+
+{
+    "patient_id": 99,
+
+  "first_name": "Hemit",
+  "last_name": "SHAH",
+  "middle_name": "R",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+{
+      "patientid": 99,
+
+      "note": "PEANUT added",
+
+      "allergyMasterId": 2
+    },
+{
+      "patientid": 99,
+
+      "note": "LATEX added",
+
+      "allergyMasterId": 3
+    },
+{
+      "patientid": 99,
+
+      "note": "MILK added",
+
+      "allergyMasterId": 1
+    }
+    ],
+    "deleted_": [
+
+    ],
+    "updated_": [
+
+    ]
+  }
+}
+
+
+
+
+{
+    "patient_id": 101,
+
+  "first_name": "KRUTI",
+  "last_name": "RANA",
+  "middle_name": "T",
+
+  "sex": "FEMALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+{
+      "patientid": 101,
+
+      "note": "LATEX added",
+
+      "allergyMasterId": 3
+    },
+{
+      "patientid": 101,
+
+      "note": "LATEX added",
+
+      "allergyMasterId": 3
+    },
+{
+      "patientid": 101,
+
+      "note": "MILK added",
+
+      "allergyMasterId": 1
+    }
+    ],
+    "deleted_": [
+
+    ],
+    "updated_": [
+
+    ]
+  }
+}
+
+
+select create_PatientAllergy("+id+","+ patient_obj.Allergy.created_[i].allergyMasterId + ","+ patient_obj.Allergy.created_[i].note + ");
+
+{
+    "patient_id": 101,
+
+  "first_name": "KRUTI",
+  "last_name": "RANA",
+  "middle_name": "T",
+
+  "sex": "FEMALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+    ],
+    "deleted_": [
+{
+      "patientid": 101,
+"allergyname": "PEANUT"
+
+    },
+{
+      "patientid": 101,
+"allergyname": "MILK"
+    },
+{
+      "patientid": 101,
+"allergyname": "LATEX"
+
+    }
+    ],
+    "updated_": [
+
+    ]
+  }
+}
+
+
+{
+    "patient_id": 100,
+
+  "first_name": "KRUTI",
+  "last_name": "RANA",
+  "middle_name": "T",
+
+  "sex": "FEMALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+    ],
+    "deleted_": [
+{
+      "patientAllergyId": 27
+
+    },
+{
+      "patientAllergyId": 28
+
+    }
+    ],
+    "updated_": [
+
+
+    ]
+  }
+}
+
+
+{
+
+
+  "first_name": "ASHRAY",
+  "last_name": "GOSAI",
+  "middle_name": "S",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+    ],
+    "deleted_": [
+      {
+        "patientAllergyId": 53
+       
+      }
+    ],
+    "updated_": [
+      {
+
+        "allergyname": "LATEX",
+        "note": "updated2",
+        "patientAllergyId": 52
+      }
+    ]
+  }
+}
+
+
+{
+
+  "first_name": "SHIVENDRA",
+  
+}
+
+
+
+getList
+
+{
+"first_name":"SANJAY",
+    "Orderby":"Patients.firstname",
+    "OrderType":"DESC"
+}
+
+
+{
+"allergyname":"MILK",
+"Orderby":"Patients.firstname"
+}
+
+
+
+
+
+
+{
+
+
+  "first_name": "Priyansh",
+  "last_name": "SHASTRI",
+  "middle_name": "S",
+
+  "sex": "MALE",
+  "dob": "2003-01-01",
+  "allergy": {
+    "created_": [
+
+{
+      "note": "MILK added",
+
+      "allergyMasterId": 1
+    }
+    ],
+    "deleted_": [
+      {
+        "patientAllergyId": 78
+       
+      }
+    ],
+    "updated_": [
+      {
+
+        "allergyname": "LATEX",
+        "note": "updated2",
+        "patientAllergyId": 79
+      }
+    ]
+  }
+}

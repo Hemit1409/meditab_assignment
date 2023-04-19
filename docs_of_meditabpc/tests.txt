@@ -1,0 +1,143 @@
+CREATE TABLE public.hemitpatient (
+	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	hemitpatientid int8 NOT NULL GENERATED ALWAYS AS (fngetprimarykey(pk, clientid)) STORED,
+	firstname varchar(50) NOT NULL,
+	lastname varchar(50) NOT NULL,
+	middlename varchar(50) NULL,
+	hemitsexid int4 NULL,
+	chartnumber varchar(20) NULL GENERATED ALWAYS AS ((('CHART'::text || pk::text))) STORED,
+	dob timestamp NULL,
+	createddate timestamp NOT NULL,
+	createdbyid int8 NOT NULL,
+	lastmodifieddate timestamp NOT NULL,
+	lastmodifiedbyid int8 NOT NULL,
+	clientid int2 NOT NULL,
+	machineid varchar(40) NOT NULL,
+	oldsystemid varchar(40) NULL,
+	isdeleted bool NOT NULL DEFAULT false,
+	isactive bool NOT NULL DEFAULT true,
+	issample bool NOT NULL DEFAULT false,
+	requestid uuid NOT NULL DEFAULT uuid_generate_v1(),
+	CONSTRAINT pk_hemitpatient PRIMARY KEY (hemitpatientid),
+	CONSTRAINT fk_hemitsexid FOREIGN KEY (hemitsexid) REFERENCES public.hemitsex(hemitsexid)
+);
+
+CREATE TABLE public.hemitallergy (
+	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	hemitallergyid int8 NOT NULL GENERATED ALWAYS AS (fngetprimarykey(pk, clientid)) STORED,
+	code varchar(20) NOT NULL,
+	"name" varchar(200) NOT NULL,
+	createddate timestamp NOT NULL,
+	createdbyid int8 NOT NULL,
+	lastmodifieddate timestamp NOT NULL,
+	lastmodifiedbyid int8 NOT NULL,
+	clientid int2 NOT NULL,
+	machineid varchar(40) NOT NULL,
+	oldsystemid varchar(40) NULL,
+	isdeleted bool NOT NULL DEFAULT false,
+	isactive bool NOT NULL DEFAULT true,
+	issample bool NOT NULL DEFAULT false,
+	requestid uuid NOT NULL DEFAULT uuid_generate_v1(),
+	CONSTRAINT pk_hemitallergy PRIMARY KEY (hemitallergyid)
+);
+
+CREATE TABLE public.hemitpatientallergy (
+	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	hemitpatientallergyid int8 NOT NULL GENERATED ALWAYS AS (fngetprimarykey(pk, clientid)) STORED,
+	hemitpatientid int4 NOT NULL,
+	hemitallergyid int4 NOT NULL,
+	note text NULL,
+	createddate timestamp NOT NULL,
+	createdbyid int8 NOT NULL,
+	lastmodifieddate timestamp NOT NULL,
+	lastmodifiedbyid int8 NOT NULL,
+	clientid int2 NOT NULL,
+	machineid varchar(40) NOT NULL,
+	oldsystemid varchar(40) NULL,
+	isdeleted bool NOT NULL DEFAULT false,
+	issample bool NOT NULL DEFAULT false,
+	requestid uuid NOT NULL DEFAULT uuid_generate_v1(),
+	CONSTRAINT pk_hemitpatientallergy PRIMARY KEY (hemitpatientallergyid),
+	CONSTRAINT fk_hemitallergy FOREIGN KEY (hemitallergyid) REFERENCES public.hemitallergy(hemitallergyid),
+	CONSTRAINT fk_hemitpatient FOREIGN KEY (hemitpatientid) REFERENCES public.hemitpatient(hemitpatientid)
+);
+
+
+CREATE TABLE public.hemitsex (
+	pk int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	hemitsexid int8 NOT NULL GENERATED ALWAYS AS (fngetprimarykey(pk, clientid)) STORED,
+	sex varchar(100) NOT NULL,
+	createddate timestamp NOT NULL,
+	createdbyid int8 NOT NULL,
+	lastmodifieddate timestamp NOT NULL,
+	lastmodifiedbyid int8 NOT NULL,
+	clientid int2 NOT NULL,
+	machineid varchar(40) NOT NULL,
+	oldsystemid varchar(40) NULL,
+	isdeleted bool NOT NULL DEFAULT false,
+	issample bool NOT NULL DEFAULT false,
+	requestid uuid NOT NULL DEFAULT uuid_generate_v1(),
+	CONSTRAINT pk_hemitsex PRIMARY KEY (hemitsexid)
+);
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION public.uspnewhemitpatientcreate(_firstname character varying, _lastname character varying, _middlename character varying, _hemitsexid bigint, _dob timestamp without time zone, _isactive boolean, _userid bigint, _langid character varying, _pk integer, _hemitpatientid bigint, _chartnumber character varying, _createddate timestamp without time zone, _createdbyid bigint, _lastmodifieddate timestamp without time zone, _lastmodifiedbyid bigint, _clientid smallint, _machineid character varying, _oldsystemid character varying, _isdeleted boolean, _issample boolean, _requestid uuid)
+ RETURNS TABLE(id integer, modifieddate timestamp without time zone)
+ LANGUAGE plpgsql
+AS $function$
+declare
+	_id integer;
+	_currentdate timestamp = current_timestamp;
+begin
+	
+	select (now() at time zone 'utc') :: timestamp(3) into _currentdate;
+
+insert into hemitpatient (
+firstname,
+lastname,
+middlename,
+hemitsexid,
+dob, 
+isActive,
+createddate, 
+createdbyid, 
+lastmodifieddate, 
+lastmodifiedbyid, 
+clientid, 
+machineid, 
+oldsystemid, 
+isdeleted, 
+issample, 
+requestid
+)
+values (
+_firstname, 
+_lastname, 
+_middlename, 
+_hemitsexid, 
+_dob, 
+_isActive, 
+_currentdate, 
+_userid, 
+_currentdate, 
+_userid, 
+_clientid, 
+_machineid, 
+_oldsystemid, 
+false, 
+_issample, 
+_requestid
+)
+RETURNING  hemitpatientid INTO _id
+;
+
+	return Query select _id, _currentdate;
+end;
+$function$
+;

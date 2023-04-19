@@ -1,0 +1,78 @@
+create  or replace function  
+uspNewHemitPatientsReadList(
+			_Page INTEGER = 1,
+  			_size INTEGER = 20,
+			_patientid int default null,
+			_FirstName varchar default '',
+			_MiddleName varchar(100) default '', 
+			_LastName varchar default '',
+			_Gender varchar default '',
+			_SexId varchar default null,
+			_DOB varchar default null,
+			_allergyname varchar default '',
+			_orderby in varchar default 'HemitPatient.hemitpatientid',
+			_ordertype in varchar default 'ASC',
+			_searchby in varchar default null,
+			_userId varchar default null,
+			_langId varchar default null,
+                _clientidin varchar default null,
+                _clientidnotin varchar default null,
+                _tpauserid varchar default null
+			)
+RETURNS SETOF json
+language plpgsql
+as
+$$
+declare 
+_count INT; 
+initialquery varchar(2000) := 'Select HemitPatient.hemitpatientid as Id, HemitPatient.firstname, HemitPatient.lastname, HemitPatient.dob, HemitPatient.chartnumber as chartnumber,HemitSex.sex as GenderDescription,HemitPatient.hemitsexid as hemitsexid,
+DENSE_RANK() OVER (
+		ORDER BY HemitPatient.hemitpatientid
+	) as denserow 
+From
+    HemitPatient
+    LEFT JOIN HemitSex ON HemitPatient.hemitsexid = HemitSex.hemitsexid 
+
+where HemitPatient.isdeleted=false and 1=1 ';
+initialquery2 varchar(2000) := '';
+v_countStatement varchar(3000) := '';
+ 
+begin
+	
+	
+	initialquery := 'select * from(' || initialquery
+	|| case when $3 != 0 then ' and HemitPatient.hemitpatientid = '''||$3||'''' else '' end 
+	|| case when $4 != '' then ' and HemitPatient.firstname = '''||$4||'''' else '' end 
+	||case when $6 != '' then ' and HemitPatient.lastname = '''||$6||'''' else '' end 
+	||case when $8 != '' then ' and HemitSex.sex = '''||$8||'''' else ''  end
+	|| case when $9 != '' then ' and HemitPatient.dob = '''||$9::date||'''' else ''  end
+	--||case when $10 != '' then ' and hemitallergy.name = '''||$10||'''' else '' end
+	||case when $13 != '' then ' and (HemitPatient.firstname = '''||$13||''' or HemitPatient.lastname = '''||$13||'''or HemitPatient.chartnumber = '''||$13||''')' else '' end
+	||' ORDER BY '|| $11|| ' ' || $12
+	/*||
+	' OFFSET (('||$1||'-1) *'|| $2||')'*/
+	||')as table1 where denserow<='||$2||'*'||$1 ||'and denserow>'||$2||'*'||($1-1) ;--||'group by denserow';
+
+	
+
+initialquery =  'SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM ('|| initialquery || ' ) A'; 
+raise notice 'sql %' , initialquery;
+	return query execute initialquery using _Page,_Size,_patientid,_FirstName,_LastName,_gender,_DOB,_allergyname,_orderby,_ordertype;
+end;
+$$
+
+
+
+_hemitpatientid INT, 
+_hemitallergyid INT default null, 
+_note varchar(100) default null,
+_allergyname varchar(100) default null,
+_hemitpatientallergyid int default null,
+_page integer default 0, 
+_size integer default 0,
+_clientidin varchar default null, 
+_clientidnotin varchar default null, 
+_tpauserid varchar default null, 
+_userid varchar default null, 
+_langid varchar default null, 
+_orderby varchar default null

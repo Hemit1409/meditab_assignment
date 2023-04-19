@@ -1,0 +1,27 @@
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+window.onload = function () {
+
+    if (id != null) { 
+        fetch(`http://localhost:5166/api/Patient/${id}`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('fname').value = data[0].first_name;
+                document.getElementById('mname').value = data[0].middle_name;
+                document.getElementById('lname').value = data[0].last_name;
+                var e = document.getElementById("sex");
+                e.options[e.selectedIndex].text = data[0].sex;
+
+                if (data[0].dob != null) {
+                    document.getElementById('dob').value = new Date(data[0].dob).toISOString().split("T")[0];// substr(0, 8);
+                }
+            })
+        }
+};
