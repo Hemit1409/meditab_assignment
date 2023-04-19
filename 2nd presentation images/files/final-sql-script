@@ -230,13 +230,14 @@ select * from uspnewhemitpatientsread(_patientid=>'12');
 
 SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12,13',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  null,_chartnumber=>null)
 
+SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL,_isactive => 'False', _searchby => NULL,_chartnumber => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  'HemitPatient.hemitpatientid');
 
 SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(A))) FROM (select HemitPatient.hemitpatientid as hemitpatientid,chartnumber,firstname , lastname,middlename, gender.code as gendercode,gender.description as genderdescription,dob,HemitPatient.sexid as sexid,HemitPatient.createdbyid as CreatedById,HemitPatient.lastmodifiedbyid as LastModifiedById from HemitPatient 
 left join staticmiscvaluemap as gender on gender.staticmiscvaluemapid = HemitPatient.sexid
 LEFT JOIN HemitPatientAllergy ON HemitPatient.hemitpatientid = HemitPatientAllergy.hemitpatientid 
 LEFT JOIN hemitallergy ON HemitPatientAllergy.hemitallergyid = hemitallergy.hemitallergyid where HemitPatient.isdeleted=false and (HemitPatient.hemitpatientid  = ANY(STRING_TO_ARRAY('12', ',')::bigint[]) ) ) A
 
-
+SELECT * FROM uspNewhemitpatientsRead (_hemitpatientid => '12',_firstname => NULL,_middlename => NULL,_lastname => NULL,_sexid => '0', _dob => NULL, _searchby => NULL,_chartnumber => NULL,_clientidin => '10007',_clientidnotin => NULL,_tpauserid => NULL,_userId => '1000768',_langId => '', _page => 0, _size => 0 , _orderby =>  'HemitPatient.hemitpatientid');
 
 create  or replace function  
 uspNewHemitPatientsReadList(
@@ -668,7 +669,7 @@ SELECT * FROM uspNewhemitpatientsCreate (_hemitpatientid => '0',_firstname => 'S
 
 INSERT INTO HemitPatient(firstname,lastname,chartnumber,middlename,sexid,dob,createdbyid,lastmodifiedbyid,createddate,lastmodifieddate) VALUES('SHREY','PARMAR','CH00000127','S',100071137,'2003-01-01 00:00:00.000'::date,1000768,1000768,2023-04-10 12:27:41.215,2023-04-10 12:27:41.215) returning hemitpatientid;
 
-
+SELECT * FROM uspNewhemitpatientsCreate (_hemitpatientid => '0',_firstname => 'JAY', _middlename => 'S', _lastname => 'SHARMA', _sexid => '100071137', _dob => '2003-01-01 00:00:00.000',_isactive => 'False', _searchby => NULL,_chartnumber => 'CH00000205', _userId => '1000768',_langId => '');
 
 select * from HemitPatient;
 
@@ -710,7 +711,7 @@ SELECT * FROM uspNewHemitPatientsUpdate (_patientid => '1',_firstname => 'Priya'
 --select * from uspNewHemitPatientsupdate(4,'SUMEET','PATEL','S','MALE','2003-01-01');
 SELECT * FROM uspNewHemitPatientsUpdate (_pagesize => '0',_pagenumber => '0',_patientid => '19',_firstname => 'Priya', _middlename => 'S', _lastname => 'WARGHESE', _sexid => '3', _dob => '2003-01-01 00:00:00.000',_orderby => 'HemitPatient.hemitpatientid', _ordertype => 'ASC', _allergyname => NULL);
 
-
+SELECT * FROM uspNewhemitpatientsUpdate (_hemitpatientid => '12',_firstname => 'KUNJ', _middlename => 'S', _lastname => 'CHOPDA', _sexid => '100071137', _dob => '2003-01-01 00:00:00.000',_isactive => 'False', _searchby => NULL,_chartnumber => 'CH00000205', _userId => '1000768',_langId => '');
 
 select * from HemitPatient;
 
@@ -747,6 +748,7 @@ SELECT * FROM uspNewhemitpatientallergyCreate (_allergyname => NULL,_note => 'PE
 
 select * from HemitPatientAllergy;
 
+SELECT * FROM uspNewhemitpatientallergyCreate (_allergyname => NULL,_note => 'PEANUT added again', _hemitpatientallergyid => '0',_hemitallergyid => '11',_hemitpatientid => '12',_userId => '1000768',_langId => '')
 
 
 
